@@ -1,6 +1,7 @@
-.sh-root {
+.sh-root-layout {
   &__wrapper {
     height: 100vh;
     overflow: auto;
+    background-color: var(--background-color);
   }
 }
