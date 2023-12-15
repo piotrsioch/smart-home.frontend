@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'sh-root',
+  template: '<sh-root-layout></sh-root-layout>',
 })
 export class AppComponent {
-  title = 'smart-home.frontend';
 }
