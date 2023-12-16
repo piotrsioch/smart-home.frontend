@@ -5,7 +5,8 @@ import { SettingsComponent } from "./modules/settings/settings.component";
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'test', component: SettingsComponent }
+  { path: 'test', component: SettingsComponent },
+  { path: '**', redirectTo: 'dashboard' },
 ]
 
 export const appConfig: ApplicationConfig = {
