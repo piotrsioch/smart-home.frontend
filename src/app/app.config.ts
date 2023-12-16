@@ -1,23 +1,13 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { ApplicationConfig } from "@angular/core";
+import { provideRouter, Routes } from "@angular/router";
+import { DashboardComponent } from "./modules/dashboard/dashboard.component";
+import { SettingsComponent } from "./modules/settings/settings.component";
 
-const childrenRoutes: Routes = [{
-  path: 'dashboard',
-  loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule)
-},
-  {
-    path: "**",
-    redirectTo: 'dashboard'
-  }];
+const routes: Routes = [
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'test', component: SettingsComponent }
+]
 
-const routes: Routes = [{
-  path: '',
-  children: childrenRoutes,
-}]
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule {
+export const appConfig: ApplicationConfig = {
+  providers: [provideRouter(routes)]
 }
