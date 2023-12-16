@@ -3,6 +3,7 @@ import { ApiService } from "../../core/api/services/api.service";
 import { HttpClient } from "@angular/common/http";
 
 @Component({
+  standalone: true,
   selector: 'sh-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
