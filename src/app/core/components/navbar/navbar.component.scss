@@ -5,12 +5,12 @@
   .sh-navbar {
     &__container {
       width: 100%;
+      margin: $main-size * 2 0;
       height: $main-size * 8;
       display: flex;
       align-items: center;
       justify-content: flex-end;
       gap: $main-size * 4;
-      margin: $main-size * 2 0;
     }
 
     &__settings {
