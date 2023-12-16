@@ -7,7 +7,7 @@ import { ApiModule } from "./core/api/api.module";
   selector: 'sh-root',
   standalone: true,
   imports: [HttpClientModule, RootLayoutComponent, ApiModule],
-  template: '<sh-root-layout></sh-root-layout>>'
+  template: '<sh-root-layout/>'
 })
 export class AppComponent {
 }

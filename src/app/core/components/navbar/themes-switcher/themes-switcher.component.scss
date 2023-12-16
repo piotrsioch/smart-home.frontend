@@ -1,10 +1,15 @@
-//@import "../../../src/assets/styles/variables.scss";
 @import "variables";
+@import "mixins";
 
 @media(max-width: $max-width) {
   .sh-theme-switcher {
-    &__container {
-      background-color: green;
+    &__switcher {
+      @include clear-button;
+
+      &__icon {
+        color: var(--black2);
+        font-size: $main-size * 7.5;
+      }
     }
   }
 }

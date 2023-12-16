@@ -6,9 +6,7 @@ import { MatIconModule } from "@angular/material/icon";
   standalone: true,
   templateUrl: './themes-switcher.component.html',
   styleUrls: ['./themes-switcher.component.scss'],
-  imports: [
-    MatIconModule
-  ]
+  imports: []
 })
 export class ThemesSwitcherComponent {
   public isLightTheme = false;

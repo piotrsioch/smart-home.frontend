@@ -1,10 +1,12 @@
 <div class="sh-theme-switcher__container">
   <button
     (click)="onThemeSwitch()"
-    class="sh-theme-switcher__button"
+    class="sh-theme-switcher__switcher"
   >
-    Switch theme
+    @if (isLightTheme) {
+    <span class="sh-theme-switcher__switcher__icon material-symbols-outlined">dark_mode</span>
+    } @else {
+    <span class="sh-theme-switcher__switcher__icon material-symbols-outlined">light_mode</span>
+    }
   </button>
-  <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
-  <mat-icon> 3d_rotation </mat-icon>
 </div>
