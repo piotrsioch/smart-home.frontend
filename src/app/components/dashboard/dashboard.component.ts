@@ -3,10 +3,11 @@ import { ApiService } from "../../core/api/services/api.service";
 import { HttpClient } from "@angular/common/http";
 
 @Component({
-  standalone: true,
   selector: 'sh-dashboard',
+  standalone: true,
+  imports: [],
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit {
 

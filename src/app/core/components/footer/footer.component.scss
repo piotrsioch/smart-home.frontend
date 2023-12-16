@@ -1,0 +1,23 @@
+@import "variables";
+@import "mixins";
+
+.sh-footer {
+  &__container {
+    height: $footer-height;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: $main-size * 6;
+    padding: 0 $main-size * 6;
+  }
+
+  &__item {
+    &__icon {
+      color: var(--black2);
+      font-size: $main-size * 7.5;
+    }
+  }
+}

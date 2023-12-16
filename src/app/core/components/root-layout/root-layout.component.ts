@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { RouterOutlet } from "@angular/router";
+import { FooterComponent } from "../footer/footer.component";
 
 @Component({
   selector: 'sh-root-layout',
   standalone: true,
-  imports: [NavbarComponent, RouterOutlet],
+  imports: [NavbarComponent, FooterComponent, RouterOutlet],
   templateUrl: './root-layout.component.html',
-  styleUrls: ['./root-layout.component.scss'],
+  styleUrl: './root-layout.component.scss',
 })
 export class RootLayoutComponent implements OnInit {
 
