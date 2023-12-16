@@ -1,11 +1,12 @@
 <div class="sh-theme-switcher__container">
   <button
     (click)="onThemeSwitch()"
-    class="sh-theme-switcher__button"
+    class="sh-theme-switcher__switcher"
   >
-    Switch theme
+    @if (isLightTheme) {
+    <span class="sh-theme-switcher__switcher__icon material-symbols-outlined">dark_mode</span>
+    } @else {
+    <span class="sh-theme-switcher__switcher__icon material-symbols-outlined">light_mode</span>
+    }
   </button>
-  <span class="material-symbols-outlined">
-dark_mode
-</span>
 </div>
