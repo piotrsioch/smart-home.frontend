@@ -1,27 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ApiService } from "../../core/api/services/api.service";
-import { HttpClient } from "@angular/common/http";
+import { CardComponent } from "./card/card.component";
+
+interface Card {
+  name: string;
+  icon: string;
+}
 
 @Component({
   selector: 'sh-dashboard',
   standalone: true,
-  imports: [],
+  imports: [CardComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
+  public readonly cards: Card[] = [
+    {
+      name: 'Security',
+      icon: '',
+    },
+    {
+      name: 'Lightning system',
+      icon: '',
+    },
+    {
+      name: 'Climate',
+      icon: '',
+    },
+    {
+      name: 'Energy usage',
+      icon: '',
+    },
+    {
+      name: 'Remote control',
+      icon: '',
+    }
+  ]
 
-  constructor(private readonly apiService: ApiService, private readonly httpClient: HttpClient) {
-    this.httpClient.get('http://localhost:4001/alarm/list?page=0&limit=5').subscribe(data => console.log(data))
+  constructor(private readonly apiService: ApiService) {
   }
-
-  ngOnInit(): void {
-    this.apiService.alarmControllerChangeLightState({
-      body: {
-        sensorId: 'L_001',
-        state: "on",
-      }
-    }).subscribe(data => console.log(data))
-  }
-
 }
