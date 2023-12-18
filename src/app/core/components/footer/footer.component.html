@@ -1,0 +1,11 @@
+<div class="sh-footer__container">
+  @for (item of routerLinks; track item.name) {
+    <a
+      [routerLink]=item.path
+      routerLinkActive="sh-footer__item--active"
+      class="sh-footer__item"
+    >
+      <span class="sh-footer__item__icon material-symbols-outlined">{{ item.icon }}</span>
+    </a>
+  }
+</div>

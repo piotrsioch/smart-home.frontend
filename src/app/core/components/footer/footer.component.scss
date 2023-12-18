@@ -1,0 +1,35 @@
+@import "variables";
+@import "mixins";
+
+:host {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+}
+
+.sh-footer {
+  &__container {
+    background: $black;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 $main-size * 8;
+    height: $footer-height;
+    border-radius: $border-radius;
+  }
+
+  &__item {
+    &__icon {
+      color: rgba($white, 0.3);
+      font-size: $main-size * 6;
+    }
+
+    &--active {
+      span {
+        color: $white;
+      }
+    }
+  }
+}
