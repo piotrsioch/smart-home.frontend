@@ -18,23 +18,27 @@ export class DashboardComponent {
   public readonly cards: Card[] = [
     {
       name: 'Security',
-      icon: '',
+      icon: 'lock',
     },
     {
       name: 'Lightning system',
-      icon: '',
+      icon: 'lightbulb',
     },
     {
       name: 'Climate',
-      icon: '',
+      icon: 'thermostat',
     },
     {
       name: 'Energy usage',
-      icon: '',
+      icon: 'bolt',
     },
     {
       name: 'Remote control',
-      icon: '',
+      icon: 'remote_gen',
+    },
+    {
+      name: 'Rooms',
+      icon: 'sensor_door'
     }
   ]
 
