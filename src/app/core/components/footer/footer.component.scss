@@ -3,15 +3,13 @@
 
 .sh-footer {
   &__container {
-    height: $footer-height;
     width: 100%;
-    position: fixed;
-    left: 0;
-    bottom: 0;
     display: flex;
     justify-content: space-between;
-    margin-bottom: $main-size * 6;
+    align-items: center;
     padding: 0 $main-size * 6;
+    padding-bottom: $main-size * 4;
+    height: $footer-height;
   }
 
   &__item {
