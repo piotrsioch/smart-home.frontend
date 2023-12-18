@@ -1,0 +1,12 @@
+@import "variables";
+
+@media(max-width: $max-width) {
+  .sh-dashboard {
+    &__items-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      row-gap: 3 * $main-size;
+      column-gap: 3 * $main-size;
+    }
+  }
+}

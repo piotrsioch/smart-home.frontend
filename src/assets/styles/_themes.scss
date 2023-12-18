@@ -2,10 +2,16 @@
   --background-color: #FFFFFF;
   --black: #1E1E1E;
   --black2: #1E1E1E;
+  --white-dirty: #F6F6F6;
+  --main-background: #228ee0;
+  --main-color: #FFFFFF;
 }
 
 [data-theme="dark"] {
   --background-color: #1E1E1E;
   --black: #FFFFFF;
   --black2: #E4E4E4;
+  --white-dirty: #2C2C2C;
+  --main-background: #1E1E1E;
+  --main-color: #228ee0;
 }
