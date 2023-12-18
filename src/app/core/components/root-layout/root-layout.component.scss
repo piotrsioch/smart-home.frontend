@@ -19,7 +19,7 @@
     }
 
     &__main {
-      height: calc(100% - $navbar-height - $footer-height);
+      height: calc(100% - $navbar-height - $footer-height - 2 * $main-size);
       margin-top: $navbar-height;
       overflow: auto;
     }
@@ -28,7 +28,7 @@
       width: 100%;
       height: $footer-height;
       position: fixed;
-      bottom: 0;
+      bottom: $main-size * 4;
       left: 0;
     }
   }
