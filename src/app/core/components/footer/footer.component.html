@@ -1,7 +1,10 @@
 <div class="sh-footer__container">
   @for (item of routerLinks; track item.name) {
-    <div class="sh-footer__item">
+    <a
+      [routerLink]=item.path
+      class="sh-footer__item"
+    >
       <span class="sh-footer__item__icon material-symbols-outlined">{{ item.icon }}</span>
-    </div>
+    </a>
   }
 </div>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RouterModule } from "@angular/router";
 
 interface Link {
   name: string;
@@ -9,7 +10,7 @@ interface Link {
 @Component({
   selector: 'sh-footer',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
 })
@@ -17,17 +18,17 @@ export class FooterComponent {
   public routerLinks: Link[] = [
     {
       name: 'dashboard',
-      path: '',
+      path: '/dashboard',
       icon: 'dashboard'
     },
     {
       name: 'notifications',
-      path: '',
+      path: '/notifications',
       icon: 'notifications'
     },
     {
       name: 'settings',
-      path: '',
+      path: '/settings',
       icon: 'settings'
     }
   ]
