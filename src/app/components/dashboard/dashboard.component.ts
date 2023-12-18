@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ApiService } from "../../core/api/services/api.service";
 import { CardComponent } from "./card/card.component";
 
 interface Card {
@@ -49,6 +48,6 @@ export class DashboardComponent {
     }
   ]
 
-  constructor(private readonly apiService: ApiService) {
+  constructor() {
   }
 }
