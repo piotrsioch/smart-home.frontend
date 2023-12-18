@@ -1,7 +1,11 @@
 <div class="sh-dashboard__container">
   <div class="sh-dashboard__items-wrapper">
     @for (item of cards; track item.name) {
-      <sh-card [name]=item.name [icon]=item.icon/>
+      <sh-card
+        [name]=item.name
+        [icon]=item.icon
+        [path]=item.path
+       />
     }
   </div>
 </div>

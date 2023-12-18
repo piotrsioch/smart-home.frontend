@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'sh-card',
@@ -10,4 +11,12 @@ import { Component, Input } from '@angular/core';
 export class CardComponent {
   @Input({ required: true }) name: string = '';
   @Input({ required: true }) icon: string = '';
+  @Input({ required: true }) path: string = '';
+
+  constructor(private readonly router: Router) {
+  }
+
+  public navigate(path: string) {
+    this.router.navigate([path]);
+  }
 }
