@@ -8,11 +8,12 @@ import { ReedSwitchDto } from "../../core/api/models/reed-switch-dto";
 import { SensorDto } from "../../core/api/models/sensor-dto";
 import { forkJoin, Subscription } from "rxjs";
 import { CommonModule } from "@angular/common";
+import { LoaderComponent } from "../../shared/loader/loader.component";
 
 @Component({
   selector: 'sh-security',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LoaderComponent],
   templateUrl: './security.component.html',
   styleUrl: './security.component.scss'
 })

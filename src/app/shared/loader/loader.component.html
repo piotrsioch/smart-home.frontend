@@ -1,0 +1,12 @@
+<div class="sh-loader__container">
+  <div
+    *ngIf="loading else defaultTemplate"
+    class="sh-loader__loader"
+  >
+    L O A D I N G . . . . .
+  </div>
+</div>
+
+<ng-template #defaultTemplate>
+  <ng-content></ng-content>
+</ng-template>
