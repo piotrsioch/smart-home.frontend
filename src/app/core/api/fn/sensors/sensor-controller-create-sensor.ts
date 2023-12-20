@@ -6,11 +6,11 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { CreateSensorInputDto } from '../../models/create-sensor-input-dto';
 import { SensorDto } from '../../models/sensor-dto';
-import { SensorListInputDto } from '../../models/sensor-list-input-dto';
 
 export interface SensorControllerCreateSensor$Params {
-      body: SensorListInputDto
+      body: CreateSensorInputDto
 }
 
 export function sensorControllerCreateSensor(http: HttpClient, rootUrl: string, params: SensorControllerCreateSensor$Params, context?: HttpContext): Observable<StrictHttpResponse<SensorDto>> {

@@ -11,8 +11,8 @@ import { StrictHttpResponse } from '../strict-http-response';
 
 import { alarmControllerAlarmList } from '../fn/alarm/alarm-controller-alarm-list';
 import { AlarmControllerAlarmList$Params } from '../fn/alarm/alarm-controller-alarm-list';
-import { alarmControllerChangeLightState } from '../fn/alarm/alarm-controller-change-light-state';
-import { AlarmControllerChangeLightState$Params } from '../fn/alarm/alarm-controller-change-light-state';
+import { alarmControllerChangeAlarmState } from '../fn/alarm/alarm-controller-change-alarm-state';
+import { AlarmControllerChangeAlarmState$Params } from '../fn/alarm/alarm-controller-change-alarm-state';
 import { alarmControllerGetAlarmState } from '../fn/alarm/alarm-controller-get-alarm-state';
 import { AlarmControllerGetAlarmState$Params } from '../fn/alarm/alarm-controller-get-alarm-state';
 import { AlarmDto } from '../models/alarm-dto';
@@ -24,27 +24,27 @@ export class AlarmService extends BaseService {
     super(config, http);
   }
 
-  /** Path part for operation `alarmControllerChangeLightState()` */
-  static readonly AlarmControllerChangeLightStatePath = '/alarm/change-state';
+  /** Path part for operation `alarmControllerChangeAlarmState()` */
+  static readonly AlarmControllerChangeAlarmStatePath = '/alarm/change-state';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `alarmControllerChangeLightState()` instead.
+   * To access only the response body, use `alarmControllerChangeAlarmState()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  alarmControllerChangeLightState$Response(params: AlarmControllerChangeLightState$Params, context?: HttpContext): Observable<StrictHttpResponse<AlarmDto>> {
-    return alarmControllerChangeLightState(this.http, this.rootUrl, params, context);
+  alarmControllerChangeAlarmState$Response(params: AlarmControllerChangeAlarmState$Params, context?: HttpContext): Observable<StrictHttpResponse<AlarmDto>> {
+    return alarmControllerChangeAlarmState(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `alarmControllerChangeLightState$Response()` instead.
+   * To access the full response (for headers, for example), `alarmControllerChangeAlarmState$Response()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  alarmControllerChangeLightState(params: AlarmControllerChangeLightState$Params, context?: HttpContext): Observable<AlarmDto> {
-    return this.alarmControllerChangeLightState$Response(params, context).pipe(
+  alarmControllerChangeAlarmState(params: AlarmControllerChangeAlarmState$Params, context?: HttpContext): Observable<AlarmDto> {
+    return this.alarmControllerChangeAlarmState$Response(params, context).pipe(
       map((r: StrictHttpResponse<AlarmDto>): AlarmDto => r.body)
     );
   }

@@ -9,12 +9,12 @@ import { RequestBuilder } from '../../request-builder';
 import { AlarmDto } from '../../models/alarm-dto';
 import { ChangeAlarmStateInputDto } from '../../models/change-alarm-state-input-dto';
 
-export interface AlarmControllerChangeLightState$Params {
+export interface AlarmControllerChangeAlarmState$Params {
       body: ChangeAlarmStateInputDto
 }
 
-export function alarmControllerChangeLightState(http: HttpClient, rootUrl: string, params: AlarmControllerChangeLightState$Params, context?: HttpContext): Observable<StrictHttpResponse<AlarmDto>> {
-  const rb = new RequestBuilder(rootUrl, alarmControllerChangeLightState.PATH, 'post');
+export function alarmControllerChangeAlarmState(http: HttpClient, rootUrl: string, params: AlarmControllerChangeAlarmState$Params, context?: HttpContext): Observable<StrictHttpResponse<AlarmDto>> {
+  const rb = new RequestBuilder(rootUrl, alarmControllerChangeAlarmState.PATH, 'post');
   if (params) {
     rb.body(params.body, 'application/json');
   }
@@ -29,4 +29,4 @@ export function alarmControllerChangeLightState(http: HttpClient, rootUrl: strin
   );
 }
 
-alarmControllerChangeLightState.PATH = '/alarm/change-state';
+alarmControllerChangeAlarmState.PATH = '/alarm/change-state';
