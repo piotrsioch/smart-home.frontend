@@ -4,7 +4,15 @@ import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
-import { ApiService } from './services/api.service';
+import { DhtSensorService } from './services/dht-sensor.service';
+import { SensorsService } from './services/sensors.service';
+import { PirSensorService } from './services/pir-sensor.service';
+import { SmokeSensorService } from './services/smoke-sensor.service';
+import { ReedSwitchService } from './services/reed-switch.service';
+import { LightService } from './services/light.service';
+import { AlarmService } from './services/alarm.service';
+import { RoomService } from './services/room.service';
+import { NotificationsService } from './services/notifications.service';
 
 /**
  * Module that provides all services and configuration.
@@ -14,7 +22,15 @@ import { ApiService } from './services/api.service';
   exports: [],
   declarations: [],
   providers: [
-    ApiService,
+    DhtSensorService,
+    SensorsService,
+    PirSensorService,
+    SmokeSensorService,
+    ReedSwitchService,
+    LightService,
+    AlarmService,
+    RoomService,
+    NotificationsService,
     ApiConfiguration
   ],
 })
