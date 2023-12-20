@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export interface LightDto {
+  '_id': string;
   createdAt: string;
-  id: string;
   isOn: boolean;
   sensorId: string;
 }

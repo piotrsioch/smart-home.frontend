@@ -6,21 +6,21 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { NotificationDto } from '../../models/notification-dto';
 import { PaginationOutput } from '../../models/pagination-output';
+import { RoomDto } from '../../models/room-dto';
 
-export interface NotificationControllerNotificationList$Params {
+export interface RoomControllerReedSwitchList$Params {
   page: number;
   limit: number;
-  orderField?: 'sensorId' | 'createdAt' | 'isActive';
+  orderField?: 'name' | 'roomType';
   orderDirection?: 'ASC' | 'DESC';
   search?: string;
 }
 
-export function notificationControllerNotificationList(http: HttpClient, rootUrl: string, params: NotificationControllerNotificationList$Params, context?: HttpContext): Observable<StrictHttpResponse<PaginationOutput & {
-'items'?: Array<NotificationDto>;
+export function roomControllerReedSwitchList(http: HttpClient, rootUrl: string, params: RoomControllerReedSwitchList$Params, context?: HttpContext): Observable<StrictHttpResponse<PaginationOutput & {
+'items'?: Array<RoomDto>;
 }>> {
-  const rb = new RequestBuilder(rootUrl, notificationControllerNotificationList.PATH, 'get');
+  const rb = new RequestBuilder(rootUrl, roomControllerReedSwitchList.PATH, 'get');
   if (params) {
     rb.query('page', params.page, {});
     rb.query('limit', params.limit, {});
@@ -35,10 +35,10 @@ export function notificationControllerNotificationList(http: HttpClient, rootUrl
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
       return r as StrictHttpResponse<PaginationOutput & {
-      'items'?: Array<NotificationDto>;
+      'items'?: Array<RoomDto>;
       }>;
     })
   );
 }
 
-notificationControllerNotificationList.PATH = '/notifications/list';
+roomControllerReedSwitchList.PATH = '/room/list';

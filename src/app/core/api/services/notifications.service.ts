@@ -56,7 +56,9 @@ export class NotificationsService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  notificationControllerNotificationList$Response(params: NotificationControllerNotificationList$Params, context?: HttpContext): Observable<StrictHttpResponse<PaginationOutput>> {
+  notificationControllerNotificationList$Response(params: NotificationControllerNotificationList$Params, context?: HttpContext): Observable<StrictHttpResponse<PaginationOutput & {
+'items'?: Array<NotificationDto>;
+}>> {
     return notificationControllerNotificationList(this.http, this.rootUrl, params, context);
   }
 
@@ -66,9 +68,15 @@ export class NotificationsService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  notificationControllerNotificationList(params: NotificationControllerNotificationList$Params, context?: HttpContext): Observable<PaginationOutput> {
+  notificationControllerNotificationList(params: NotificationControllerNotificationList$Params, context?: HttpContext): Observable<PaginationOutput & {
+'items'?: Array<NotificationDto>;
+}> {
     return this.notificationControllerNotificationList$Response(params, context).pipe(
-      map((r: StrictHttpResponse<PaginationOutput>): PaginationOutput => r.body)
+      map((r: StrictHttpResponse<PaginationOutput & {
+'items'?: Array<NotificationDto>;
+}>): PaginationOutput & {
+'items'?: Array<NotificationDto>;
+} => r.body)
     );
   }
 

@@ -1,9 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
 export interface DhtSensorDto {
+  '_id': string;
   createdAt: string;
   humidity: number;
-  id: string;
   sensorId: string;
   temperature: number;
 }

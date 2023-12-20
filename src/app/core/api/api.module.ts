@@ -11,6 +11,7 @@ import { SmokeSensorService } from './services/smoke-sensor.service';
 import { ReedSwitchService } from './services/reed-switch.service';
 import { LightService } from './services/light.service';
 import { AlarmService } from './services/alarm.service';
+import { RoomService } from './services/room.service';
 import { NotificationsService } from './services/notifications.service';
 
 /**
@@ -28,6 +29,7 @@ import { NotificationsService } from './services/notifications.service';
     ReedSwitchService,
     LightService,
     AlarmService,
+    RoomService,
     NotificationsService,
     ApiConfiguration
   ],
