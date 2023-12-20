@@ -1,29 +1,32 @@
-<div
-  *ngIf="!isLoading && reedSwitches.length > 0 && reedSwitchSensors.length > 0"
-  class="sh-security__container"
->
-  <div class="sh-security__alarm">
-    Alarm details:
-    <div class="sh-security__alarm__overview">
-      {{ alarmSensor.name }}
-      {{ alarmSensor.location }}
-    </div>
-    <div class="sh-security__alarm__state">
-      {{ alarm.state }}
-      <button class="sh-security__alarm__state__button">Change state</button>
-    </div>
-  </div>
-
+<sh-loader [loading]="isLoading || !(reedSwitches.length > 0) || !(reedSwitchSensors.length > 0)">
   <div
-    *ngFor="let sensor of reedSwitchSensors; index as i"
-    class=sh-security__reed-switch
+    *ngIf="!isLoading && reedSwitches.length > 0 && reedSwitchSensors.length > 0"
+    class="sh-security__container"
   >
-    <div class="sh-security__reed-switch__overview">
-      {{ sensor.name }} {{ sensor.location }}
+    <div class="sh-security__alarm">
+      Alarm details:
+      <div class="sh-security__alarm__overview">
+        {{ alarmSensor.name }}
+        {{ alarmSensor.location }}
+      </div>
+      <div class="sh-security__alarm__state">
+        {{ alarm.state }}
+        <button class="sh-security__alarm__state__button">Change state</button>
+      </div>
     </div>
-    <div class="sh-security__reed-switch__state">
-      {{ reedSwitches[i].isOpened }}
+
+    <div
+      *ngFor="let sensor of reedSwitchSensors; index as i"
+      class=sh-security__reed-switch
+    >
+      <div class="sh-security__reed-switch__overview">
+        {{ sensor.name }} {{ sensor.location }}
+      </div>
+      <div class="sh-security__reed-switch__state">
+        {{ reedSwitches[i].isOpened }}
+      </div>
     </div>
   </div>
-</div>
+</sh-loader>
+
 

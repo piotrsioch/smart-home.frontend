@@ -1,0 +1,16 @@
+<div class="sh-loader__container">
+  <div
+    *ngIf="loading else defaultTemplate"
+    class="sh-loader__wrapper"
+  >
+    <mat-progress-spinner
+      [diameter]="diameter"
+      class="sh-loader__spinner"
+      mode="indeterminate"
+    ></mat-progress-spinner>
+  </div>
+</div>
+
+<ng-template #defaultTemplate>
+  <ng-content></ng-content>
+</ng-template>
