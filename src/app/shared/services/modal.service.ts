@@ -15,6 +15,7 @@ export class ModalService {
   ): MatDialogRef<C, R> {
     return this._modal.open<C, D, R>(component, {
       data,
+      panelClass: ['sh-modal'],
     });
   }
 }

@@ -1,0 +1,21 @@
+:host ::ng-deep {
+  .mdc-dialog__container {
+    //width: 70% !important;
+    width: 500px !important;
+    height: 50% !important;
+  }
+
+  .mat-mdc-dialog-container.mdc-dialog.cdk-dialog-container.mdc-dialog--open  {
+    height: 500px !important;
+  }
+
+  .mat-mdc-dialog-surface mdc-dialog__surface {
+    height: 500px !important;
+  }
+}
+
+.sh-alarm-modal {
+  &__container {
+
+  }
+}
