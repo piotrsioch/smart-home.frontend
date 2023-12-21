@@ -8,12 +8,15 @@ import { ReedSwitchDto } from "../../core/api/models/reed-switch-dto";
 import { SensorDto } from "../../core/api/models/sensor-dto";
 import { forkJoin, Subscription } from "rxjs";
 import { CommonModule } from "@angular/common";
-import { LoaderComponent } from "../../shared/loader/loader.component";
+import { LoaderComponent } from "../../shared/components/loader/loader.component";
+import { ModalService } from "../../shared/services/modal.service";
+import { AlarmModalComponent } from "./alarm-modal/alarm-modal.component";
 
 @Component({
   selector: 'sh-security',
   standalone: true,
-  imports: [CommonModule, LoaderComponent],
+  imports: [CommonModule, LoaderComponent, AlarmModalComponent],
+  providers: [ModalService],
   templateUrl: './security.component.html',
   styleUrl: './security.component.scss'
 })
@@ -28,7 +31,8 @@ export class SecurityComponent implements OnDestroy {
   constructor(
     private readonly sensorsService: SensorsService,
     private readonly alarmService: AlarmService,
-    private readonly reedSwitchService: ReedSwitchService
+    private readonly reedSwitchService: ReedSwitchService,
+    private readonly modalService: ModalService,
   ) {
     this.subscriptions.add(this.sensorsService.sensorControllerSensorList({
       search: 'alarm',
@@ -66,7 +70,10 @@ export class SecurityComponent implements OnDestroy {
       this.reedSwitches = data;
       this.isLoading = false;
     });
+  }
 
+  public openAlarmModal(): void {
+    const modalRef = this.modalService.open<AlarmModalComponent>(AlarmModalComponent);
   }
 
   ngOnDestroy(): void {

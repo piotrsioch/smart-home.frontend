@@ -11,7 +11,10 @@
       </div>
       <div class="sh-security__alarm__state">
         {{ alarm.state }}
-        <button class="sh-security__alarm__state__button">Change state</button>
+        <button
+          (click)="openAlarmModal()"
+          class="sh-security__alarm__state__button"
+        >Change state</button>
       </div>
     </div>
 
