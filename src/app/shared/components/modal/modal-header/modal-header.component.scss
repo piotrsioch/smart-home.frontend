@@ -7,9 +7,6 @@
     align-items: center;
   }
 
-  &__title {
-  }
-
   &__close {
     @include clear-button;
     color: var(--black);

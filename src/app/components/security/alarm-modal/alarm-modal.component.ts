@@ -23,7 +23,6 @@ export class AlarmModalComponent {
   constructor(
     public dialogRef: MatDialogRef<AlarmModalComponent>,
   ) {
-
   }
 
   public close(data?: string) {
