@@ -1,0 +1,10 @@
+<div class="sh-select__container">
+  <mat-select
+    [(value)]="value"
+    (selectionChange)="selectValue($event)"
+  >
+    @for (value of values;track value) {
+      <mat-option [value]="value">{{ value | titlecase }}</mat-option>
+    }
+  </mat-select>
+</div>

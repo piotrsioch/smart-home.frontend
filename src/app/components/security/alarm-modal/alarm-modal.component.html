@@ -3,4 +3,7 @@
     (closeClicked)="close()"
     title="Alarm state"
   />
+  <div class="sh-alarm-modal__state">
+    <sh-select [values]="states" (valueSelected)="valueSelected($event)" />
+  </div>
 </div>
