@@ -9,7 +9,7 @@ import { SensorDto } from "../../core/api/models/sensor-dto";
 import { forkJoin, Subscription } from "rxjs";
 import { CommonModule } from "@angular/common";
 import { LoaderComponent } from "../../shared/components/loader/loader.component";
-import { ModalService } from "../../shared/services/modal.service";
+import { ModalService, ModalStyle } from "../../shared/services/modal.service";
 import { AlarmModalComponent } from "./alarm-modal/alarm-modal.component";
 
 @Component({
@@ -73,7 +73,9 @@ export class SecurityComponent implements OnDestroy {
   }
 
   public openAlarmModal(id: string): void {
-    const modalRef = this.modalService.open<AlarmModalComponent>(AlarmModalComponent);
+    const modalRef = this.modalService.open<AlarmModalComponent>(AlarmModalComponent, {
+      style: ModalStyle.Small,
+    });
 
     modalRef.afterClosed().pipe(
       filter(data => !!data),
