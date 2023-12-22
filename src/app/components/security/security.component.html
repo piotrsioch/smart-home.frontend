@@ -12,7 +12,7 @@
       <div class="sh-security__alarm__state">
         {{ alarm.state }}
         <button
-          (click)="openAlarmModal()"
+          (click)="openAlarmModal(alarmSensor._id)"
           class="sh-security__alarm__state__button"
         >Change state</button>
       </div>

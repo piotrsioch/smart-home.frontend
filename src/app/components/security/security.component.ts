@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { SensorsService } from "../../core/api/services/sensors.service";
 import { AlarmService } from "../../core/api/services/alarm.service";
 import { ReedSwitchService } from "../../core/api/services/reed-switch.service";
-import { map, switchMap, tap } from "rxjs/operators";
+import { filter, map, switchMap, tap } from "rxjs/operators";
 import { AlarmDto } from "../../core/api/models/alarm-dto";
 import { ReedSwitchDto } from "../../core/api/models/reed-switch-dto";
 import { SensorDto } from "../../core/api/models/sensor-dto";
@@ -72,8 +72,12 @@ export class SecurityComponent implements OnDestroy {
     });
   }
 
-  public openAlarmModal(): void {
+  public openAlarmModal(id: string): void {
     const modalRef = this.modalService.open<AlarmModalComponent>(AlarmModalComponent);
+
+    modalRef.afterClosed().pipe(
+      filter(data => !!data),
+    ).subscribe(data => console.log(data))
   }
 
   ngOnDestroy(): void {
