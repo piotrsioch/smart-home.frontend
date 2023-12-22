@@ -4,6 +4,7 @@ import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { SettingsComponent } from "./components/settings/settings.component";
 import { NotificationsComponent } from "./components/notifications/notifications.component";
 import { SecurityComponent } from "./components/security/security.component";
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
@@ -14,5 +15,5 @@ const routes: Routes = [
 ]
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes)],
+  providers: [provideRouter(routes), provideAnimations()],
 }

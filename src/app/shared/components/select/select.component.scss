@@ -1,0 +1,44 @@
+@import "variables";
+
+:host ::ng-deep {
+  display: block;
+
+  .mat-mdc-select-trigger {
+    border: 1px solid var(--black);
+    border-radius: $main-size;
+    padding: $main-size * 3;
+    color: var(--black);
+  }
+
+  .mat-mdc-select-arrow svg {
+    fill: var(--black)
+  }
+
+  .mat-mdc-select-arrow {
+    padding-right: $main-size * 5;
+  }
+
+  .mat-mdc-select-panel {
+    background-color: var(--white-dirty) !important;
+  }
+}
+
+::ng-deep {
+  .mat-mdc-select-panel {
+    background-color: var(--white-dirty) !important;
+  }
+
+  .mat-mdc-option {
+    color: var(--black) !important;
+  }
+
+  .mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked::after {
+    color: var(--black) !important;
+  }
+
+  .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text {
+    color: var(--black) !important;
+  }
+}
+
+

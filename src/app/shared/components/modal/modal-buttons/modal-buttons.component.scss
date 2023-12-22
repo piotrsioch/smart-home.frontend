@@ -1,0 +1,23 @@
+@import "variables";
+@import "mixins";
+
+.sh-modal-buttons {
+  &__container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__close, &__save {
+    @include clear-button;
+    border: 1px solid var(--black);
+    color: var(--black);
+    border-radius: $border-radius;
+    padding: $main-size * 3;
+    display: flex;
+    width: 40%;
+    align-items: center;
+    justify-content: center;
+  }
+}

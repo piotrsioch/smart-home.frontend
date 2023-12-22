@@ -1,0 +1,14 @@
+@import "variables";
+
+.sh-alarm-modal {
+  &__container {
+    height: 90%;
+  }
+  &__content-wrapper {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 95%;
+    justify-content: space-around;
+  }
+}

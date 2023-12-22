@@ -1,0 +1,14 @@
+<div class="sh-alarm-modal__container">
+  <sh-modal-header
+    (closeClicked)="close()"
+    title="Alarm state"
+  />
+  <div class="sh-alarm-modal__content-wrapper">
+    <div class="sh-alarm-modal__state">
+      <sh-select [values]="states" (valueSelected)="valueSelected($event)" />
+    </div>
+    <div class="sh-alarm-modal__buttons">
+      <sh-modal-buttons (buttonClicked)="handleButtonClicked($event)"/>
+    </div>
+  </div>
+</div>

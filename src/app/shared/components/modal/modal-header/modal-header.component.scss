@@ -1,0 +1,14 @@
+@import "mixins";
+
+.sh-modal-header {
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__close {
+    @include clear-button;
+    color: var(--black);
+  }
+}
