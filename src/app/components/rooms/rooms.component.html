@@ -1,1 +1,20 @@
-<p>rooms works!</p>
+<sh-loader [loading]="loading">
+  <div class="sh-rooms__container">
+    <button
+      (click)="addRoom()"
+      class="sh-rooms__add-room-button"
+    >
+      Add new room
+    </button>
+    <div
+      *ngIf="rooms.length > 0 else noRoomsTemplate"
+      class="sh-rooms__rooms"
+    ></div>
+  </div>
+</sh-loader>
+
+<ng-template #noRoomsTemplate>
+  <div class="sh-rooms__no-rooms">
+    You have currently no rooms
+  </div>
+</ng-template>

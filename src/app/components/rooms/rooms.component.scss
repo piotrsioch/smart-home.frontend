@@ -1,0 +1,17 @@
+@import 'mixins';
+@import 'variables';
+
+.sh-rooms {
+  &__container {
+    color: var(--black);
+    display: flex;
+    flex-direction: column;
+    gap: $main-size * 5;
+  }
+
+  &__add-room-button {
+    @include clear-button;
+    @include default-button;
+    align-self: end;
+  }
+}

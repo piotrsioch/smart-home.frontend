@@ -16,12 +16,12 @@ import { roomControllerCreateRoom } from '../fn/room/room-controller-create-room
 import { RoomControllerCreateRoom$Params } from '../fn/room/room-controller-create-room';
 import { roomControllerDeleteRoom } from '../fn/room/room-controller-delete-room';
 import { RoomControllerDeleteRoom$Params } from '../fn/room/room-controller-delete-room';
-import { roomControllerGetLatestData } from '../fn/room/room-controller-get-latest-data';
-import { RoomControllerGetLatestData$Params } from '../fn/room/room-controller-get-latest-data';
-import { roomControllerReedSwitchList } from '../fn/room/room-controller-reed-switch-list';
-import { RoomControllerReedSwitchList$Params } from '../fn/room/room-controller-reed-switch-list';
+import { roomControllerGetRoomById } from '../fn/room/room-controller-get-room-by-id';
+import { RoomControllerGetRoomById$Params } from '../fn/room/room-controller-get-room-by-id';
 import { roomControllerRemoveSensorFromRoom } from '../fn/room/room-controller-remove-sensor-from-room';
 import { RoomControllerRemoveSensorFromRoom$Params } from '../fn/room/room-controller-remove-sensor-from-room';
+import { roomControllerRoomList } from '../fn/room/room-controller-room-list';
+import { RoomControllerRoomList$Params } from '../fn/room/room-controller-room-list';
 import { RoomDto } from '../models/room-dto';
 import { SuccessDto } from '../models/success-dto';
 
@@ -31,31 +31,31 @@ export class RoomService extends BaseService {
     super(config, http);
   }
 
-  /** Path part for operation `roomControllerReedSwitchList()` */
-  static readonly RoomControllerReedSwitchListPath = '/room/list';
+  /** Path part for operation `roomControllerRoomList()` */
+  static readonly RoomControllerRoomListPath = '/room/list';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `roomControllerReedSwitchList()` instead.
+   * To access only the response body, use `roomControllerRoomList()` instead.
    *
    * This method doesn't expect any request body.
    */
-  roomControllerReedSwitchList$Response(params: RoomControllerReedSwitchList$Params, context?: HttpContext): Observable<StrictHttpResponse<PaginationOutput & {
+  roomControllerRoomList$Response(params: RoomControllerRoomList$Params, context?: HttpContext): Observable<StrictHttpResponse<PaginationOutput & {
 'items'?: Array<RoomDto>;
 }>> {
-    return roomControllerReedSwitchList(this.http, this.rootUrl, params, context);
+    return roomControllerRoomList(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `roomControllerReedSwitchList$Response()` instead.
+   * To access the full response (for headers, for example), `roomControllerRoomList$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  roomControllerReedSwitchList(params: RoomControllerReedSwitchList$Params, context?: HttpContext): Observable<PaginationOutput & {
+  roomControllerRoomList(params: RoomControllerRoomList$Params, context?: HttpContext): Observable<PaginationOutput & {
 'items'?: Array<RoomDto>;
 }> {
-    return this.roomControllerReedSwitchList$Response(params, context).pipe(
+    return this.roomControllerRoomList$Response(params, context).pipe(
       map((r: StrictHttpResponse<PaginationOutput & {
 'items'?: Array<RoomDto>;
 }>): PaginationOutput & {
@@ -64,27 +64,27 @@ export class RoomService extends BaseService {
     );
   }
 
-  /** Path part for operation `roomControllerGetLatestData()` */
-  static readonly RoomControllerGetLatestDataPath = '/room/get-by-id';
+  /** Path part for operation `roomControllerGetRoomById()` */
+  static readonly RoomControllerGetRoomByIdPath = '/room/get-by-id';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `roomControllerGetLatestData()` instead.
+   * To access only the response body, use `roomControllerGetRoomById()` instead.
    *
    * This method doesn't expect any request body.
    */
-  roomControllerGetLatestData$Response(params: RoomControllerGetLatestData$Params, context?: HttpContext): Observable<StrictHttpResponse<RoomDto>> {
-    return roomControllerGetLatestData(this.http, this.rootUrl, params, context);
+  roomControllerGetRoomById$Response(params: RoomControllerGetRoomById$Params, context?: HttpContext): Observable<StrictHttpResponse<RoomDto>> {
+    return roomControllerGetRoomById(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `roomControllerGetLatestData$Response()` instead.
+   * To access the full response (for headers, for example), `roomControllerGetRoomById$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  roomControllerGetLatestData(params: RoomControllerGetLatestData$Params, context?: HttpContext): Observable<RoomDto> {
-    return this.roomControllerGetLatestData$Response(params, context).pipe(
+  roomControllerGetRoomById(params: RoomControllerGetRoomById$Params, context?: HttpContext): Observable<RoomDto> {
+    return this.roomControllerGetRoomById$Response(params, context).pipe(
       map((r: StrictHttpResponse<RoomDto>): RoomDto => r.body)
     );
   }

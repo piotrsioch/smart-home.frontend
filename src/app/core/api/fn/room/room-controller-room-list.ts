@@ -9,7 +9,7 @@ import { RequestBuilder } from '../../request-builder';
 import { PaginationOutput } from '../../models/pagination-output';
 import { RoomDto } from '../../models/room-dto';
 
-export interface RoomControllerReedSwitchList$Params {
+export interface RoomControllerRoomList$Params {
   page: number;
   limit: number;
   orderField?: 'name' | 'roomType';
@@ -17,10 +17,10 @@ export interface RoomControllerReedSwitchList$Params {
   search?: string;
 }
 
-export function roomControllerReedSwitchList(http: HttpClient, rootUrl: string, params: RoomControllerReedSwitchList$Params, context?: HttpContext): Observable<StrictHttpResponse<PaginationOutput & {
+export function roomControllerRoomList(http: HttpClient, rootUrl: string, params: RoomControllerRoomList$Params, context?: HttpContext): Observable<StrictHttpResponse<PaginationOutput & {
 'items'?: Array<RoomDto>;
 }>> {
-  const rb = new RequestBuilder(rootUrl, roomControllerReedSwitchList.PATH, 'get');
+  const rb = new RequestBuilder(rootUrl, roomControllerRoomList.PATH, 'get');
   if (params) {
     rb.query('page', params.page, {});
     rb.query('limit', params.limit, {});
@@ -41,4 +41,4 @@ export function roomControllerReedSwitchList(http: HttpClient, rootUrl: string, 
   );
 }
 
-roomControllerReedSwitchList.PATH = '/room/list';
+roomControllerRoomList.PATH = '/room/list';
