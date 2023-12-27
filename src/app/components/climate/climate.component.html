@@ -3,6 +3,49 @@
     *ngIf="!loading"
     class="sh-climate__container"
   >
-
+    <div class="sh-climate__dht-header">Temperature and humidity</div>
+    <div
+      *ngFor="let dht of dhtData; index as i"
+      class="sh-climate__dht"
+    >
+      <div class="sh-climate__wrapper">
+        <div class="sh-climate__dht__name">Name:</div>
+        {{ dhtSensors[i].name }}
+      </div>
+      <div class="sh-climate__wrapper">
+        <div class="sh-climate__dht__name">Location:</div>
+        {{ dhtSensors[i].location }}
+      </div>
+      <div class="sh-climate__wrapper">
+        <div class="sh-climate__dht__name">Temperature:</div>
+        {{ dht.temperature }}
+      </div>
+      <div class="sh-climate__wrapper">
+        <div class="sh-climate__dht__name">Humidity:</div>
+        {{ dht.humidity }}
+      </div>
+    </div>
+    <div class="sh-climate__dht-header">Smoke sensor</div>
+    <div
+      *ngFor="let smoke of smokeData; index as i"
+      class="sh-climate__smoke"
+    >
+      <div class="sh-climate__wrapper">
+        <div class="sh-climate__smoke__name">Name:</div>
+        {{ smokeSensors[i].name }}
+      </div>
+      <div class="sh-climate__wrapper">
+        <div class="sh-climate__smoke__name">Location:</div>
+        {{ smokeSensors[i].location }}
+      </div>
+      <div class="sh-climate__wrapper">
+        <div class="sh-climate__smoke__name">Value:</div>
+        {{ smoke.value }}
+      </div>
+      <div class="sh-climate__wrapper">
+        <div class="sh-climate__smoke__name">Is critical:</div>
+        {{ smoke.value > 350 ? 'Yes' : 'No' }}
+      </div>
+    </div>
   </div>
 </sh-loader>
