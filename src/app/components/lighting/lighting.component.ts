@@ -1,12 +1,13 @@
 import { Component, OnDestroy } from '@angular/core';
 import { LightService } from "../../core/api/services/light.service";
-import { BehaviorSubject, Subscription } from "rxjs";
+import { BehaviorSubject, forkJoin, Subscription } from "rxjs";
 import { LightDto } from "../../core/api/models/light-dto";
 import { LoaderComponent } from "../../shared/components/loader/loader.component";
 import { CommonModule } from "@angular/common";
 import { SensorsService } from "../../core/api/services/sensors.service";
 import { SensorDto } from "../../core/api/models/sensor-dto";
-import { tap } from "rxjs/operators";
+import { map, switchMap, tap } from "rxjs/operators";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 
 @Component({
   selector: 'sh-lighting',
@@ -14,6 +15,7 @@ import { tap } from "rxjs/operators";
   imports: [
     LoaderComponent,
     CommonModule,
+    MatSlideToggleModule,
   ],
   templateUrl: './lighting.component.html',
   styleUrl: './lighting.component.scss'
@@ -33,27 +35,37 @@ export class LightingComponent implements OnDestroy {
     );
 
     this.subscription.add(
-      this.lightService.lightControllerLightList({
-        page: 0,
-        limit: 100
-      }).pipe(
-        tap(data => this.loadingSubject.next(true)),
-      ).subscribe(data => {
-        this.lights = data.items || [];
-        this.loadingSubject.next(false);
-      }));
-    this.subscription.add(
       this.sensorsService.sensorControllerSensorList({
         search: 'L_',
         limit: 50,
         page: 0
       }).pipe(
-        tap(data => this.loadingSubject.next(true)),
+        tap(data => {
+          this.loadingSubject.next(true);
+          this.lightSensors = data.items || [];
+        }),
+        map(data => data.items!),
+        switchMap(sensors => {
+          const observableArray = sensors.map(sensor =>
+            this.lightService.lightControllerGetLightState({sensorId: sensor._id})
+          );
+          return forkJoin(observableArray);
+        })
       ).subscribe(data => {
-        this.lightSensors = data.items || [];
+        this.lights = data || [];
         this.loadingSubject.next(false);
       })
     )
+  }
+
+  handleStateChange(light: LightDto, index: number) {
+    this.lightService.lightControllerChangeLightState({
+      body: {
+        sensorId: light.sensorId
+      },
+    }).subscribe(data => {
+      this.lights[index] = data;
+    });
   }
 
   ngOnDestroy(): void {

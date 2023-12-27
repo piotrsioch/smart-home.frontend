@@ -1,0 +1,30 @@
+@import "variables";
+@import "mixins";
+
+.sh-lighting {
+  &__container {
+    color: var(--black);
+  }
+
+  &__wrapper {
+    display: flex;
+  }
+
+  &__header {
+    font-size: $main-size * 5;
+    margin-bottom: $main-size * 8;
+    font-weight: 700;
+  }
+
+  &__light {
+    margin-bottom: $main-size * 10;
+    display: flex;
+    flex-direction: column;
+    gap: $main-size * 3;
+
+    &__name {
+      font-weight: 700;
+      margin-right: $main-size;
+    }
+  }
+}

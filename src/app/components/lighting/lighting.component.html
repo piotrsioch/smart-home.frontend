@@ -1,6 +1,6 @@
 <sh-loader [loading]="loading">
   <div
-    *ngIf="!loading"
+    *ngIf="!loading && lightSensors.length > 0 && lights.length > 0"
     class="sh-lighting__container"
   >
     <div class="sh-lighting__header">Lighting System</div>
@@ -8,7 +8,23 @@
       *ngFor="let light of lights; index as i"
       class="sh-lighting__light"
     >
-      {{ light.isOn }}
+      <div class="sh-lighting__wrapper">
+        <div class="sh-lighting__light__name">Name:</div>
+        {{ lightSensors[i].name }}
+      </div>
+      <div class="sh-lighting__wrapper">
+        <div class="sh-lighting__light__name">Location:</div>
+        {{ lightSensors[i].location }}
+      </div>
+      <div class="sh-lighting__wrapper">
+        <div class="sh-lighting__light__name">State:</div>
+        <mat-slide-toggle
+          [checked]="light.isOn"
+          (change)="handleStateChange(light, i)"
+        >
+          {{ light.isOn }}
+        </mat-slide-toggle>
+      </div>
     </div>
   </div>
 </sh-loader>

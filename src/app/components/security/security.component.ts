@@ -6,7 +6,7 @@ import { filter, map, switchMap, tap } from "rxjs/operators";
 import { AlarmDto } from "../../core/api/models/alarm-dto";
 import { ReedSwitchDto } from "../../core/api/models/reed-switch-dto";
 import { SensorDto } from "../../core/api/models/sensor-dto";
-import { forkJoin, Subscription } from "rxjs";
+import { BehaviorSubject, forkJoin, Subscription } from "rxjs";
 import { CommonModule } from "@angular/common";
 import { LoaderComponent } from "../../shared/components/loader/loader.component";
 import { ModalService, ModalStyle } from "../../shared/services/modal.service";
@@ -21,12 +21,13 @@ import { AlarmModalComponent, AlarmModalReturnData } from "./alarm-modal/alarm-m
   styleUrl: './security.component.scss'
 })
 export class SecurityComponent implements OnDestroy {
-  public isLoading = true;
+  public loading = true;
   public alarm: AlarmDto;
   public alarmSensor: SensorDto;
   public reedSwitchSensors: SensorDto[] = [];
   public reedSwitches: ReedSwitchDto[] = [];
-  private subscriptions = new Subscription();
+  private subscription = new Subscription();
+  private loadingSubject = new BehaviorSubject<boolean>(true);
 
   constructor(
     private readonly sensorsService: SensorsService,
@@ -34,12 +35,18 @@ export class SecurityComponent implements OnDestroy {
     private readonly reedSwitchService: ReedSwitchService,
     private readonly modalService: ModalService,
   ) {
-    this.subscriptions.add(this.sensorsService.sensorControllerSensorList({
+    this.subscription.add(
+      this.loadingSubject.subscribe(isLoading => {
+        this.loading = isLoading;
+      })
+    );
+
+    this.subscription.add(this.sensorsService.sensorControllerSensorList({
       search: 'alarm',
       page: 0,
       limit: 5
     }).pipe(
-      tap(_ => this.isLoading = true),
+      tap(data => this.loadingSubject.next(true)),
       map(data => data.items!),
       tap(data => this.alarmSensor = data[0]),
       map(data => data[0]._id),
@@ -47,15 +54,15 @@ export class SecurityComponent implements OnDestroy {
     )
       .subscribe(data => {
         this.alarm = data;
-        this.isLoading = false;
+        this.loadingSubject.next(false);
       }));
 
-    this.sensorsService.sensorControllerSensorList({
+    this.subscription.add(this.sensorsService.sensorControllerSensorList({
       search: 'RS_',
       page: 0,
       limit: 100,
     }).pipe(
-      tap(_ => this.isLoading = true),
+      tap(data => this.loadingSubject.next(true)),
       map(data => data.items!),
       tap(data => this.reedSwitchSensors = data),
       switchMap(sensors => {
@@ -68,8 +75,8 @@ export class SecurityComponent implements OnDestroy {
       })
     ).subscribe(data => {
       this.reedSwitches = data;
-      this.isLoading = false;
-    });
+      this.loadingSubject.next(false);
+    }));
   }
 
   public openAlarmModal(id: string): void {
@@ -77,7 +84,8 @@ export class SecurityComponent implements OnDestroy {
       style: ModalStyle.Small,
     });
 
-    modalRef.afterClosed().pipe(
+    this.subscription.add(modalRef.afterClosed().pipe(
+      tap(data => this.loadingSubject.next(true)),
       filter(data => data?.data !== undefined),
       map(data => data?.data),
       filter(data => !!data),
@@ -89,10 +97,13 @@ export class SecurityComponent implements OnDestroy {
           }
         })
       }),
-    ).subscribe(data => this.alarm.state = data.state);
+    ).subscribe(data => {
+      this.alarm.state = data.state;
+      this.loadingSubject.next(false);
+    }));
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }

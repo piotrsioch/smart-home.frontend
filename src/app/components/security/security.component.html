@@ -1,6 +1,6 @@
-<sh-loader [loading]="isLoading || !(reedSwitches.length > 0) || !(reedSwitchSensors.length > 0)">
+<sh-loader [loading]="loading">
   <div
-    *ngIf="!isLoading && reedSwitches.length > 0 && reedSwitchSensors.length > 0"
+    *ngIf="!loading && reedSwitches.length > 0 && reedSwitchSensors.length > 0"
     class="sh-security__container"
   >
     <div class="sh-security__alarm">
