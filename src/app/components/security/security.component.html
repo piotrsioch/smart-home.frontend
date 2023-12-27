@@ -1,25 +1,28 @@
 <sh-loader [loading]="loading">
   <div
-    *ngIf="!loading && reedSwitches.length > 0 && reedSwitchSensors.length > 0"
+    *ngIf="!loading && reedSwitches.length > 0 && reedSwitchSensors.length > 0 && alarmData.length > 0"
     class="sh-security__container"
   >
-    <div class="sh-security__alarm">
+    <div
+      *ngFor="let alarm of alarmData; index as i"
+      class="sh-security__alarm"
+    >
       <div class="sh-security__alarm__text">Alarm details</div>
       <div class="sh-security__alarm__overview">
         <div class="sh-security__wrapper">
           <div class="sh-security__alarm__overview__name">Name:</div>
-          {{ alarmSensor.name }}
+          {{ alarmSensors[i].name }}
         </div>
         <div class="sh-security__wrapper">
           <div class="sh-security__alarm__overview__name"> Location:</div>
-          {{ alarmSensor.location }}
+          {{ alarmSensors[i].location }}
         </div>
         <div class="sh-security__wrapper">
           <div class="sh-security__alarm__overview__name">State:</div>
           {{ alarm.state }}
         </div>
         <button
-          (click)="openAlarmModal(alarmSensor._id)"
+          (click)="openAlarmModal(alarmSensors[i]._id, i)"
           class="sh-security__alarm__button"
         >
           Change state
@@ -44,7 +47,7 @@
         </div>
         <div class="sh-security__wrapper">
           <div class="sh-security__reed-switch__overview__name">State:</div>
-          {{ reedSwitches[i].isOpened }}
+          {{ reedSwitches[i].isOpened ? 'Opened' : 'Closed' }}
         </div>
       </div>
     </div>

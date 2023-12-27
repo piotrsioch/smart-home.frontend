@@ -14,6 +14,8 @@ import { smokeSensorControllerAddSmokeSensorData } from '../fn/smoke-sensor/smok
 import { SmokeSensorControllerAddSmokeSensorData$Params } from '../fn/smoke-sensor/smoke-sensor-controller-add-smoke-sensor-data';
 import { smokeSensorControllerDhtSensorList } from '../fn/smoke-sensor/smoke-sensor-controller-dht-sensor-list';
 import { SmokeSensorControllerDhtSensorList$Params } from '../fn/smoke-sensor/smoke-sensor-controller-dht-sensor-list';
+import { smokeSensorControllerGetLatestData } from '../fn/smoke-sensor/smoke-sensor-controller-get-latest-data';
+import { SmokeSensorControllerGetLatestData$Params } from '../fn/smoke-sensor/smoke-sensor-controller-get-latest-data';
 import { SmokeSensorDto } from '../models/smoke-sensor-dto';
 
 @Injectable({ providedIn: 'root' })
@@ -77,6 +79,31 @@ export class SmokeSensorService extends BaseService {
 }>): PaginationOutput & {
 'items'?: Array<SmokeSensorDto>;
 } => r.body)
+    );
+  }
+
+  /** Path part for operation `smokeSensorControllerGetLatestData()` */
+  static readonly SmokeSensorControllerGetLatestDataPath = '/smoke-sensor/latest-data';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `smokeSensorControllerGetLatestData()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  smokeSensorControllerGetLatestData$Response(params: SmokeSensorControllerGetLatestData$Params, context?: HttpContext): Observable<StrictHttpResponse<SmokeSensorDto>> {
+    return smokeSensorControllerGetLatestData(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `smokeSensorControllerGetLatestData$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  smokeSensorControllerGetLatestData(params: SmokeSensorControllerGetLatestData$Params, context?: HttpContext): Observable<SmokeSensorDto> {
+    return this.smokeSensorControllerGetLatestData$Response(params, context).pipe(
+      map((r: StrictHttpResponse<SmokeSensorDto>): SmokeSensorDto => r.body)
     );
   }
 

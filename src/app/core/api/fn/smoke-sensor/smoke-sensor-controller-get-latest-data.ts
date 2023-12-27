@@ -6,14 +6,14 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { DhtSensorDto } from '../../models/dht-sensor-dto';
+import { SmokeSensorDto } from '../../models/smoke-sensor-dto';
 
-export interface DhtSensorControllerGetLatestData$Params {
+export interface SmokeSensorControllerGetLatestData$Params {
   sensorId: string;
 }
 
-export function dhtSensorControllerGetLatestData(http: HttpClient, rootUrl: string, params: DhtSensorControllerGetLatestData$Params, context?: HttpContext): Observable<StrictHttpResponse<DhtSensorDto>> {
-  const rb = new RequestBuilder(rootUrl, dhtSensorControllerGetLatestData.PATH, 'get');
+export function smokeSensorControllerGetLatestData(http: HttpClient, rootUrl: string, params: SmokeSensorControllerGetLatestData$Params, context?: HttpContext): Observable<StrictHttpResponse<SmokeSensorDto>> {
+  const rb = new RequestBuilder(rootUrl, smokeSensorControllerGetLatestData.PATH, 'get');
   if (params) {
     rb.query('sensorId', params.sensorId, {});
   }
@@ -23,9 +23,9 @@ export function dhtSensorControllerGetLatestData(http: HttpClient, rootUrl: stri
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<DhtSensorDto>;
+      return r as StrictHttpResponse<SmokeSensorDto>;
     })
   );
 }
 
-dhtSensorControllerGetLatestData.PATH = '/dht-sensor/latest-data';
+smokeSensorControllerGetLatestData.PATH = '/smoke-sensor/latest-data';

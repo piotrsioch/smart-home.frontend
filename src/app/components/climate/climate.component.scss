@@ -1,7 +1,6 @@
 @import "variables";
-@import "mixins";
 
-.sh-lighting {
+.sh-climate {
   &__container {
     color: var(--black);
   }
@@ -10,13 +9,13 @@
     display: flex;
   }
 
-  &__header {
+  &__dht-header, &__smoke-header {
     font-size: $main-size * 5;
     margin-bottom: $main-size * 8;
     font-weight: 700;
   }
 
-  &__light {
+  &__dht, &__smoke {
     margin-bottom: $main-size * 10;
     display: flex;
     flex-direction: column;
@@ -25,10 +24,6 @@
     &__name {
       font-weight: 700;
       margin-right: $main-size;
-    }
-
-    &__toggle {
-      margin-left: $main-size * 2;
     }
   }
 }
