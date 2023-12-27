@@ -41,42 +41,46 @@ export class SecurityComponent implements OnDestroy {
       })
     );
 
-    this.subscription.add(this.sensorsService.sensorControllerSensorList({
-      search: 'alarm',
-      page: 0,
-      limit: 5
-    }).pipe(
-      tap(data => this.loadingSubject.next(true)),
-      map(data => data.items!),
-      tap(data => this.alarmSensor = data[0]),
-      map(data => data[0]._id),
-      switchMap(id => this.alarmService.alarmControllerGetAlarmState({sensorId: id}))
-    )
-      .subscribe(data => {
-        this.alarm = data;
-        this.loadingSubject.next(false);
-      }));
+    this.subscription.add(
+      this.sensorsService.sensorControllerSensorList({
+        search: 'alarm',
+        page: 0,
+        limit: 5
+      }).pipe(
+        tap(data => this.loadingSubject.next(true)),
+        map(data => data.items!),
+        tap(data => this.alarmSensor = data[0]),
+        map(data => data[0]._id),
+        switchMap(id => this.alarmService.alarmControllerGetAlarmState({sensorId: id}))
+      )
+        .subscribe(data => {
+          this.alarm = data;
+          this.loadingSubject.next(false);
+        })
+    );
 
-    this.subscription.add(this.sensorsService.sensorControllerSensorList({
-      search: 'RS_',
-      page: 0,
-      limit: 100,
-    }).pipe(
-      tap(data => this.loadingSubject.next(true)),
-      map(data => data.items!),
-      tap(data => this.reedSwitchSensors = data),
-      switchMap(sensors => {
-        const observableArray = sensors.map(sensor =>
-          this.reedSwitchService.reedSwitchControllerGetLatestData({
-            sensorId:
-            sensor._id
-          }));
-        return forkJoin(observableArray);
+    this.subscription.add(
+      this.sensorsService.sensorControllerSensorList({
+        search: 'RS_',
+        page: 0,
+        limit: 100,
+      }).pipe(
+        tap(data => this.loadingSubject.next(true)),
+        map(data => data.items!),
+        tap(data => this.reedSwitchSensors = data),
+        switchMap(sensors => {
+          const observableArray = sensors.map(sensor =>
+            this.reedSwitchService.reedSwitchControllerGetLatestData({
+              sensorId:
+              sensor._id
+            }));
+          return forkJoin(observableArray);
+        })
+      ).subscribe(data => {
+        this.reedSwitches = data;
+        this.loadingSubject.next(false);
       })
-    ).subscribe(data => {
-      this.reedSwitches = data;
-      this.loadingSubject.next(false);
-    }));
+    );
   }
 
   public openAlarmModal(id: string): void {
@@ -84,23 +88,25 @@ export class SecurityComponent implements OnDestroy {
       style: ModalStyle.Small,
     });
 
-    this.subscription.add(modalRef.afterClosed().pipe(
-      tap(data => this.loadingSubject.next(true)),
-      filter(data => data?.data !== undefined),
-      map(data => data?.data),
-      filter(data => !!data),
-      switchMap(state => {
-        return this.alarmService.alarmControllerChangeAlarmState({
-          body: {
-            state: state || 'off',
-            sensorId: this.alarmSensor._id
-          }
-        })
-      }),
-    ).subscribe(data => {
-      this.alarm.state = data.state;
-      this.loadingSubject.next(false);
-    }));
+    this.subscription.add(
+      modalRef.afterClosed().pipe(
+        tap(data => this.loadingSubject.next(true)),
+        filter(data => data?.data !== undefined),
+        map(data => data?.data),
+        filter(data => !!data),
+        switchMap(state => {
+          return this.alarmService.alarmControllerChangeAlarmState({
+            body: {
+              state: state || 'off',
+              sensorId: this.alarmSensor._id
+            }
+          })
+        }),
+      ).subscribe(data => {
+        this.alarm.state = data.state;
+        this.loadingSubject.next(false);
+      })
+    );
   }
 
   ngOnDestroy(): void {

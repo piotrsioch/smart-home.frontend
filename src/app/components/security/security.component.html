@@ -1,6 +1,6 @@
 <sh-loader [loading]="loading">
   <div
-    *ngIf="!loading && reedSwitches.length > 0 && reedSwitchSensors.length > 0"
+    *ngIf="!loading && reedSwitches.length > 0 && reedSwitchSensors.length > 0 && alarm"
     class="sh-security__container"
   >
     <div class="sh-security__alarm">
@@ -44,7 +44,7 @@
         </div>
         <div class="sh-security__wrapper">
           <div class="sh-security__reed-switch__overview__name">State:</div>
-          {{ reedSwitches[i].isOpened }}
+          {{ reedSwitches[i].isOpened ? 'Opened' : 'Closed' }}
         </div>
       </div>
     </div>
