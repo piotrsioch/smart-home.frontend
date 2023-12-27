@@ -7,6 +7,7 @@ import { SecurityComponent } from "./components/security/security.component";
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { LightingComponent } from "./components/lighting/lighting.component";
 import { ClimateComponent } from "./components/climate/climate.component";
+import { RoomsComponent } from "./components/rooms/rooms.component";
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'security', component: SecurityComponent },
   { path: 'lighting', component: LightingComponent },
   { path: 'climate', component: ClimateComponent },
+  { path: 'rooms', component: RoomsComponent },
   { path: '**', redirectTo: 'dashboard' },
 ]
 
