@@ -12,7 +12,8 @@ import { MatSlideToggleChange, MatSlideToggleModule } from "@angular/material/sl
 })
 export class ToggleComponent {
   @Input({ required: true}) checkValue: boolean;
-  @Input({ required: true }) text: string;
+  @Input({ required: true }) textWhenUnchecked: string;
+  @Input({ required: true }) textWhenChecked: string;
   @Output() change = new EventEmitter<MatSlideToggleChange>();
 
   handleStateChange($event: MatSlideToggleChange) {

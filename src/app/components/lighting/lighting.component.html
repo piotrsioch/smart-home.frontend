@@ -20,8 +20,10 @@
         <div class="sh-lighting__light__name">State:</div>
         <sh-toggle
           [checkValue]="light.isOn"
-          [text]="light.isOn + ''"
           (change)="handleStateChange($event, light, i)"
+          textWhenChecked="On"
+          textWhenUnchecked="Off"
+          class="sh-lighting__light__toggle"
         />
       </div>
     </div>

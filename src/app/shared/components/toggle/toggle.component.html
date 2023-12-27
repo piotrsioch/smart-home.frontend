@@ -3,6 +3,6 @@
     [checked]="checkValue"
     (change)="handleStateChange($event)"
   >
-    {{ text }}
+    {{ checkValue ? textWhenChecked : textWhenUnchecked }}
   </mat-slide-toggle>
 </div>
