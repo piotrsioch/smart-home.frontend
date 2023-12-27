@@ -18,14 +18,14 @@
       </div>
       <div class="sh-climate__wrapper">
         <div class="sh-climate__dht__name">Temperature:</div>
-        {{ dht.temperature }}
+        {{ dht.temperature }} C
       </div>
       <div class="sh-climate__wrapper">
         <div class="sh-climate__dht__name">Humidity:</div>
-        {{ dht.humidity }}
+        {{ dht.humidity }} %
       </div>
     </div>
-    <div class="sh-climate__dht-header">Smoke sensor</div>
+    <div class="sh-climate__smoke-header">Smoke sensor</div>
     <div
       *ngFor="let smoke of smokeData; index as i"
       class="sh-climate__smoke"
