@@ -4,10 +4,11 @@ import { ModalButtonsComponent } from "../../../shared/components/modal/modal-bu
 import { MatDialogRef } from "@angular/material/dialog";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { SelectComponent } from "../../../shared/components/select/select.component";
+import { CreateRoomInputDto } from "../../../core/api/models/create-room-input-dto";
 
 export interface AlarmModalReturnData {
   name: string;
-  roomType: string;
+  roomType: CreateRoomInputDto['roomType'];
   description?: string;
 }
 
@@ -24,7 +25,10 @@ export interface AlarmModalReturnData {
   styleUrl: './add-room-modal.component.scss'
 })
 export class AddRoomModalComponent {
-  public roomTypes = ["Bedroom", "Garage"];
+  public roomTypes = ['Living Room', 'Kitchen', 'Bedroom', 'Bathroom', 'Dining Room', 'Home Office',
+    'Garage', 'Basement', 'Attic', 'Guest Room', 'Hallway', 'Laundry Room',
+    'Pantry', 'Play Room', 'Storage Room', 'Gym', 'Home Theater', 'Garden',
+    'Balcony', 'Other'];
   public addRoomForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     roomType: new FormControl('', [Validators.required]),
@@ -42,7 +46,7 @@ export class AddRoomModalComponent {
   public handleButtonClicked($event: boolean): void {
     ($event && this.addRoomForm.valid) ? this.close({
       name: this.addRoomForm.value.name ?? '',
-      roomType: this.addRoomForm.value.roomType ?? '',
+      roomType: this.addRoomForm.value.roomType as CreateRoomInputDto['roomType'] ?? 'Other',
       description: this.addRoomForm.value.description ?? '',
     }) : this.close();
   }

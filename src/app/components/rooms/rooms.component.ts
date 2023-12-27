@@ -45,6 +45,7 @@ export class RoomsComponent {
         map(data => data.items!),
       ).subscribe(data => {
         this.rooms = data;
+        console.log(this.rooms);
         this.loadingSubject.next(false);
       })
     )
