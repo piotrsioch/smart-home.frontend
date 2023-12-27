@@ -1,5 +1,58 @@
+@import "variables";
+@import "mixins";
+
 .sh-security {
   &__container {
     color: var(--black);
+  }
+
+  &__wrapper {
+    display: flex;
+  }
+
+  &__alarm {
+    &__text {
+      font-size: $main-size * 5;
+      font-weight: 700;
+    }
+
+    &__overview {
+      display: flex;
+      flex-direction: column;
+      gap: $main-size * 5;
+      margin-top: $main-size * 5;
+
+      &__name {
+        font-weight: 700;
+        margin-right: $main-size;
+      }
+    }
+
+    &__button {
+      @include clear-button;
+      @include default-button;
+    }
+  }
+
+  &__reed-switch-name {
+    font-size: $main-size * 5;
+    font-weight: 700;
+    margin-top: $main-size * 12;
+  }
+
+  &__reed-switch {
+    margin-bottom: $main-size * 10;
+
+    &__overview {
+      display: flex;
+      flex-direction: column;
+      gap: $main-size * 5;
+      margin-top: $main-size * 5;
+
+      &__name {
+        font-weight: 700;
+        margin-right: $main-size;
+      }
+    }
   }
 }

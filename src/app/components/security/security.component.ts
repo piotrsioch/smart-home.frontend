@@ -10,7 +10,7 @@ import { forkJoin, Subscription } from "rxjs";
 import { CommonModule } from "@angular/common";
 import { LoaderComponent } from "../../shared/components/loader/loader.component";
 import { ModalService, ModalStyle } from "../../shared/services/modal.service";
-import { AlarmModalComponent } from "./alarm-modal/alarm-modal.component";
+import { AlarmModalComponent, AlarmModalReturnData } from "./alarm-modal/alarm-modal.component";
 
 @Component({
   selector: 'sh-security',
@@ -73,13 +73,23 @@ export class SecurityComponent implements OnDestroy {
   }
 
   public openAlarmModal(id: string): void {
-    const modalRef = this.modalService.open<AlarmModalComponent>(AlarmModalComponent, {
+    const modalRef = this.modalService.open<AlarmModalComponent, any, AlarmModalReturnData>(AlarmModalComponent, {
       style: ModalStyle.Small,
     });
 
     modalRef.afterClosed().pipe(
+      filter(data => data?.data !== undefined),
+      map(data => data?.data),
       filter(data => !!data),
-    ).subscribe(data => console.log(data))
+      switchMap(state => {
+        return this.alarmService.alarmControllerChangeAlarmState({
+          body: {
+            state: state || 'off',
+            sensorId: this.alarmSensor._id
+          }
+        })
+      }),
+    ).subscribe(data => this.alarm.state = data.state);
   }
 
   ngOnDestroy(): void {

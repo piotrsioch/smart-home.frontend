@@ -3,6 +3,11 @@ import { MatDialogRef } from "@angular/material/dialog";
 import { ModalHeaderComponent } from "../../../shared/components/modal/modal-header/modal-header.component";
 import { SelectComponent } from "../../../shared/components/select/select.component";
 import { ModalButtonsComponent } from "../../../shared/components/modal/modal-buttons/modal-buttons.component";
+import { ChangeAlarmStateInputDto } from "../../../core/api/models/change-alarm-state-input-dto";
+
+export interface AlarmModalReturnData {
+  data: ChangeAlarmStateInputDto['state'];
+}
 
 @Component({
   selector: 'sh-alarm-modal',
@@ -26,7 +31,9 @@ export class AlarmModalComponent {
   }
 
   public close(data?: string) {
-    this.dialogRef.close(data);
+    this.dialogRef.close({
+      data,
+    });
   }
 
   public valueSelected(event: string): void {
