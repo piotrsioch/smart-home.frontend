@@ -4,31 +4,48 @@
     class="sh-security__container"
   >
     <div class="sh-security__alarm">
-      Alarm details:
+      <div class="sh-security__alarm__text">Alarm details</div>
       <div class="sh-security__alarm__overview">
-        {{ alarmSensor.name }}
-        {{ alarmSensor.location }}
-      </div>
-      <div class="sh-security__alarm__state">
-        {{ alarm.state }}
+        <div class="sh-security__wrapper">
+          <div class="sh-security__alarm__overview__name">Name:</div>
+          {{ alarmSensor.name }}
+        </div>
+        <div class="sh-security__wrapper">
+          <div class="sh-security__alarm__overview__name"> Location:</div>
+          {{ alarmSensor.location }}
+        </div>
+        <div class="sh-security__wrapper">
+          <div class="sh-security__alarm__overview__name">State:</div>
+          {{ alarm.state }}
+        </div>
         <button
           (click)="openAlarmModal(alarmSensor._id)"
-          class="sh-security__alarm__state__button"
+          class="sh-security__alarm__button"
         >
           Change state
         </button>
       </div>
     </div>
-
+    <div class="sh-security__reed-switch-name">
+      Open / close sensors
+    </div>
     <div
       *ngFor="let sensor of reedSwitchSensors; index as i"
       class=sh-security__reed-switch
     >
       <div class="sh-security__reed-switch__overview">
-        {{ sensor.name }} {{ sensor.location }}
-      </div>
-      <div class="sh-security__reed-switch__state">
-        {{ reedSwitches[i].isOpened }}
+        <div class="sh-security__wrapper">
+          <div class="sh-security__reed-switch__overview__name">Name:</div>
+          {{ sensor.name }}
+        </div>
+        <div class="sh-security__wrapper">
+          <div class="sh-security__reed-switch__overview__name">Location:</div>
+          {{ sensor.location }}
+        </div>
+        <div class="sh-security__wrapper">
+          <div class="sh-security__reed-switch__overview__name">State:</div>
+          {{ reedSwitches[i].isOpened }}
+        </div>
       </div>
     </div>
   </div>
