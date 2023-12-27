@@ -43,7 +43,7 @@ export class ClimateComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription.add(
-      interval(3000).pipe(
+      interval(5000).pipe(
         startWith(0),
         switchMap(() => this.fetchSensorData())
       ).subscribe(([dhtData, smokeData]) => {
@@ -76,8 +76,11 @@ export class ClimateComponent implements OnInit, OnDestroy {
       tap(data => this.dhtSensors = data || []),
       switchMap(sensors => {
         const observableArray = sensors.map(sensor =>
-          this.dhtService.dhtSensorControllerGetLatestData({sensorId: sensor._id})
+          this.dhtService.dhtSensorControllerGetLatestData({
+            sensorId: sensor._id
+          })
         );
+
         return forkJoin(observableArray);
       })
     );
@@ -95,6 +98,7 @@ export class ClimateComponent implements OnInit, OnDestroy {
         const observableArray = sensors.map(sensor =>
           this.smokeService.smokeSensorControllerGetLatestData({sensorId: sensor._id})
         );
+
         return forkJoin(observableArray);
       })
     );

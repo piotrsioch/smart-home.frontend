@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SensorsService } from "../../core/api/services/sensors.service";
 import { AlarmService } from "../../core/api/services/alarm.service";
 import { ReedSwitchService } from "../../core/api/services/reed-switch.service";
@@ -6,7 +6,7 @@ import { filter, map, switchMap, tap } from "rxjs/operators";
 import { AlarmDto } from "../../core/api/models/alarm-dto";
 import { ReedSwitchDto } from "../../core/api/models/reed-switch-dto";
 import { SensorDto } from "../../core/api/models/sensor-dto";
-import { BehaviorSubject, forkJoin, Subscription } from "rxjs";
+import { BehaviorSubject, forkJoin, interval, Observable, startWith, Subscription } from "rxjs";
 import { CommonModule } from "@angular/common";
 import { LoaderComponent } from "../../shared/components/loader/loader.component";
 import { ModalService, ModalStyle } from "../../shared/services/modal.service";
@@ -20,10 +20,10 @@ import { AlarmModalComponent, AlarmModalReturnData } from "./alarm-modal/alarm-m
   templateUrl: './security.component.html',
   styleUrl: './security.component.scss'
 })
-export class SecurityComponent implements OnDestroy {
+export class SecurityComponent implements OnInit, OnDestroy {
   public loading = true;
-  public alarm: AlarmDto;
-  public alarmSensor: SensorDto;
+  public alarmData: AlarmDto[] = [];
+  public alarmSensors: SensorDto[] = [];
   public reedSwitchSensors: SensorDto[] = [];
   public reedSwitches: ReedSwitchDto[] = [];
   private subscription = new Subscription();
@@ -40,50 +40,23 @@ export class SecurityComponent implements OnDestroy {
         this.loading = isLoading;
       })
     );
+  }
 
+  ngOnInit(): void {
     this.subscription.add(
-      this.sensorsService.sensorControllerSensorList({
-        search: 'alarm',
-        page: 0,
-        limit: 5
-      }).pipe(
-        tap(data => this.loadingSubject.next(true)),
-        map(data => data.items!),
-        tap(data => this.alarmSensor = data[0]),
-        map(data => data[0]._id),
-        switchMap(id => this.alarmService.alarmControllerGetAlarmState({sensorId: id}))
-      )
-        .subscribe(data => {
-          this.alarm = data;
+      interval(4000).pipe(
+        startWith(0),
+        switchMap(() => this.fetchSensorsData())
+      ).subscribe(([alarmData, reedSwitchData]) => {
+          this.alarmData = alarmData;
+          this.reedSwitches = reedSwitchData;
           this.loadingSubject.next(false);
-        })
-    );
-
-    this.subscription.add(
-      this.sensorsService.sensorControllerSensorList({
-        search: 'RS_',
-        page: 0,
-        limit: 100,
-      }).pipe(
-        tap(data => this.loadingSubject.next(true)),
-        map(data => data.items!),
-        tap(data => this.reedSwitchSensors = data),
-        switchMap(sensors => {
-          const observableArray = sensors.map(sensor =>
-            this.reedSwitchService.reedSwitchControllerGetLatestData({
-              sensorId:
-              sensor._id
-            }));
-          return forkJoin(observableArray);
-        })
-      ).subscribe(data => {
-        this.reedSwitches = data;
-        this.loadingSubject.next(false);
-      })
+        },
+      )
     );
   }
 
-  public openAlarmModal(id: string): void {
+  public openAlarmModal(id: string, index: number): void {
     const modalRef = this.modalService.open<AlarmModalComponent, any, AlarmModalReturnData>(AlarmModalComponent, {
       style: ModalStyle.Small,
     });
@@ -98,12 +71,12 @@ export class SecurityComponent implements OnDestroy {
           return this.alarmService.alarmControllerChangeAlarmState({
             body: {
               state: state || 'off',
-              sensorId: this.alarmSensor._id
+              sensorId: id,
             }
           })
         }),
       ).subscribe(data => {
-        this.alarm.state = data.state;
+        this.alarmData[index].state = data.state;
         this.loadingSubject.next(false);
       })
     );
@@ -111,5 +84,56 @@ export class SecurityComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  private fetchSensorsData(): Observable<[AlarmDto[], ReedSwitchDto[]]> {
+    return forkJoin([
+      this.fetchAlarmData(),
+      this.fetchReedSwitchSensorData()
+    ])
+  }
+
+  private fetchReedSwitchSensorData(): Observable<ReedSwitchDto[]> {
+    return this.sensorsService.sensorControllerSensorList({
+      page: 0,
+      limit: 100,
+      search: 'RS_',
+    }).pipe(
+      tap(data => this.loadingSubject.next(true)),
+      map(data => data.items!),
+      tap(data => this.reedSwitchSensors = data),
+      switchMap(sensors => {
+        const observableArray = sensors.map(sensor =>
+          this.reedSwitchService.reedSwitchControllerGetLatestData({
+            sensorId: sensor._id
+          })
+        );
+
+        return forkJoin(observableArray);
+      })
+    );
+  }
+
+  private fetchAlarmData(): Observable<AlarmDto[]> {
+    return this.sensorsService.sensorControllerSensorList({
+      search: 'alarm',
+      page: 0,
+      limit: 5
+    }).pipe(
+      map(data => data.items!),
+      tap(data => {
+        this.alarmSensors = data;
+        this.loadingSubject.next(true);
+      }),
+      switchMap(sensors => {
+        const observableArray = sensors.map(sensor =>
+          this.alarmService.alarmControllerGetAlarmState({
+            sensorId: sensor._id
+          })
+        );
+
+        return forkJoin(observableArray)
+      })
+    )
   }
 }
