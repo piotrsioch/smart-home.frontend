@@ -99,7 +99,6 @@ export class SecurityComponent implements OnInit, OnDestroy {
       limit: 100,
       search: 'RS_',
     }).pipe(
-      tap(data => this.loadingSubject.next(true)),
       map(data => data.items!),
       tap(data => this.reedSwitchSensors = data),
       switchMap(sensors => {
@@ -121,10 +120,7 @@ export class SecurityComponent implements OnInit, OnDestroy {
       limit: 5
     }).pipe(
       map(data => data.items!),
-      tap(data => {
-        this.alarmSensors = data;
-        this.loadingSubject.next(true);
-      }),
+      tap(data => this.alarmSensors = data),
       switchMap(sensors => {
         const observableArray = sensors.map(sensor =>
           this.alarmService.alarmControllerGetAlarmState({
