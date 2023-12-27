@@ -6,6 +6,7 @@
     {{ closeText }}
   </button>
   <button
+    [disabled]="disabled"
     (click)="close(true)"
     class="sh-modal-buttons__save"
   >

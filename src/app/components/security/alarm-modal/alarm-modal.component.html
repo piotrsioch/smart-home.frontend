@@ -8,7 +8,10 @@
       <sh-select [values]="states" (valueSelected)="valueSelected($event)" />
     </div>
     <div class="sh-alarm-modal__buttons">
-      <sh-modal-buttons (buttonClicked)="handleButtonClicked($event)"/>
+      <sh-modal-buttons
+        [disabled]="!value"
+        (buttonClicked)="handleButtonClicked($event)"
+      />
     </div>
   </div>
 </div>
