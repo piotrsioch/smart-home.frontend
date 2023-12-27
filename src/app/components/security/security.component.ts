@@ -63,10 +63,9 @@ export class SecurityComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       modalRef.afterClosed().pipe(
-        tap(data => this.loadingSubject.next(true)),
-        filter(data => data?.data !== undefined),
         map(data => data?.data),
         filter(data => !!data),
+        tap(data => this.loadingSubject.next(true)),
         switchMap(state => {
           return this.alarmService.alarmControllerChangeAlarmState({
             body: {

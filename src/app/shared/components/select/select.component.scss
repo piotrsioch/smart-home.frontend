@@ -20,6 +20,8 @@
 
   .mat-mdc-select-panel {
     background-color: var(--white-dirty) !important;
+    overflow: scroll !important;
+    max-height: 200px !important;
   }
 }
 

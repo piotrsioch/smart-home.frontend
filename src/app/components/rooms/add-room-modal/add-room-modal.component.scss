@@ -1,0 +1,38 @@
+@import 'variables';
+@import 'mixins';
+
+.sh-add-room {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    height: 90%;
+    flex: 1;
+  }
+
+  &__form {
+    margin-top: $main-size * 5;
+    flex: 1;
+
+    &__wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: $main-size * 5;
+
+      &__label {
+        font-weight: 700;
+      }
+
+      &__input {
+        @include default-input;
+      }
+
+      &__select {
+        margin-bottom: $main-size * 5;
+      }
+    }
+  }
+
+  &__buttons {
+    justify-self: flex-end;
+  }
+}

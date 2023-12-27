@@ -10,6 +10,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class ModalButtonsComponent {
   @Input() closeText = 'Cancel';
   @Input() saveText = 'Apply';
+  @Input() disabled = false;
   @Output() buttonClicked = new EventEmitter<boolean>();
 
   public close($event: boolean): void {

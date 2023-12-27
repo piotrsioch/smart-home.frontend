@@ -8,12 +8,12 @@ import { RequestBuilder } from '../../request-builder';
 
 import { RoomDto } from '../../models/room-dto';
 
-export interface RoomControllerGetLatestData$Params {
+export interface RoomControllerGetRoomById$Params {
   id: string;
 }
 
-export function roomControllerGetLatestData(http: HttpClient, rootUrl: string, params: RoomControllerGetLatestData$Params, context?: HttpContext): Observable<StrictHttpResponse<RoomDto>> {
-  const rb = new RequestBuilder(rootUrl, roomControllerGetLatestData.PATH, 'get');
+export function roomControllerGetRoomById(http: HttpClient, rootUrl: string, params: RoomControllerGetRoomById$Params, context?: HttpContext): Observable<StrictHttpResponse<RoomDto>> {
+  const rb = new RequestBuilder(rootUrl, roomControllerGetRoomById.PATH, 'get');
   if (params) {
     rb.query('id', params.id, {});
   }
@@ -28,4 +28,4 @@ export function roomControllerGetLatestData(http: HttpClient, rootUrl: string, p
   );
 }
 
-roomControllerGetLatestData.PATH = '/room/get-by-id';
+roomControllerGetRoomById.PATH = '/room/get-by-id';
