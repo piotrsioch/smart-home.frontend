@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { RoomService } from "../../core/api/services/room.service";
 import { SensorsService } from "../../core/api/services/sensors.service";
 import { BehaviorSubject, Subscription } from "rxjs";
-import { map, tap } from "rxjs/operators";
+import { filter, map, tap } from "rxjs/operators";
 import { RoomDto } from "../../core/api/models/room-dto";
 import { LoaderComponent } from "../../shared/components/loader/loader.component";
 import { CommonModule } from "@angular/common";
 import { ModalService } from "../../shared/services/modal.service";
+import { AddRoomModalComponent, AlarmModalReturnData } from "./add-room-modal/add-room-modal.component";
 
 @Component({
   selector: 'sh-rooms',
@@ -51,6 +52,15 @@ export class RoomsComponent {
   }
 
   public addRoom(): void {
+    const modalRef = this.modalService.open<AddRoomModalComponent, any, AlarmModalReturnData>(AddRoomModalComponent);
 
+    this.subscription.add(
+      modalRef.afterClosed().pipe(
+        tap(_ => this.loadingSubject.next(true)),
+        filter(data => !!data),
+      ).subscribe(data => {
+        this.loadingSubject.next(false);
+      })
+    )
   }
 }

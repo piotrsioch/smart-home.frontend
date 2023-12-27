@@ -1,6 +1,6 @@
 <div class="sh-select__container">
   <mat-select
-    [(value)]="value"
+    [(ngModel)]="selectedItem"
     (selectionChange)="selectValue($event)"
   >
     @for (value of values;track value) {

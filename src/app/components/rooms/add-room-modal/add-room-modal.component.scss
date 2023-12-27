@@ -1,0 +1,13 @@
+@import 'variables';
+
+.sh-add-room {
+  &__container{}
+
+  &__form {
+    &__wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: $main-size * 2;
+    }
+  }
+}

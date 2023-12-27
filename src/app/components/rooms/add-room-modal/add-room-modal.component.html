@@ -1,0 +1,42 @@
+<div class="sh-add-room__container">
+  <sh-modal-header
+    (closeClicked)="close()"
+    title="Alarm state"
+  />
+  <form
+    [formGroup]="addRoomForm"
+    class="sh-add-room__form"
+  >
+    <div class="sh-add-room__form__wrapper">
+      <span class="sh-add-room__form__wrapper__label">
+        Name
+      </span>
+      <input
+        formControlName="name"
+        class="sh-add-room__form__wrapper__input"
+      >
+    </div>
+    <div class="sh-add-room__form__wrapper">
+      <span class="sh-add-room__form__wrapper__label">
+        Type
+      </span>
+      <sh-select
+        [values]="roomTypes"
+        formControlName="roomType"
+        class="sh-add-room__form__wrapper__input"
+      />
+    </div>
+    <div class="sh-add-room__form__wrapper">
+      <span class="sh-add-room__form__wrapper__label">
+        Description
+      </span>
+      <input
+        formControlName="description"
+        class="sh-add-room__form__wrapper__input"
+      >
+    </div>
+  </form>
+  <div class="sh-add-room__buttons">
+    <sh-modal-buttons (buttonClicked)="handleButtonClicked($event)"/>
+  </div>
+</div>
