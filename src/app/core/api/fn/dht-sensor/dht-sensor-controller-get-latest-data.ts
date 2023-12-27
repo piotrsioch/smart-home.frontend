@@ -6,13 +6,13 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { AddDhtSensorDataInputDto } from '../../models/add-dht-sensor-data-input-dto';
+import { DhtSensorDto } from '../../models/dht-sensor-dto';
 
 export interface DhtSensorControllerGetLatestData$Params {
   sensorId: string;
 }
 
-export function dhtSensorControllerGetLatestData(http: HttpClient, rootUrl: string, params: DhtSensorControllerGetLatestData$Params, context?: HttpContext): Observable<StrictHttpResponse<AddDhtSensorDataInputDto>> {
+export function dhtSensorControllerGetLatestData(http: HttpClient, rootUrl: string, params: DhtSensorControllerGetLatestData$Params, context?: HttpContext): Observable<StrictHttpResponse<DhtSensorDto>> {
   const rb = new RequestBuilder(rootUrl, dhtSensorControllerGetLatestData.PATH, 'get');
   if (params) {
     rb.query('sensorId', params.sensorId, {});
@@ -23,7 +23,7 @@ export function dhtSensorControllerGetLatestData(http: HttpClient, rootUrl: stri
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<AddDhtSensorDataInputDto>;
+      return r as StrictHttpResponse<DhtSensorDto>;
     })
   );
 }

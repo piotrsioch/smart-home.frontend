@@ -92,7 +92,7 @@ export class DhtSensorService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  dhtSensorControllerGetLatestData$Response(params: DhtSensorControllerGetLatestData$Params, context?: HttpContext): Observable<StrictHttpResponse<AddDhtSensorDataInputDto>> {
+  dhtSensorControllerGetLatestData$Response(params: DhtSensorControllerGetLatestData$Params, context?: HttpContext): Observable<StrictHttpResponse<DhtSensorDto>> {
     return dhtSensorControllerGetLatestData(this.http, this.rootUrl, params, context);
   }
 
@@ -102,9 +102,9 @@ export class DhtSensorService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  dhtSensorControllerGetLatestData(params: DhtSensorControllerGetLatestData$Params, context?: HttpContext): Observable<AddDhtSensorDataInputDto> {
+  dhtSensorControllerGetLatestData(params: DhtSensorControllerGetLatestData$Params, context?: HttpContext): Observable<DhtSensorDto> {
     return this.dhtSensorControllerGetLatestData$Response(params, context).pipe(
-      map((r: StrictHttpResponse<AddDhtSensorDataInputDto>): AddDhtSensorDataInputDto => r.body)
+      map((r: StrictHttpResponse<DhtSensorDto>): DhtSensorDto => r.body)
     );
   }
 
