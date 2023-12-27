@@ -22,9 +22,9 @@ export class DashboardComponent {
       path: '/security'
     },
     {
-      name: 'Lightning system',
+      name: 'Lighting system',
       icon: 'lightbulb',
-      path: '/lightning',
+      path: '/lighting',
     },
     {
       name: 'Climate',

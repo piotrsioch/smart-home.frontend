@@ -5,12 +5,14 @@ import { SettingsComponent } from "./components/settings/settings.component";
 import { NotificationsComponent } from "./components/notifications/notifications.component";
 import { SecurityComponent } from "./components/security/security.component";
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { LightingComponent } from "./components/lighting/lighting.component";
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'settings', component: SettingsComponent },
   { path: 'notifications', component: NotificationsComponent },
   { path: 'security', component: SecurityComponent },
+  { path: 'lighting', component: LightingComponent },
   { path: '**', redirectTo: 'dashboard' },
 ]
 

@@ -1,0 +1,14 @@
+<sh-loader [loading]="loading">
+  <div
+    *ngIf="!loading"
+    class="sh-lighting__container"
+  >
+    <div class="sh-lighting__header">Lighting System</div>
+    <div
+      *ngFor="let light of lights; index as i"
+      class="sh-lighting__light"
+    >
+      {{ light.isOn }}
+    </div>
+  </div>
+</sh-loader>
