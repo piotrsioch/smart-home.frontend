@@ -1,0 +1,29 @@
+<sh-loader [loading]="loading">
+  <div
+    *ngIf="!loading && lightSensors.length > 0 && lights.length > 0"
+    class="sh-lighting__container"
+  >
+    <div class="sh-lighting__header">Lighting System</div>
+    <div
+      *ngFor="let light of lights; index as i"
+      class="sh-lighting__light"
+    >
+      <div class="sh-lighting__wrapper">
+        <div class="sh-lighting__light__name">Name:</div>
+        {{ lightSensors[i].name }}
+      </div>
+      <div class="sh-lighting__wrapper">
+        <div class="sh-lighting__light__name">Location:</div>
+        {{ lightSensors[i].location }}
+      </div>
+      <div class="sh-lighting__wrapper">
+        <div class="sh-lighting__light__name">State:</div>
+        <sh-toggle
+          [checkValue]="light.isOn"
+          [text]="light.isOn + ''"
+          (change)="handleStateChange($event, light, i)"
+        />
+      </div>
+    </div>
+  </div>
+</sh-loader>

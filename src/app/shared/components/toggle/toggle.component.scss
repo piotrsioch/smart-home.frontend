@@ -1,0 +1,21 @@
+@import 'variables';
+
+:host ::ng-deep {
+  .mdc-switch:enabled .mdc-switch__track::after {
+    background: $main !important;
+  }
+
+  .mdc-switch__icon {
+    display: none;
+  }
+
+  .mdc-switch.mdc-switch--selected:enabled .mdc-switch__handle::after {
+    background: $white;
+  }
+
+  .mdc-label {
+    color: var(--black);
+    font-size: $main-size * 4 !important;
+    margin-left: $main-size;
+  }
+}
