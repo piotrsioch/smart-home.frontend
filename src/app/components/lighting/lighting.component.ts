@@ -8,6 +8,7 @@ import { SensorsService } from "../../core/api/services/sensors.service";
 import { SensorDto } from "../../core/api/models/sensor-dto";
 import { map, switchMap, tap } from "rxjs/operators";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { ToggleComponent } from "../../shared/components/toggle/toggle.component";
 
 @Component({
   selector: 'sh-lighting',
@@ -16,6 +17,7 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
     LoaderComponent,
     CommonModule,
     MatSlideToggleModule,
+    ToggleComponent,
   ],
   templateUrl: './lighting.component.html',
   styleUrl: './lighting.component.scss'
@@ -58,7 +60,7 @@ export class LightingComponent implements OnDestroy {
     )
   }
 
-  handleStateChange(light: LightDto, index: number) {
+  handleStateChange(event:any, light: LightDto, index: number) {
     this.lightService.lightControllerChangeLightState({
       body: {
         sensorId: light.sensorId

@@ -18,12 +18,11 @@
       </div>
       <div class="sh-lighting__wrapper">
         <div class="sh-lighting__light__name">State:</div>
-        <mat-slide-toggle
-          [checked]="light.isOn"
-          (change)="handleStateChange(light, i)"
-        >
-          {{ light.isOn }}
-        </mat-slide-toggle>
+        <sh-toggle
+          [checkValue]="light.isOn"
+          [text]="light.isOn + ''"
+          (change)="handleStateChange($event, light, i)"
+        />
       </div>
     </div>
   </div>
