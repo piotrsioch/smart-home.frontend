@@ -1,4 +1,4 @@
-
+@import 'variables';
 
 @mixin clear-button {
   background-color: transparent;
@@ -18,6 +18,18 @@
   &:disabled {
     opacity: 50%;
   }
+}
+
+@mixin default-input {
+  height: $main-size * 12.5;
+  display: block;
+  color: var(--black);
+  background: var(--background-color);
+  margin-bottom: $main-size * 5;
+  border: 1px solid var(--black);
+  border-radius: $main-size;
+  padding: $main-size * 3;
+  font-size: $main-size * 4;
 }
 
 @mixin modal-styles {

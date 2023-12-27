@@ -36,13 +36,14 @@ export class AddRoomModalComponent {
   }
 
   public close(data?: AlarmModalReturnData) {
-    this.dialogRef.close({
-      data,
-    });
+    this.dialogRef.close(data);
   }
 
   public handleButtonClicked($event: boolean): void {
-    console.log(this.addRoomForm.value);
-    // $event ? this.close() : this.close();
+    ($event && this.addRoomForm.valid) ? this.close({
+      name: this.addRoomForm.value.name ?? '',
+      roomType: this.addRoomForm.value.roomType ?? '',
+      description: this.addRoomForm.value.description ?? '',
+    }) : this.close();
   }
 }

@@ -23,7 +23,7 @@
       <sh-select
         [values]="roomTypes"
         formControlName="roomType"
-        class="sh-add-room__form__wrapper__input"
+        class="sh-add-room__form__wrapper__select"
       />
     </div>
     <div class="sh-add-room__form__wrapper">
@@ -37,6 +37,9 @@
     </div>
   </form>
   <div class="sh-add-room__buttons">
-    <sh-modal-buttons (buttonClicked)="handleButtonClicked($event)"/>
+    <sh-modal-buttons
+      [disabled]="!addRoomForm.valid"
+      (buttonClicked)="handleButtonClicked($event)"
+    />
   </div>
 </div>

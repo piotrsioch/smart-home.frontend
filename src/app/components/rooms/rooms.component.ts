@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RoomService } from "../../core/api/services/room.service";
 import { SensorsService } from "../../core/api/services/sensors.service";
 import { BehaviorSubject, Subscription } from "rxjs";
-import { filter, map, tap } from "rxjs/operators";
+import { filter, map, switchMap, tap } from "rxjs/operators";
 import { RoomDto } from "../../core/api/models/room-dto";
 import { LoaderComponent } from "../../shared/components/loader/loader.component";
 import { CommonModule } from "@angular/common";
@@ -45,7 +45,6 @@ export class RoomsComponent {
         map(data => data.items!),
       ).subscribe(data => {
         this.rooms = data;
-        console.log(this.rooms);
         this.loadingSubject.next(false);
       })
     )
@@ -56,8 +55,17 @@ export class RoomsComponent {
 
     this.subscription.add(
       modalRef.afterClosed().pipe(
-        tap(_ => this.loadingSubject.next(true)),
         filter(data => !!data),
+        tap(_ => this.loadingSubject.next(true)),
+        switchMap(data => {
+          return this.roomService.roomControllerCreateRoom({
+            body: {
+              name: data?.name!,
+              roomType: data?.roomType!,
+              description: data?.description || '',
+            }
+          })
+        })
       ).subscribe(data => {
         this.loadingSubject.next(false);
       })
