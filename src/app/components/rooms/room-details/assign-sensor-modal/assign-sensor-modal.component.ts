@@ -42,7 +42,11 @@ export class AssignSensorModalComponent {
   }
 
   public handleButtonClicked($event: boolean): void {
-    const trimmedIdFromForm = this.assignSensorForm.value.sensorName?.split(' (id:')[1].split(')')[0].trim() || '';
+    let trimmedIdFromForm = ''
+
+    if ($event) {
+      trimmedIdFromForm = this.assignSensorForm.value.sensorName?.split(' (id:')[1].split(')')[0].trim() || '';
+    }
 
     ($event && this.assignSensorForm.valid) ? this.close({
       sensorId: trimmedIdFromForm,

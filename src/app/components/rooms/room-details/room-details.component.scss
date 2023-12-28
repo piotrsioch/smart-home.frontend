@@ -4,6 +4,8 @@
 .sh-room-details {
   &__container {
     color: var(--black);
+    display: flex;
+    flex-direction: column;
   }
 
   &__title {
@@ -25,6 +27,17 @@
 
     &__header {
       font-weight: 700;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: $main-size * 12 0 $main-size * 5 0;
+
+    &__edit-button, &__assign-button {
+      @include default-button;
     }
   }
 

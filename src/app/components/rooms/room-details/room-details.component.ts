@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { RoomService } from "../../../core/api/services/room.service";
 import { SensorsService } from "../../../core/api/services/sensors.service";
 import { BehaviorSubject, forkJoin, Observable, Subscription, switchMap } from "rxjs";
@@ -8,7 +8,7 @@ import { filter, map, tap } from "rxjs/operators";
 import { LoaderComponent } from "../../../shared/components/loader/loader.component";
 import { ActivatedRoute } from "@angular/router";
 import { CommonModule } from "@angular/common";
-import { ModalService } from "../../../shared/services/modal.service";
+import { ModalService, ModalStyle } from "../../../shared/services/modal.service";
 import {
   AssignSensorModalComponent,
   AssignSensorReturnData
@@ -61,6 +61,7 @@ export class RoomDetailsComponent implements OnDestroy {
           data: {
             sensors: this.unassignedSensors,
           },
+          style: ModalStyle.Small,
         });
 
     this.subscription.add(
