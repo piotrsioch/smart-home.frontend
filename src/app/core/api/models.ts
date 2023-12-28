@@ -10,7 +10,6 @@ export { ChangeLightStateInputDto } from './models/change-light-state-input-dto'
 export { CreateRoomInputDto } from './models/create-room-input-dto';
 export { CreateSensorInputDto } from './models/create-sensor-input-dto';
 export { DhtSensorDto } from './models/dht-sensor-dto';
-export { GetSensorByIdInputDto } from './models/get-sensor-by-id-input-dto';
 export { IdInputDto } from './models/id-input-dto';
 export { LightDto } from './models/light-dto';
 export { NotificationDto } from './models/notification-dto';

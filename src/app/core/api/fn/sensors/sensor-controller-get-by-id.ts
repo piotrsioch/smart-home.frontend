@@ -6,17 +6,16 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { GetSensorByIdInputDto } from '../../models/get-sensor-by-id-input-dto';
 import { SensorDto } from '../../models/sensor-dto';
 
 export interface SensorControllerGetById$Params {
-      body: GetSensorByIdInputDto
+  id: string;
 }
 
 export function sensorControllerGetById(http: HttpClient, rootUrl: string, params: SensorControllerGetById$Params, context?: HttpContext): Observable<StrictHttpResponse<SensorDto>> {
   const rb = new RequestBuilder(rootUrl, sensorControllerGetById.PATH, 'get');
   if (params) {
-    rb.body(params.body, 'application/json');
+    rb.query('id', params.id, {});
   }
 
   return http.request(

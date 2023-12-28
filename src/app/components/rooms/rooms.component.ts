@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { RoomService } from "../../core/api/services/room.service";
 import { SensorsService } from "../../core/api/services/sensors.service";
 import { BehaviorSubject, Subscription } from "rxjs";
@@ -8,6 +8,7 @@ import { LoaderComponent } from "../../shared/components/loader/loader.component
 import { CommonModule } from "@angular/common";
 import { ModalService } from "../../shared/services/modal.service";
 import { AddRoomModalComponent, AlarmModalReturnData } from "./add-room-modal/add-room-modal.component";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: 'sh-rooms',
@@ -19,7 +20,7 @@ import { AddRoomModalComponent, AlarmModalReturnData } from "./add-room-modal/ad
   templateUrl: './rooms.component.html',
   styleUrl: './rooms.component.scss'
 })
-export class RoomsComponent {
+export class RoomsComponent implements OnDestroy{
   public loading = true;
   public rooms: RoomDto[] = [];
   private subscription = new Subscription();
@@ -29,6 +30,8 @@ export class RoomsComponent {
     private readonly roomService: RoomService,
     private readonly sensorsService: SensorsService,
     private readonly modalService: ModalService,
+    private readonly router: Router,
+    private route: ActivatedRoute,
   ) {
     this.subscription.add(
       this.loadingSubject.subscribe(isLoading => {
@@ -45,10 +48,13 @@ export class RoomsComponent {
         map(data => data.items!),
       ).subscribe(data => {
         this.rooms = data;
-        console.log(this.rooms);
         this.loadingSubject.next(false);
       })
     )
+  }
+
+  public openRoomDetails(id: string): void {
+    this.router.navigate(['/room-details', id]);
   }
 
   public addRoom(): void {
@@ -71,5 +77,9 @@ export class RoomsComponent {
         this.loadingSubject.next(false);
       })
     )
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

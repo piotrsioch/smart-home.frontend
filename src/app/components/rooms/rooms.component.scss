@@ -14,4 +14,30 @@
     @include default-button;
     align-self: end;
   }
+
+  &__rooms-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: $main-size * 4;
+    row-gap: $main-size * 3;
+    column-gap: $main-size * 3;
+  }
+
+  &__room {
+    padding: $main-size * 4;
+    background-color: var(--white-dirty);
+    border-radius: $border-radius;
+    height: $main-size * 40;
+
+    &__wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: $main-size;
+      margin-bottom: 4 * $main-size;
+    }
+
+    &__hedaer {
+      font-weight: 700;
+    }
+  }
 }

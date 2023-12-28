@@ -89,7 +89,7 @@ export class SensorsService extends BaseService {
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `sensorControllerGetById()` instead.
    *
-   * This method sends `application/json` and handles request body of type `application/json`.
+   * This method doesn't expect any request body.
    */
   sensorControllerGetById$Response(params: SensorControllerGetById$Params, context?: HttpContext): Observable<StrictHttpResponse<SensorDto>> {
     return sensorControllerGetById(this.http, this.rootUrl, params, context);
@@ -99,7 +99,7 @@ export class SensorsService extends BaseService {
    * This method provides access only to the response body.
    * To access the full response (for headers, for example), `sensorControllerGetById$Response()` instead.
    *
-   * This method sends `application/json` and handles request body of type `application/json`.
+   * This method doesn't expect any request body.
    */
   sensorControllerGetById(params: SensorControllerGetById$Params, context?: HttpContext): Observable<SensorDto> {
     return this.sensorControllerGetById$Response(params, context).pipe(
