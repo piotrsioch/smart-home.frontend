@@ -74,8 +74,6 @@ export class RoomDetailsComponent implements OnDestroy {
     this.subscription.add(
       modalRef.afterClosed().pipe(
         filter(data => !!data),
-        tap(data => console.log(data!.sensorId)),
-        tap(_ => console.log(this.room._id)),
         switchMap(data => this.roomService.roomControllerAssignSensorToRoom({
             body: {
               sensorId: data!.sensorId,
@@ -103,7 +101,6 @@ export class RoomDetailsComponent implements OnDestroy {
     this.subscription.add(
       modalRef.afterClosed().pipe(
         filter(data => !!data),
-        tap(data => console.log(data)),
         switchMap(data => this.roomService.roomControllerEditRoom({
           body: {
             id: this.room._id,
