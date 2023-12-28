@@ -1,5 +1,34 @@
+@import "mixins";
+@import "variables";
+
 .sh-room-details {
   &__container {
     color: var(--black);
+  }
+
+  &__title {
+    display: block;
+    font-size: $main-size * 5;
+    font-weight: 700;
+    margin-bottom: $main-size * 8;
+  }
+
+  &__overview {
+    display: flex;
+    flex-direction: column;
+    gap: $main-size * 5;
+
+    &__wrapper {
+      display: flex;
+      gap: $main-size * 2;
+    }
+
+    &__header {
+      font-weight: 700;
+    }
+  }
+
+  &__no-sensors {
+    margin-top: $main-size * 8;
   }
 }

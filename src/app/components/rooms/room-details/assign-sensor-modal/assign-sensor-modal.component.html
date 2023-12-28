@@ -1,0 +1,28 @@
+<div
+  *ngIf="sensorNames.length > 0"
+  class="sh-assign-sensor-modal__container"
+>
+  <sh-modal-header
+    (closeClicked)="close()"
+    title="Assign Sensor To Room"
+  />
+  <form
+    [formGroup]="assignSensorForm"
+    class="sh-assign-sensor-modal__form"
+  >
+    <div class="sh-assign-sensor-modal__form__wrapper">
+      <span class="sh-assign-sensor-modal__form__wrapper__label">Type</span>
+      <sh-select
+        [values]="sensorNames"
+        formControlName="sensorName"
+        class="sh-assign-sensor-modal__form__wrapper__select"
+      />
+    </div>
+  </form>
+  <div class="sh-assign-sensor-modal__buttons">
+    <sh-modal-buttons
+      [disabled]="!assignSensorForm.valid"
+      (buttonClicked)="handleButtonClicked($event)"
+    />
+  </div>
+</div>
