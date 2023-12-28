@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { RoomService } from "../../../core/api/services/room.service";
 import { SensorsService } from "../../../core/api/services/sensors.service";
-import { BehaviorSubject, forkJoin, Observable, Subscription, switchMap } from "rxjs";
+import { BehaviorSubject, first, forkJoin, Observable, of, Subscription, switchMap } from "rxjs";
 import { RoomDto } from "../../../core/api/models/room-dto";
 import { SensorDto } from "../../../core/api/models/sensor-dto";
 import { filter, map, tap } from "rxjs/operators";
@@ -30,8 +30,8 @@ export class RoomDetailsComponent implements OnDestroy {
   public roomSensors: SensorDto[] = [];
   public unassignedSensors: SensorDto[] = [];
   public loading = true;
-  private readonly subscription = new Subscription();
   private loadingSubject = new BehaviorSubject<boolean>(true);
+  private readonly subscription = new Subscription();
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -46,11 +46,10 @@ export class RoomDetailsComponent implements OnDestroy {
     );
 
     this.subscription.add(
-     this.fetchRoomAndRoomSensorsData().subscribe(data => this.roomSensors = data)
-    );
-
-    this.subscription.add(
-      this.fetchUnassignedSensorsData().subscribe(data => this.unassignedSensors = data)
+      this.fetchRoomAndUnassignedSensorData().subscribe(([roomSensors, unassignedSensors]) => {
+        this.roomSensors = roomSensors;
+        this.unassignedSensors = unassignedSensors;
+      })
     )
   }
 
@@ -76,13 +75,23 @@ export class RoomDetailsComponent implements OnDestroy {
             },
           })
         ),
-        switchMap(_ => this.fetchRoomAndRoomSensorsData()),
-      ).subscribe(data => this.roomSensors = data)
+        switchMap(_ => this.fetchRoomAndUnassignedSensorData()),
+      ).subscribe(([roomSensors, unassignedSensors]) => {
+        this.roomSensors = roomSensors;
+        this.unassignedSensors = unassignedSensors;
+      })
     );
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  private fetchRoomAndUnassignedSensorData(): Observable<[SensorDto[], SensorDto[]]> {
+    return forkJoin([
+      this.fetchRoomAndRoomSensorsData(),
+      this.fetchUnassignedSensorsData()
+    ])
   }
 
   private fetchRoomAndRoomSensorsData(): Observable<SensorDto[]> {
@@ -91,19 +100,24 @@ export class RoomDetailsComponent implements OnDestroy {
     }).pipe(
       tap(data => this.room = data),
       switchMap(room => {
+        if (room.sensorsIds.length === 0) {
+          return of([]);
+        }
+
         const observableArray = room.sensorsIds.map(id => this.sensorsService.sensorControllerGetById({id}));
 
         return forkJoin(observableArray);
-      })
+      }),
     )
   }
 
   private fetchUnassignedSensorsData(): Observable<SensorDto[]> {
     return this.sensorsService.sensorControllerSensorList({
-        page: 0, limit: 100
-      }).pipe(
+      page: 0, limit: 100
+    }).pipe(
       map(data => data.items!),
-      map(data => data!.filter(sensor => sensor.roomId == null)),
+      map(data => data!.filter(sensor => sensor.roomId == null || sensor.roomId == '')),
+      first(),
     )
   }
 }
