@@ -11,11 +11,19 @@ import { CommonModule } from "@angular/common";
 import { ModalService, ModalStyle } from "../../../shared/services/modal.service";
 import {
   AssignSensorModalComponent,
-  AssignSensorReturnData
+  AssignSensorReturnModalData
 } from "./assign-sensor-modal/assign-sensor-modal.component";
+import {
+  EditRoomModalComponent,
+  EditRoomModalReturnData,
+} from "./edit-room-modal/edit-room-modal.component";
 
 export interface AssignSensorModalData {
   sensors: SensorDto[];
+}
+
+export interface EditRoomModalData {
+  room: RoomDto;
 }
 
 @Component({
@@ -55,7 +63,7 @@ export class RoomDetailsComponent implements OnDestroy {
 
   public assignSensorToRoom(): void {
     const modalRef =
-      this.modalService.open<AssignSensorModalComponent, AssignSensorModalData, AssignSensorReturnData>(
+      this.modalService.open<AssignSensorModalComponent, AssignSensorModalData, AssignSensorReturnModalData>(
         AssignSensorModalComponent, {
           data: {
             sensors: this.unassignedSensors,
@@ -83,7 +91,33 @@ export class RoomDetailsComponent implements OnDestroy {
     );
   }
 
-  ngOnDestroy() {
+  public editRoom(): void {
+    const modalRef =
+      this.modalService.open<EditRoomModalComponent, EditRoomModalData, EditRoomModalReturnData>(
+        EditRoomModalComponent, {
+          data: {
+            room: this.room,
+          },
+        });
+
+    this.subscription.add(
+      modalRef.afterClosed().pipe(
+        filter(data => !!data),
+        tap(data => console.log(data)),
+        switchMap(data => this.roomService.roomControllerEditRoom({
+          body: {
+            id: this.room._id,
+            name: data?.name || '',
+            roomType: data?.roomType || undefined,
+            description: data?.description || '',
+          }
+        })),
+        switchMap(_ => this.fetchRoomAndRoomSensorsData()),
+      ).subscribe()
+    )
+  }
+
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 

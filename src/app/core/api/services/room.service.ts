@@ -16,6 +16,8 @@ import { roomControllerCreateRoom } from '../fn/room/room-controller-create-room
 import { RoomControllerCreateRoom$Params } from '../fn/room/room-controller-create-room';
 import { roomControllerDeleteRoom } from '../fn/room/room-controller-delete-room';
 import { RoomControllerDeleteRoom$Params } from '../fn/room/room-controller-delete-room';
+import { roomControllerEditRoom } from '../fn/room/room-controller-edit-room';
+import { RoomControllerEditRoom$Params } from '../fn/room/room-controller-edit-room';
 import { roomControllerGetRoomById } from '../fn/room/room-controller-get-room-by-id';
 import { RoomControllerGetRoomById$Params } from '../fn/room/room-controller-get-room-by-id';
 import { roomControllerRemoveSensorFromRoom } from '../fn/room/room-controller-remove-sensor-from-room';
@@ -136,6 +138,31 @@ export class RoomService extends BaseService {
   roomControllerDeleteRoom(params: RoomControllerDeleteRoom$Params, context?: HttpContext): Observable<SuccessDto> {
     return this.roomControllerDeleteRoom$Response(params, context).pipe(
       map((r: StrictHttpResponse<SuccessDto>): SuccessDto => r.body)
+    );
+  }
+
+  /** Path part for operation `roomControllerEditRoom()` */
+  static readonly RoomControllerEditRoomPath = '/room/edit-room';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `roomControllerEditRoom()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  roomControllerEditRoom$Response(params: RoomControllerEditRoom$Params, context?: HttpContext): Observable<StrictHttpResponse<RoomDto>> {
+    return roomControllerEditRoom(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `roomControllerEditRoom$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  roomControllerEditRoom(params: RoomControllerEditRoom$Params, context?: HttpContext): Observable<RoomDto> {
+    return this.roomControllerEditRoom$Response(params, context).pipe(
+      map((r: StrictHttpResponse<RoomDto>): RoomDto => r.body)
     );
   }
 

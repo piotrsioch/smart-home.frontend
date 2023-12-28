@@ -7,7 +7,10 @@ import { RoomDto } from "../../core/api/models/room-dto";
 import { LoaderComponent } from "../../shared/components/loader/loader.component";
 import { CommonModule } from "@angular/common";
 import { ModalService } from "../../shared/services/modal.service";
-import { AddRoomModalComponent, AlarmModalReturnData } from "./add-room-modal/add-room-modal.component";
+import {
+  AddRoomModalComponent,
+  AddRoomModalReturnData,
+} from "./add-room-modal/add-room-modal.component";
 import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
@@ -20,7 +23,7 @@ import { ActivatedRoute, Router } from "@angular/router";
   templateUrl: './rooms.component.html',
   styleUrl: './rooms.component.scss'
 })
-export class RoomsComponent implements OnDestroy{
+export class RoomsComponent implements OnDestroy {
   public loading = true;
   public rooms: RoomDto[] = [];
   private subscription = new Subscription();
@@ -58,7 +61,7 @@ export class RoomsComponent implements OnDestroy{
   }
 
   public addRoom(): void {
-    const modalRef = this.modalService.open<AddRoomModalComponent, any, AlarmModalReturnData>(AddRoomModalComponent);
+    const modalRef = this.modalService.open<AddRoomModalComponent, any, AddRoomModalReturnData>(AddRoomModalComponent);
 
     this.subscription.add(
       modalRef.afterClosed().pipe(

@@ -7,7 +7,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { AssignSensorModalData } from "../room-details.component";
 import { CommonModule } from "@angular/common";
 
-export interface AssignSensorReturnData {
+export interface AssignSensorReturnModalData {
   sensorId: string;
 }
 
@@ -37,7 +37,7 @@ export class AssignSensorModalComponent {
     this.sensorNames = this.data.sensors.map(sensor => sensor.name + ` (id: ${ sensor._id })`);
   }
 
-  public close(data?: AssignSensorReturnData) {
+  public close(data?: AssignSensorReturnModalData) {
     this.dialogRef.close(data);
   }
 

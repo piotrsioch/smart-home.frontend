@@ -6,7 +6,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angula
 import { SelectComponent } from "../../../shared/components/select/select.component";
 import { CreateRoomInputDto } from "../../../core/api/models/create-room-input-dto";
 
-export interface AlarmModalReturnData {
+export interface AddRoomModalReturnData {
   name: string;
   roomType: CreateRoomInputDto['roomType'];
   description?: string;
@@ -39,7 +39,7 @@ export class AddRoomModalComponent {
   ) {
   }
 
-  public close(data?: AlarmModalReturnData) {
+  public close(data?: AddRoomModalReturnData) {
     this.dialogRef.close(data);
   }
 
