@@ -1,0 +1,44 @@
+@import "variables";
+@import "mixins";
+
+.sh-notifications {
+  &__container {
+    color: var(--black);
+  }
+
+  &__title {
+    font-size: $main-size * 5;
+    font-weight: 700;
+    margin-bottom: $main-size * 8;
+  }
+
+  &__notification {
+    margin-bottom: $main-size * 10;
+    display: flex;
+    flex-direction: column;
+    gap: $main-size * 3;
+    border: 1px solid var(--white-dirty);
+    padding: $main-size * 7;
+    border-radius: $border-radius;
+  }
+
+  &__wrapper {
+    display: flex;
+    gap: $main-size;
+
+    &__header {
+      font-weight: 700;
+    }
+  }
+
+  &__mark-as-read-button {
+    @include default-button;
+    margin: $main-size * 3 auto 0 auto;
+  }
+
+  &__all-button {
+    @include default-button;
+    width: 50% !important;
+    margin: $main-size * 10 auto 0 auto;
+  }
+}

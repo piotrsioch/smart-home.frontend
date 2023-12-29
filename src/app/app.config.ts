@@ -9,11 +9,13 @@ import { LightingComponent } from "./components/lighting/lighting.component";
 import { ClimateComponent } from "./components/climate/climate.component";
 import { RoomsComponent } from "./components/rooms/rooms.component";
 import { RoomDetailsComponent } from "./components/rooms/room-details/room-details.component";
+import { AllNotificationsComponent } from "./components/notifications/all-notifications/all-notifications.component";
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'settings', component: SettingsComponent },
   { path: 'notifications', component: NotificationsComponent },
+  { path: 'notifications/all', component: AllNotificationsComponent },
   { path: 'security', component: SecurityComponent },
   { path: 'lighting', component: LightingComponent },
   { path: 'climate', component: ClimateComponent },
