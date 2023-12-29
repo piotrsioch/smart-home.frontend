@@ -48,11 +48,10 @@ export class EditRoomModalComponent implements OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: EditRoomModalData,
   ) {
     this.editRoomForm.setValue({
-        name: data.room.name,
-        roomType: data.room.roomType,
-        description: data.room.description
-      }
-    );
+      name: data.room.name,
+      roomType: data.room.roomType,
+      description: data.room.description
+    });
 
     this.subscription.add(
       this.editRoomForm.valueChanges.subscribe(values => {
