@@ -1,0 +1,22 @@
+@import "variables";
+
+:host ::ng-deep {
+  .sh-modal-buttons__save {
+    border-color: rgba(red, 0.8) !important;
+    color: rgba(red, 0.8) !important;
+  }
+}
+
+.sh-confirm-modal {
+  &__container {
+    color: var(--black);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  &__description {
+    margin-top: $main-size * 8;
+    flex: 1;
+  }
+}
