@@ -13,10 +13,11 @@ import {
   AssignSensorModalComponent,
   AssignSensorReturnModalData
 } from "./assign-sensor-modal/assign-sensor-modal.component";
+import { EditRoomModalComponent, EditRoomModalReturnData, } from "./edit-room-modal/edit-room-modal.component";
 import {
-  EditRoomModalComponent,
-  EditRoomModalReturnData,
-} from "./edit-room-modal/edit-room-modal.component";
+  ConfirmModalComponent,
+  ConfirmModalData
+} from "../../../shared/components/modal/confirm-modal/confirm-modal.component";
 
 export interface AssignSensorModalData {
   sensors: SensorDto[];
@@ -115,14 +116,28 @@ export class RoomDetailsComponent implements OnDestroy {
   }
 
   public unassigneSensor(id: string): void {
+    const modalRef = this.modalService.open<ConfirmModalComponent, ConfirmModalData>(
+      ConfirmModalComponent,
+      {
+        data: {
+          title: "Are you sure?",
+          description: "Do you wish to proceed with removing the selected sensor from this room?"
+        },
+        style: ModalStyle.ConfirmModal
+      }
+    )
     this.subscription.add(
-      this.roomService.roomControllerRemoveSensorFromRoom({
-        body: {
-          sensorId: id,
-          roomId: this.room._id,
-        }
-      }).pipe(
-        switchMap(data => this.fetchRoomAndUnassignedSensorData())
+      modalRef.afterClosed().pipe(
+        filter(data => !!data),
+        switchMap(_ => {
+          return this.roomService.roomControllerRemoveSensorFromRoom({
+            body: {
+              sensorId: id,
+              roomId: this.room._id,
+            }
+          })
+        }),
+        switchMap(_ => this.fetchRoomAndUnassignedSensorData())
       ).subscribe(([roomSensors, unassignedSensors]) => {
         this.roomSensors = roomSensors;
         this.unassignedSensors = unassignedSensors;

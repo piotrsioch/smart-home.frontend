@@ -4,7 +4,8 @@ import { ComponentType } from "@angular/cdk/overlay";
 
 export enum ModalStyle {
   Small = 'sh-small-modal',
-  Default = 'sh-modal'
+  Default = 'sh-modal',
+  ConfirmModal = 'sh-confirm-modal',
 }
 
 @Injectable({
