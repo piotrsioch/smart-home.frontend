@@ -8,8 +8,23 @@
     </button>
     <div
       *ngIf="rooms.length > 0 else noRoomsTemplate"
-      class="sh-rooms__rooms"
-    ></div>
+      class="sh-rooms__rooms-wrapper"
+    >
+      <div
+        *ngFor="let room of rooms"
+        (click)="openRoomDetails(room._id)"
+        class="sh-rooms__room"
+      >
+        <div class="sh-rooms__room__wrapper">
+          <div class="sh-rooms__room__header">Name:</div>
+          {{ room.name }}
+        </div>
+        <div class="sh-rooms__room__wrapper">
+          <div class="sh-rooms__room__header">Type:</div>
+          {{ room.roomType }}
+        </div>
+      </div>
+    </div>
   </div>
 </sh-loader>
 

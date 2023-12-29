@@ -6,6 +6,7 @@
 }
 
 @mixin default-button {
+  @include clear-button;
   border: 1px solid var(--black);
   color: var(--black);
   border-radius: $border-radius;

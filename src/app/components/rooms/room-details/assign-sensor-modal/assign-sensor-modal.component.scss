@@ -1,0 +1,20 @@
+@import 'variables';
+
+.sh-assign-sensor-modal {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  &__form {
+    margin-top: $main-size * 5;
+    flex: 1;
+
+    &__wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: $main-size * 5;
+    }
+  }
+}

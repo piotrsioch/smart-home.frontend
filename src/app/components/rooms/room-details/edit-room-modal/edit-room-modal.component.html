@@ -1,0 +1,39 @@
+<div class="sh-edit-room-modal__container">
+  <sh-modal-header
+    (closeClicked)="close()"
+    title="Edit Room"
+  />
+  <form
+    [formGroup]="editRoomForm"
+    class="sh-edit-room-modal__form"
+  >
+    <div class="sh-edit-room-modal__form__wrapper">
+      <span class="sh-edit-room-modal__form__wrapper__label">Name</span>
+      <input
+        formControlName="name"
+        class="sh-edit-room-modal__form__wrapper__input"
+      >
+    </div>
+    <div class="sh-edit-room-modal__form__wrapper">
+      <span class="sh-edit-room-modal__form__wrapper__label">Type</span>
+      <sh-select
+        [values]="roomTypes"
+        formControlName="roomType"
+        class="sh-edit-room-modal__form__wrapper__select"
+      />
+    </div>
+    <div class="sh-edit-room-modal__form__wrapper">
+      <span class="sh-edit-room-modal__form__wrapper__label">Description</span>
+      <input
+        formControlName="description"
+        class="sh-edit-room-modal__form__wrapper__input"
+      >
+    </div>
+  </form>
+  <div class="sh-edit-room-modal__buttons">
+    <sh-modal-buttons
+      [disabled]="!isFormValid"
+      (buttonClicked)="handleButtonClicked($event)"
+    />
+  </div>
+</div>

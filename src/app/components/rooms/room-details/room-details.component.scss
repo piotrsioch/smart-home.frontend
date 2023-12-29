@@ -1,0 +1,78 @@
+@import "mixins";
+@import "variables";
+
+.sh-room-details {
+  &__container {
+    color: var(--black);
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+    display: block;
+    font-size: $main-size * 5;
+    font-weight: 700;
+    margin-bottom: $main-size * 8;
+  }
+
+  &__overview {
+    display: flex;
+    flex-direction: column;
+    gap: $main-size * 5;
+
+    &__wrapper {
+      display: flex;
+      gap: $main-size * 2;
+    }
+
+    &__header {
+      font-weight: 700;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: $main-size * 12 0 $main-size * 5 0;
+
+    &__edit-button, &__assign-button {
+      @include default-button;
+    }
+  }
+
+  &__sensors-header {
+    margin-top: $main-size * 8;
+    font-weight: 700;
+    font-size: $main-size * 5;
+  }
+
+  &__sensors {
+    margin-top: $main-size * 8;
+  }
+
+  &__sensor {
+    margin-bottom: $main-size * 8;
+
+    &__wrapper {
+      display: flex;
+      gap: $main-size;
+      margin-bottom: $main-size * 2;
+
+      &__header {
+        font-weight: 700;
+      }
+    }
+
+    &__unassigne-button {
+      @include default-button;
+      padding: $main-size * 2;
+      width: $main-size * 25;
+      margin-top: $main-size * 3.5;
+    }
+  }
+
+  &__no-sensors {
+    margin-top: $main-size * 8;
+  }
+}

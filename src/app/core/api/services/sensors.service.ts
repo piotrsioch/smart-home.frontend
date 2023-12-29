@@ -12,6 +12,8 @@ import { StrictHttpResponse } from '../strict-http-response';
 import { PaginationOutput } from '../models/pagination-output';
 import { sensorControllerCreateSensor } from '../fn/sensors/sensor-controller-create-sensor';
 import { SensorControllerCreateSensor$Params } from '../fn/sensors/sensor-controller-create-sensor';
+import { sensorControllerEditSensor } from '../fn/sensors/sensor-controller-edit-sensor';
+import { SensorControllerEditSensor$Params } from '../fn/sensors/sensor-controller-edit-sensor';
 import { sensorControllerGetById } from '../fn/sensors/sensor-controller-get-by-id';
 import { SensorControllerGetById$Params } from '../fn/sensors/sensor-controller-get-by-id';
 import { sensorControllerSensorList } from '../fn/sensors/sensor-controller-sensor-list';
@@ -45,6 +47,31 @@ export class SensorsService extends BaseService {
    */
   sensorControllerCreateSensor(params: SensorControllerCreateSensor$Params, context?: HttpContext): Observable<SensorDto> {
     return this.sensorControllerCreateSensor$Response(params, context).pipe(
+      map((r: StrictHttpResponse<SensorDto>): SensorDto => r.body)
+    );
+  }
+
+  /** Path part for operation `sensorControllerEditSensor()` */
+  static readonly SensorControllerEditSensorPath = '/sensors/edit';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `sensorControllerEditSensor()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  sensorControllerEditSensor$Response(params: SensorControllerEditSensor$Params, context?: HttpContext): Observable<StrictHttpResponse<SensorDto>> {
+    return sensorControllerEditSensor(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `sensorControllerEditSensor$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  sensorControllerEditSensor(params: SensorControllerEditSensor$Params, context?: HttpContext): Observable<SensorDto> {
+    return this.sensorControllerEditSensor$Response(params, context).pipe(
       map((r: StrictHttpResponse<SensorDto>): SensorDto => r.body)
     );
   }
@@ -89,7 +116,7 @@ export class SensorsService extends BaseService {
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `sensorControllerGetById()` instead.
    *
-   * This method sends `application/json` and handles request body of type `application/json`.
+   * This method doesn't expect any request body.
    */
   sensorControllerGetById$Response(params: SensorControllerGetById$Params, context?: HttpContext): Observable<StrictHttpResponse<SensorDto>> {
     return sensorControllerGetById(this.http, this.rootUrl, params, context);
@@ -99,7 +126,7 @@ export class SensorsService extends BaseService {
    * This method provides access only to the response body.
    * To access the full response (for headers, for example), `sensorControllerGetById$Response()` instead.
    *
-   * This method sends `application/json` and handles request body of type `application/json`.
+   * This method doesn't expect any request body.
    */
   sensorControllerGetById(params: SensorControllerGetById$Params, context?: HttpContext): Observable<SensorDto> {
     return this.sensorControllerGetById$Response(params, context).pipe(

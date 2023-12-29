@@ -16,11 +16,11 @@ export class ModalService {
 
   public open<C, D = any, R = any>(
     component: ComponentType<C>,
-    config: { data?: D, style: ModalStyle } = { style: ModalStyle.Default}
+    config: { data?: D, style?: ModalStyle } = { style: ModalStyle.Default}
   ): MatDialogRef<C, R> {
     return this._modal.open<C, D, R>(component, {
       data: config.data,
-      panelClass: ['sh-modal', config.style],
+      panelClass: ['sh-modal', config.style || ModalStyle.Default],
     });
   }
 }

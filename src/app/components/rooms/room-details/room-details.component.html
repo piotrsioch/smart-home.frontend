@@ -1,0 +1,67 @@
+<sh-loader [loading]="false">
+  <div
+    *ngIf="room"
+    class="sh-room-details__container"
+  >
+    <div class="sh-room-details__title">Room details</div>
+    <div class="sh-room-details__overview">
+      <div class="sh-room-details__overview__wrapper">
+        <div class="sh-room-details__overview__header">Name:</div>
+        {{ room.name }}
+      </div>
+      <div class="sh-room-details__overview__wrapper">
+        <div class="sh-room-details__overview__header">Description:</div>
+        {{ room.description }}
+      </div>
+      <div class="sh-room-details__overview__wrapper">
+        <div class="sh-room-details__overview__header">Room type:</div>
+        {{ room.roomType }}
+      </div>
+    </div>
+    <div class="sh-room-details__buttons">
+      <button
+        (click)="assignSensorToRoom()"
+        class="sh-room-details__buttons__assign-button"
+      >
+        Assign sensor
+      </button>
+      <button
+        (click)="editRoom()"
+        class="sh-room-details__buttons__edit-button"
+      >
+        Edit
+      </button>
+    </div>
+    <div class="sh-room-details__sensors-header">Assigned Sensors</div>
+    <div
+      *ngIf="roomSensors.length > 0 else noSensorsTemplate"
+      class="sh-room-details__sensors"
+    >
+      <div
+        *ngFor="let sensor of roomSensors"
+        class="sh-room-details__sensor"
+      >
+        <div class="sh-room-details__sensor__wrapper">
+          <div class="sh-room-details__sensor__wrapper__header">Name:</div>
+          {{ sensor.name }}
+        </div>
+        <div class="sh-room-details__sensor__wrapper">
+          <div class="sh-room-details__sensor__wrapper__header">Type:</div>
+          {{ sensor.type }}
+        </div>
+        <button
+          (click)="unassigneSensor(sensor._id)"
+          class="sh-room-details__sensor__unassigne-button"
+        >
+          Unassign
+        </button>
+      </div>
+    </div>
+  </div>
+</sh-loader>
+
+<ng-template #noSensorsTemplate>
+  <div class="sh-room-details__no-sensors">
+    This room does not have any sensors assigned yet.
+  </div>
+</ng-template>

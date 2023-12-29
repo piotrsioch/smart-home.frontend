@@ -14,13 +14,13 @@
     &__text {
       font-size: $main-size * 5;
       font-weight: 700;
+      margin-bottom: $main-size * 8;
     }
 
     &__overview {
       display: flex;
       flex-direction: column;
       gap: $main-size * 5;
-      margin-top: $main-size * 5;
 
       &__name {
         font-weight: 700;
