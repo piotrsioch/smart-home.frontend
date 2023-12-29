@@ -1,0 +1,14 @@
+<div class="sh-confirm-modal__container">
+  <sh-modal-header
+    (closeClicked)="close()"
+    [title]="title"
+  />
+  <div class="sh-confirm-modal__description">
+    {{ description }}
+  </div>
+  <div class="sh-alarm-modal__buttons">
+    <sh-modal-buttons
+      (buttonClicked)="handleButtonClicked($event)"
+    />
+  </div>
+</div>
