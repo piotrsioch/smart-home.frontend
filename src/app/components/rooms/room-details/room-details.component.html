@@ -32,17 +32,29 @@
         Edit
       </button>
     </div>
+    <div class="sh-room-details__sensors-header">Assigned Sensors</div>
     <div
       *ngIf="roomSensors.length > 0 else noSensorsTemplate"
       class="sh-room-details__sensors"
     >
       <div
         *ngFor="let sensor of roomSensors"
-        class="sh-room-details__sensors__sensor"
+        class="sh-room-details__sensor"
       >
-        {{ sensor.name }}
-        {{ sensor.location }}
-        {{ sensor.type }}
+        <div class="sh-room-details__sensor__wrapper">
+          <div class="sh-room-details__sensor__wrapper__header">Name:</div>
+          {{ sensor.name }}
+        </div>
+        <div class="sh-room-details__sensor__wrapper">
+          <div class="sh-room-details__sensor__wrapper__header">Type:</div>
+          {{ sensor.type }}
+        </div>
+        <button
+          (click)="unassigneSensor(sensor._id)"
+          class="sh-room-details__sensor__unassigne-button"
+        >
+          Unassign
+        </button>
       </div>
     </div>
   </div>

@@ -41,6 +41,37 @@
     }
   }
 
+  &__sensors-header {
+    margin-top: $main-size * 8;
+    font-weight: 700;
+    font-size: $main-size * 5;
+  }
+
+  &__sensors {
+    margin-top: $main-size * 8;
+  }
+
+  &__sensor {
+    margin-bottom: $main-size * 8;
+
+    &__wrapper {
+      display: flex;
+      gap: $main-size;
+      margin-bottom: $main-size * 2;
+
+      &__header {
+        font-weight: 700;
+      }
+    }
+
+    &__unassigne-button {
+      @include default-button;
+      padding: $main-size * 2;
+      width: $main-size * 25;
+      margin-top: $main-size * 3.5;
+    }
+  }
+
   &__no-sensors {
     margin-top: $main-size * 8;
   }

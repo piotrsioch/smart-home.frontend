@@ -114,6 +114,22 @@ export class RoomDetailsComponent implements OnDestroy {
     )
   }
 
+  public unassigneSensor(id: string): void {
+    this.subscription.add(
+      this.roomService.roomControllerRemoveSensorFromRoom({
+        body: {
+          sensorId: id,
+          roomId: this.room._id,
+        }
+      }).pipe(
+        switchMap(data => this.fetchRoomAndUnassignedSensorData())
+      ).subscribe(([roomSensors, unassignedSensors]) => {
+        this.roomSensors = roomSensors;
+        this.unassignedSensors = unassignedSensors;
+      })
+    )
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
