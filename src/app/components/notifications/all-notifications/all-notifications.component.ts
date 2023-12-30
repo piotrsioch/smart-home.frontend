@@ -82,7 +82,7 @@ export class AllNotificationsComponent implements OnDestroy {
     )
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 

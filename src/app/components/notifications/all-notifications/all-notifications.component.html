@@ -6,8 +6,8 @@
         *ngFor="let notification of notifications; index as i"
         [notification]="notification"
         [sensor]="notificationsSensors[i]"
-        buttonText="Delete"
         (buttonClicked)="deleteNotification(notification._id)"
+        buttonText="Delete"
       />
     </ng-container>
   </div>
