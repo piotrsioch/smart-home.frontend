@@ -12,12 +12,14 @@ import {
 } from "../../shared/components/modal/confirm-modal/confirm-modal.component";
 import { SensorDto } from "../../core/api/models/sensor-dto";
 import { SensorsService } from "../../core/api/services/sensors.service";
+import { NotificationCardComponent } from "./notification-card/notification-card.component";
 
 @Component({
   selector: 'sh-notifications',
   standalone: true,
   imports: [
     CommonModule,
+    NotificationCardComponent,
   ],
   templateUrl: './notifications.component.html',
   styleUrl: './notifications.component.scss'

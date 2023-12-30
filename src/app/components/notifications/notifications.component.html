@@ -1,37 +1,12 @@
 <div class="sh-notifications__container">
   <ng-container *ngIf="unreadNotifications.length > 0 && notificationsSensors.length > 0">
     <div class="sh-notifications__title">Unread Notifications</div>
-    <div
+    <sh-notification-card
       *ngFor="let notification of unreadNotifications; index as i"
-      class="sh-notifications__notification"
-    >
-      <div class="sh-notifications__wrapper">
-        <div class="sh-notifications__wrapper__header">Name:</div>
-        {{ notification.name }}
-      </div>
-      <div class="sh-notifications__wrapper">
-        <div class="sh-notifications__wrapper__header">Sensor Name:</div>
-        {{ notificationsSensors[i].name }}
-      </div>
-      <div class="sh-notifications__wrapper">
-        <div class="sh-notifications__wrapper__header">Sensor Location:</div>
-        {{ notificationsSensors[i].location }}
-      </div>
-      <div class="sh-notifications__wrapper">
-        <div class="sh-notifications__wrapper__header">Message:</div>
-        {{ notification.message }}
-      </div>
-      <div class="sh-notifications__wrapper">
-        <div class="sh-notifications__wrapper__header">Date:</div>
-        {{ notification.createdAt | date }}
-      </div>
-      <button
-        (click)="markNotificationAsRead(notification._id)"
-        class="sh-notifications__mark-as-read-button"
-      >
-        Mark as read
-      </button>
-    </div>
+      [notification]="notification"
+      [sensor]="notificationsSensors[i]"
+      (buttonClicked)="markNotificationAsRead(notification._id)"
+    />
     <button
       (click)="navigateToAllNotifications()"
       class="sh-notifications__all-button"
