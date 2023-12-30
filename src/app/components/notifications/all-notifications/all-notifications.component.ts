@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { SensorDto } from "../../../core/api/models/sensor-dto";
-import { forkJoin, Observable, Subscription } from "rxjs";
+import { BehaviorSubject, forkJoin, Observable, of, Subscription } from "rxjs";
 import { NotificationsService } from "../../../core/api/services/notifications.service";
 import { SensorsService } from "../../../core/api/services/sensors.service";
 import { ModalService, ModalStyle } from "../../../shared/services/modal.service";
@@ -12,13 +12,15 @@ import {
   ConfirmModalComponent,
   ConfirmModalData
 } from "../../../shared/components/modal/confirm-modal/confirm-modal.component";
+import { LoaderComponent } from "../../../shared/components/loader/loader.component";
 
 @Component({
   selector: 'sh-all-notifications',
   standalone: true,
   imports: [
     CommonModule,
-    NotificationCardComponent
+    NotificationCardComponent,
+    LoaderComponent,
   ],
   templateUrl: './all-notifications.component.html',
   styleUrl: './all-notifications.component.scss'
@@ -26,6 +28,8 @@ import {
 export class AllNotificationsComponent implements OnDestroy {
   public notifications: NotificationDto[] = [];
   public notificationsSensors: SensorDto[] = [];
+  public loading = true;
+  private loadingSubject = new BehaviorSubject<boolean>(true);
   private subscription = new Subscription();
 
   constructor(
@@ -34,7 +38,18 @@ export class AllNotificationsComponent implements OnDestroy {
     private readonly modalService: ModalService,
   ) {
     this.subscription.add(
-      this.fetchNotifications().subscribe(data => this.notificationsSensors = data)
+      this.loadingSubject.subscribe(isLoading => {
+        this.loading = isLoading;
+      })
+    );
+
+    this.subscription.add(
+      this.fetchNotifications().pipe(
+        tap(_ => this.loadingSubject.next(true))
+      ).subscribe(data => {
+        this.notificationsSensors = data;
+        this.loadingSubject.next(false);
+      })
     )
   }
 
@@ -51,6 +66,7 @@ export class AllNotificationsComponent implements OnDestroy {
     this.subscription.add(
       modalRef.afterClosed().pipe(
         filter(data => !!data),
+        tap(_ => this.loadingSubject.next(true)),
         switchMap(_ => {
           return this.notificationsService.notificationControllerDelete({
             body: {
@@ -59,7 +75,10 @@ export class AllNotificationsComponent implements OnDestroy {
           })
         }),
         switchMap(_ => this.fetchNotifications())
-      ).subscribe(data => this.notificationsSensors = data)
+      ).subscribe(data => {
+        this.notificationsSensors = data;
+        this.loadingSubject.next(false);
+      })
     )
   }
 
@@ -75,6 +94,10 @@ export class AllNotificationsComponent implements OnDestroy {
       map(data => data.items!),
       tap(data => this.notifications = data),
       switchMap(data => {
+        if (data.length === 0) {
+          return of([]);
+        }
+
         const observableArray = data.map(notification =>
           this.sensorsService.sensorControllerGetById({
               id: notification.sensorId

@@ -1,14 +1,18 @@
-<div class="sh-all-notifications__container">
-  <div class="sh-all-notifications__title">All Notifications</div>
-  <ng-container *ngIf="notifications.length > 0 && notificationsSensors.length > 0 else noNotifications">
-    <sh-notification-card
-      *ngFor="let notification of notifications; index as i"
-      [notification]="notification"
-      [sensor]="notificationsSensors[i]"
-      buttonText="Delete"
-      (buttonClicked)="deleteNotification(notification._id)"
-    />
-  </ng-container>
-</div>
+<sh-loader [loading]="loading">
+  <div class="sh-all-notifications__container">
+    <div class="sh-all-notifications__title">All Notifications</div>
+    <ng-container *ngIf="notifications.length > 0 && notificationsSensors.length > 0 else noNotifications">
+      <sh-notification-card
+        *ngFor="let notification of notifications; index as i"
+        [notification]="notification"
+        [sensor]="notificationsSensors[i]"
+        buttonText="Delete"
+        (buttonClicked)="deleteNotification(notification._id)"
+      />
+    </ng-container>
+  </div>
+</sh-loader>
 
-<ng-template #noNotifications></ng-template>
+<ng-template #noNotifications>
+  You have no notifications
+</ng-template>
