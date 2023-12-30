@@ -1,0 +1,13 @@
+@import "variables";
+
+.sh-all-notifications {
+  &__container {
+    color: var(--black);
+  }
+
+  &__title {
+    font-size: $main-size * 5;
+    font-weight: 700;
+    margin-bottom: $main-size * 8;
+  }
+}

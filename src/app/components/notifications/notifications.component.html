@@ -1,17 +1,21 @@
 <div class="sh-notifications__container">
-  <ng-container *ngIf="unreadNotifications.length > 0 && notificationsSensors.length > 0">
-    <div class="sh-notifications__title">Unread Notifications</div>
+  <div class="sh-notifications__title">Unread Notifications</div>
+  <ng-container *ngIf="unreadNotifications.length > 0 && notificationsSensors.length > 0 else noUnreadTemplate">
     <sh-notification-card
       *ngFor="let notification of unreadNotifications; index as i"
       [notification]="notification"
       [sensor]="notificationsSensors[i]"
       (buttonClicked)="markNotificationAsRead(notification._id)"
     />
-    <button
-      (click)="navigateToAllNotifications()"
-      class="sh-notifications__all-button"
-    >
-      See all notifications
-    </button>
   </ng-container>
+  <button
+    (click)="navigateToAllNotifications()"
+    class="sh-notifications__all-button"
+  >
+    See all notifications
+  </button>
 </div>
+
+<ng-template #noUnreadTemplate>
+  <div>You have no unread notifications. To see all notifications click in the button below</div>
+</ng-template>
