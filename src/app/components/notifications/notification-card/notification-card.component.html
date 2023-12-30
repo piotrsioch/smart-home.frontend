@@ -1,0 +1,28 @@
+<div class="sh-notification-card__notification">
+  <div class="sh-notification-card__wrapper">
+    <div class="sh-notification-card__wrapper__header">Name:</div>
+    {{ notification.name }}
+  </div>
+  <div class="sh-notification-card__wrapper">
+    <div class="sh-notification-card__wrapper__header">Sensor Name:</div>
+    {{ sensor.name }}
+  </div>
+  <div class="sh-notification-card__wrapper">
+    <div class="sh-notification-card__wrapper__header">Sensor Location:</div>
+    {{ sensor.location }}
+  </div>
+  <div class="sh-notification-card__wrapper">
+    <div class="sh-notification-card__wrapper__header">Message:</div>
+    {{ notification.message }}
+  </div>
+  <div class="sh-notification-card__wrapper">
+    <div class="sh-notification-card__wrapper__header">Date:</div>
+    {{ notification.createdAt | date }}
+  </div>
+  <button
+    (click)="handleButtonClicked(notification._id)"
+    class="sh-notification-card__button"
+  >
+    {{ buttonText }}
+  </button>
+</div>

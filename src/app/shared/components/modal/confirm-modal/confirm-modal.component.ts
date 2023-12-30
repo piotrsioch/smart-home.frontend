@@ -5,7 +5,7 @@ import { SelectComponent } from "../../select/select.component";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 export interface ConfirmModalData {
-  title: string;
+  title?: string;
   description: string;
 }
 
@@ -21,14 +21,17 @@ export interface ConfirmModalData {
   styleUrl: './confirm-modal.component.scss'
 })
 export class ConfirmModalComponent {
-  public title: string;
+  public title: string = 'Are you sure?';
   public description: string;
 
   constructor(
     public dialogRef: MatDialogRef<ConfirmModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ConfirmModalData,
   ) {
-    this.title = this.data.title;
+    if (this.data.title) {
+      this.title = this.data.title;
+    }
+
     this.description = this.data.description;
   }
 

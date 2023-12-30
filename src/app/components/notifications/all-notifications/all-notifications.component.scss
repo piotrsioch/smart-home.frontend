@@ -1,7 +1,6 @@
 @import "variables";
-@import "mixins";
 
-.sh-notifications {
+.sh-all-notifications {
   &__container {
     color: var(--black);
   }
@@ -10,11 +9,5 @@
     font-size: $main-size * 5;
     font-weight: 700;
     margin-bottom: $main-size * 8;
-  }
-
-  &__all-button {
-    @include default-button;
-    width: 50% !important;
-    margin: $main-size * 10 auto 0 auto;
   }
 }

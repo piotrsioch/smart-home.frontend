@@ -74,7 +74,7 @@ export class EditRoomModalComponent implements OnDestroy {
     }) : this.close();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 }

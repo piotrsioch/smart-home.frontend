@@ -1,33 +1,32 @@
-import { Component } from '@angular/core';
-import { NotificationsService } from "../../core/api/services/notifications.service";
-import { filter, map, switchMap, tap } from "rxjs/operators";
-import { NotificationDto } from "../../core/api/models/notification-dto";
+import { Component, OnDestroy } from '@angular/core';
+import { SensorDto } from "../../../core/api/models/sensor-dto";
 import { BehaviorSubject, forkJoin, Observable, of, Subscription } from "rxjs";
+import { NotificationsService } from "../../../core/api/services/notifications.service";
+import { SensorsService } from "../../../core/api/services/sensors.service";
+import { ModalService, ModalStyle } from "../../../shared/services/modal.service";
+import { NotificationDto } from "../../../core/api/models/notification-dto";
+import { filter, map, switchMap, tap } from "rxjs/operators";
 import { CommonModule } from "@angular/common";
-import { Router } from "@angular/router";
-import { ModalService, ModalStyle } from "../../shared/services/modal.service";
+import { NotificationCardComponent } from "../notification-card/notification-card.component";
 import {
   ConfirmModalComponent,
   ConfirmModalData
-} from "../../shared/components/modal/confirm-modal/confirm-modal.component";
-import { SensorDto } from "../../core/api/models/sensor-dto";
-import { SensorsService } from "../../core/api/services/sensors.service";
-import { NotificationCardComponent } from "./notification-card/notification-card.component";
-import { LoaderComponent } from "../../shared/components/loader/loader.component";
+} from "../../../shared/components/modal/confirm-modal/confirm-modal.component";
+import { LoaderComponent } from "../../../shared/components/loader/loader.component";
 
 @Component({
-  selector: 'sh-notifications',
+  selector: 'sh-all-notifications',
   standalone: true,
   imports: [
     CommonModule,
     NotificationCardComponent,
     LoaderComponent,
   ],
-  templateUrl: './notifications.component.html',
-  styleUrl: './notifications.component.scss'
+  templateUrl: './all-notifications.component.html',
+  styleUrl: './all-notifications.component.scss'
 })
-export class NotificationsComponent {
-  public unreadNotifications: NotificationDto[] = [];
+export class AllNotificationsComponent implements OnDestroy {
+  public notifications: NotificationDto[] = [];
   public notificationsSensors: SensorDto[] = [];
   public loading = true;
   private loadingSubject = new BehaviorSubject<boolean>(true);
@@ -36,7 +35,6 @@ export class NotificationsComponent {
   constructor(
     private readonly notificationsService: NotificationsService,
     private readonly sensorsService: SensorsService,
-    private readonly router: Router,
     private readonly modalService: ModalService,
   ) {
     this.subscription.add(
@@ -46,24 +44,20 @@ export class NotificationsComponent {
     );
 
     this.subscription.add(
-      this.fetchUnreadNotifications().pipe(
+      this.fetchNotifications().pipe(
         tap(_ => this.loadingSubject.next(true))
       ).subscribe(data => {
-        this.loadingSubject.next(false);
         this.notificationsSensors = data;
+        this.loadingSubject.next(false);
       })
-    );
+    )
   }
 
-  public navigateToAllNotifications(): void {
-    this.router.navigate(['notifications/all']);
-  }
-
-  public markNotificationAsRead(id: string): void {
+  public deleteNotification(id: string): void {
     const modalRef = this.modalService.open<ConfirmModalComponent, ConfirmModalData>(
       ConfirmModalComponent, {
         data: {
-          description: 'Do you wish to mark this notification as read?'
+          description: "Do you wish to proceed with deleting the selected notification?"
         },
         style: ModalStyle.ConfirmModal,
       }
@@ -74,13 +68,13 @@ export class NotificationsComponent {
         filter(data => !!data),
         tap(_ => this.loadingSubject.next(true)),
         switchMap(_ => {
-          return this.notificationsService.notificationControllerMarkAsRead({
+          return this.notificationsService.notificationControllerDelete({
             body: {
               id,
             }
           })
         }),
-        switchMap(_ => this.fetchUnreadNotifications())
+        switchMap(_ => this.fetchNotifications())
       ).subscribe(data => {
         this.notificationsSensors = data;
         this.loadingSubject.next(false);
@@ -88,10 +82,17 @@ export class NotificationsComponent {
     )
   }
 
-  private fetchUnreadNotifications(): Observable<SensorDto[]> {
-    return this.notificationsService.notificationControllerGetUnreadNotifications().pipe(
-      map(data => data.notifications),
-      tap(data => this.unreadNotifications = data),
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  private fetchNotifications(): Observable<SensorDto[]> {
+    return this.notificationsService.notificationControllerNotificationList({
+      page: 0,
+      limit: 100,
+    }).pipe(
+      map(data => data.items!),
+      tap(data => this.notifications = data),
       switchMap(data => {
         if (data.length === 0) {
           return of([]);

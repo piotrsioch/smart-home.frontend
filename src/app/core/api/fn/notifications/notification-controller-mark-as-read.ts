@@ -6,16 +6,17 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { MarkNotificationAsReadInputDto } from '../../models/mark-notification-as-read-input-dto';
 import { NotificationDto } from '../../models/notification-dto';
 
-export interface NotificationControllerGetNotificationById$Params {
-  id: string;
+export interface NotificationControllerMarkAsRead$Params {
+      body: MarkNotificationAsReadInputDto
 }
 
-export function notificationControllerGetNotificationById(http: HttpClient, rootUrl: string, params: NotificationControllerGetNotificationById$Params, context?: HttpContext): Observable<StrictHttpResponse<NotificationDto>> {
-  const rb = new RequestBuilder(rootUrl, notificationControllerGetNotificationById.PATH, 'get');
+export function notificationControllerMarkAsRead(http: HttpClient, rootUrl: string, params: NotificationControllerMarkAsRead$Params, context?: HttpContext): Observable<StrictHttpResponse<NotificationDto>> {
+  const rb = new RequestBuilder(rootUrl, notificationControllerMarkAsRead.PATH, 'post');
   if (params) {
-    rb.query('id', params.id, {});
+    rb.body(params.body, 'application/json');
   }
 
   return http.request(
@@ -28,4 +29,4 @@ export function notificationControllerGetNotificationById(http: HttpClient, root
   );
 }
 
-notificationControllerGetNotificationById.PATH = '/notifications/get-by-id';
+notificationControllerMarkAsRead.PATH = '/notifications/mark-as-read';
