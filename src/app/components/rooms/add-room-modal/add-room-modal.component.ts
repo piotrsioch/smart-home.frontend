@@ -5,6 +5,7 @@ import { MatDialogRef } from "@angular/material/dialog";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { SelectComponent } from "../../../shared/components/select/select.component";
 import { CreateRoomInputDto } from "../../../core/api/models/create-room-input-dto";
+import { roomTypes } from "../rooms.assets";
 
 export interface AddRoomModalReturnData {
   name: string;
@@ -25,10 +26,7 @@ export interface AddRoomModalReturnData {
   styleUrl: './add-room-modal.component.scss'
 })
 export class AddRoomModalComponent {
-  public roomTypes = ['Living Room', 'Kitchen', 'Bedroom', 'Bathroom', 'Dining Room', 'Home Office',
-    'Garage', 'Basement', 'Attic', 'Guest Room', 'Hallway', 'Laundry Room',
-    'Pantry', 'Play Room', 'Storage Room', 'Gym', 'Home Theater', 'Garden',
-    'Balcony', 'Other'];
+  public roomTypes = roomTypes;
   public addRoomForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     roomType: new FormControl('', [Validators.required]),

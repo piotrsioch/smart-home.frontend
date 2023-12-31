@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { RoomService } from "../../core/api/services/room.service";
 import { SensorsService } from "../../core/api/services/sensors.service";
-import { BehaviorSubject, Subscription } from "rxjs";
+import { BehaviorSubject, Observable, Subscription } from "rxjs";
 import { filter, map, switchMap, tap } from "rxjs/operators";
 import { RoomDto } from "../../core/api/models/room-dto";
 import { LoaderComponent } from "../../shared/components/loader/loader.component";
@@ -12,6 +12,8 @@ import {
   AddRoomModalReturnData,
 } from "./add-room-modal/add-room-modal.component";
 import { ActivatedRoute, Router } from "@angular/router";
+import { MatIconModule } from "@angular/material/icon";
+import { roomTypeIconMap } from "./rooms.assets";
 
 @Component({
   selector: 'sh-rooms',
@@ -19,6 +21,7 @@ import { ActivatedRoute, Router } from "@angular/router";
   imports: [
     LoaderComponent,
     CommonModule,
+    MatIconModule,
   ],
   templateUrl: './rooms.component.html',
   styleUrl: './rooms.component.scss'
@@ -26,6 +29,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 export class RoomsComponent implements OnDestroy {
   public loading = true;
   public rooms: RoomDto[] = [];
+  public roomIconMap = roomTypeIconMap;
   private subscription = new Subscription();
   private loadingSubject = new BehaviorSubject<boolean>(true);
 
@@ -43,13 +47,7 @@ export class RoomsComponent implements OnDestroy {
     );
 
     this.subscription.add(
-      this.roomService.roomControllerRoomList({
-        page: 0,
-        limit: 0,
-      }).pipe(
-        tap(_ => this.loadingSubject.next(true)),
-        map(data => data.items!),
-      ).subscribe(data => {
+      this.fetchRoomData().subscribe(data => {
         this.rooms = data;
         this.loadingSubject.next(false);
       })
@@ -75,14 +73,26 @@ export class RoomsComponent implements OnDestroy {
               description: data?.description || '',
             }
           })
-        })
+        }),
+        switchMap(_ => this.fetchRoomData())
       ).subscribe(data => {
         this.loadingSubject.next(false);
+        this.rooms = data;
       })
     )
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  private fetchRoomData(): Observable<RoomDto[]> {
+    return this.roomService.roomControllerRoomList({
+      page: 0,
+      limit: 0,
+    }).pipe(
+      tap(_ => this.loadingSubject.next(true)),
+      map(data => data.items!),
+    )
   }
 }
