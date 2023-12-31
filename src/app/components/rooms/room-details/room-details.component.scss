@@ -8,11 +8,24 @@
     flex-direction: column;
   }
 
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $main-size * 8;
+  }
+
   &__title {
     display: block;
     font-size: $main-size * 5;
     font-weight: 700;
-    margin-bottom: $main-size * 8;
+  }
+
+  &__delete-button {
+    @include default-button;
+    width: $main-size * 25 !important;
+    border-color: $red;
+    color: $red;
   }
 
   &__overview {

@@ -15,14 +15,13 @@
         (click)="openRoomDetails(room._id)"
         class="sh-rooms__room"
       >
-        <div class="sh-rooms__room__wrapper">
-          <div class="sh-rooms__room__header">Name:</div>
-          {{ room.name }}
+        <div class="sh-rooms__room__icon-wrapper">
+          <mat-icon
+            [svgIcon]="roomIconMap[room.roomType]"
+            class="sh-rooms__room__icon"
+          ></mat-icon>
         </div>
-        <div class="sh-rooms__room__wrapper">
-          <div class="sh-rooms__room__header">Type:</div>
-          {{ room.roomType }}
-        </div>
+        <div class="sh-rooms__room__name">{{ room.name }}</div>
       </div>
     </div>
   </div>

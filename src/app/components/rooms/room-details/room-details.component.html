@@ -1,9 +1,17 @@
-<sh-loader [loading]="!!room">
+<sh-loader [loading]="loading">
   <div
     *ngIf="room"
     class="sh-room-details__container"
   >
-    <div class="sh-room-details__title">Room details</div>
+    <div class="sh-room-details__wrapper">
+      <div class="sh-room-details__title">Room details</div>
+      <button
+        (click)="deleteRoom(room._id)"
+        class="sh-room-details__delete-button"
+      >
+        Delete
+      </button>
+    </div>
     <div class="sh-room-details__overview">
       <div class="sh-room-details__overview__wrapper">
         <div class="sh-room-details__overview__header">Name:</div>
