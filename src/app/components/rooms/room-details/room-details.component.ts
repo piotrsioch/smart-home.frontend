@@ -6,7 +6,7 @@ import { RoomDto } from "../../../core/api/models/room-dto";
 import { SensorDto } from "../../../core/api/models/sensor-dto";
 import { filter, map, tap } from "rxjs/operators";
 import { LoaderComponent } from "../../../shared/components/loader/loader.component";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { ModalService, ModalStyle } from "../../../shared/services/modal.service";
 import {
@@ -47,6 +47,7 @@ export class RoomDetailsComponent implements OnDestroy {
     private readonly roomService: RoomService,
     private readonly sensorsService: SensorsService,
     private readonly modalService: ModalService,
+    private readonly router: Router,
   ) {
     this.subscription.add(
       this.loadingSubject.subscribe(isLoading => {
@@ -63,6 +64,34 @@ export class RoomDetailsComponent implements OnDestroy {
           this.roomSensors = roomSensors;
           this.unassignedSensors = unassignedSensors;
         })
+    )
+  }
+
+  public deleteRoom(id: string): void {
+    const modalRef = this.modalService.open<ConfirmModalComponent, ConfirmModalData>(
+      ConfirmModalComponent,
+      {
+        data: {
+          title: "Are you sure?",
+          description: "Do you wish to proceed with deleting this room?"
+        },
+        style: ModalStyle.ConfirmModal
+      }
+    )
+    this.subscription.add(
+      modalRef.afterClosed().pipe(
+        filter(data => !!data),
+        tap(_ => this.loadingSubject.next(true)),
+        switchMap(_ => {
+          return this.roomService.roomControllerDeleteRoom({
+            body: {
+              id: this.room._id,
+            }
+          })
+        }),
+      ).subscribe(() => {
+        this.router.navigate(['/rooms']);
+      })
     )
   }
 
