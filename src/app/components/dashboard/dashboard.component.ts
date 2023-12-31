@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CardComponent } from "./card/card.component";
+import { MatIconModule } from "@angular/material/icon";
 
 interface Card {
   name: string;
@@ -10,7 +11,7 @@ interface Card {
 @Component({
   selector: 'sh-dashboard',
   standalone: true,
-  imports: [CardComponent],
+  imports: [CardComponent, MatIconModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -47,7 +48,4 @@ export class DashboardComponent {
       path: '/rooms',
     }
   ]
-
-  constructor() {
-  }
 }

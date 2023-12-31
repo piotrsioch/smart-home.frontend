@@ -55,10 +55,14 @@ export class RoomDetailsComponent implements OnDestroy {
     );
 
     this.subscription.add(
-      this.fetchRoomAndUnassignedSensorData().subscribe(([roomSensors, unassignedSensors]) => {
-        this.roomSensors = roomSensors;
-        this.unassignedSensors = unassignedSensors;
-      })
+      this.fetchRoomAndUnassignedSensorData().pipe(
+        tap(_ => this.loadingSubject.next(true)),
+      )
+        .subscribe(([roomSensors, unassignedSensors]) => {
+          this.loadingSubject.next(false);
+          this.roomSensors = roomSensors;
+          this.unassignedSensors = unassignedSensors;
+        })
     )
   }
 
@@ -75,6 +79,7 @@ export class RoomDetailsComponent implements OnDestroy {
     this.subscription.add(
       modalRef.afterClosed().pipe(
         filter(data => !!data),
+        tap(_ => this.loadingSubject.next(true)),
         switchMap(data => this.roomService.roomControllerAssignSensorToRoom({
             body: {
               sensorId: data!.sensorId,
@@ -84,6 +89,7 @@ export class RoomDetailsComponent implements OnDestroy {
         ),
         switchMap(_ => this.fetchRoomAndUnassignedSensorData()),
       ).subscribe(([roomSensors, unassignedSensors]) => {
+        this.loadingSubject.next(false);
         this.roomSensors = roomSensors;
         this.unassignedSensors = unassignedSensors;
       })
@@ -102,6 +108,7 @@ export class RoomDetailsComponent implements OnDestroy {
     this.subscription.add(
       modalRef.afterClosed().pipe(
         filter(data => !!data),
+        tap(_ => this.loadingSubject.next(true)),
         switchMap(data => this.roomService.roomControllerEditRoom({
           body: {
             id: this.room._id,
@@ -111,7 +118,7 @@ export class RoomDetailsComponent implements OnDestroy {
           }
         })),
         switchMap(_ => this.fetchRoomAndRoomSensorsData()),
-      ).subscribe()
+      ).subscribe(_ => this.loadingSubject.next(false))
     )
   }
 
@@ -129,6 +136,7 @@ export class RoomDetailsComponent implements OnDestroy {
     this.subscription.add(
       modalRef.afterClosed().pipe(
         filter(data => !!data),
+        tap(_ => this.loadingSubject.next(true)),
         switchMap(_ => {
           return this.roomService.roomControllerRemoveSensorFromRoom({
             body: {
@@ -139,6 +147,7 @@ export class RoomDetailsComponent implements OnDestroy {
         }),
         switchMap(_ => this.fetchRoomAndUnassignedSensorData())
       ).subscribe(([roomSensors, unassignedSensors]) => {
+        this.loadingSubject.next(false);
         this.roomSensors = roomSensors;
         this.unassignedSensors = unassignedSensors;
       })
@@ -179,7 +188,6 @@ export class RoomDetailsComponent implements OnDestroy {
     }).pipe(
       map(data => data.items!),
       map(data => data!.filter(sensor => sensor.roomId == null || sensor.roomId == '')),
-      first(),
     )
   }
 }
