@@ -1,0 +1,28 @@
+<sh-loader [loading]="loading">
+  <div class="sh-sensors__container">
+    <div
+      *ngIf="sensors.length > 0 else noSensorsTemplate"
+      class="sh-sensors__sensors-wrapper"
+    >
+      <div
+        *ngFor="let sensor of sensors"
+        (click)="openSensorDetails(sensor._id)"
+        class="sh-sensors__sensor"
+      >
+        <div class="sh-sensors__sensor__icon-wrapper">
+          <mat-icon
+            [svgIcon]="sensorIconMap[sensor.type]"
+            class="sh-sensors__sensor__icon"
+          ></mat-icon>
+        </div>
+        <div class="sh-sensors__sensor__name">{{ sensor.name }}</div>
+      </div>
+    </div>
+  </div>
+</sh-loader>
+
+<ng-template #noSensorsTemplate>
+  <div class="sh-sensors__sensor">
+    You have currently no sensors
+  </div>
+</ng-template>

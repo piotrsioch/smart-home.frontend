@@ -1,6 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
 import { RoomService } from "../../core/api/services/room.service";
-import { SensorsService } from "../../core/api/services/sensors.service";
 import { BehaviorSubject, Observable, Subscription } from "rxjs";
 import { filter, map, switchMap, tap } from "rxjs/operators";
 import { RoomDto } from "../../core/api/models/room-dto";
@@ -11,7 +10,7 @@ import {
   AddRoomModalComponent,
   AddRoomModalReturnData,
 } from "./add-room-modal/add-room-modal.component";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { MatIconModule } from "@angular/material/icon";
 import { roomTypeIconMap } from "./rooms.assets";
 
@@ -35,10 +34,8 @@ export class RoomsComponent implements OnDestroy {
 
   constructor(
     private readonly roomService: RoomService,
-    private readonly sensorsService: SensorsService,
     private readonly modalService: ModalService,
     private readonly router: Router,
-    private route: ActivatedRoute,
   ) {
     this.subscription.add(
       this.loadingSubject.subscribe(isLoading => {
