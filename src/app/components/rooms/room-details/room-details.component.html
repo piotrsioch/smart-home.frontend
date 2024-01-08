@@ -55,7 +55,7 @@
         </div>
         <div class="sh-room-details__sensor__wrapper">
           <div class="sh-room-details__sensor__wrapper__header">Type:</div>
-          {{ sensor.type }}
+          {{ sensorTypesMap[sensor.type] }}
         </div>
         <button
           (click)="unassignSensor(sensor._id)"

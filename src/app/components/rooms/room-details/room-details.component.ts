@@ -18,6 +18,7 @@ import {
   ConfirmModalComponent,
   ConfirmModalData
 } from "../../../shared/components/modal/confirm-modal/confirm-modal.component";
+import { sensorsTypesMap } from "../../sensors/sensors.assets";
 
 export interface AssignSensorModalData {
   sensors: SensorDto[];
@@ -38,6 +39,7 @@ export class RoomDetailsComponent implements OnDestroy {
   public room: RoomDto;
   public roomSensors: SensorDto[] = [];
   public unassignedSensors: SensorDto[] = [];
+  public sensorTypesMap = sensorsTypesMap;
   public loading = true;
   private loadingSubject = new BehaviorSubject<boolean>(true);
   private readonly subscription = new Subscription();
