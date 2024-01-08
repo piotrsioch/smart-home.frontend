@@ -9,6 +9,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { sensorTypeIconMap } from "./sensors.assets";
 import { roomTypeIconMap } from "src/app/components/rooms/rooms.assets";
 import { Router } from "@angular/router";
+import { RoomDto } from "../../core/api/models/room-dto";
 
 @Component({
   selector: 'sh-sensors',

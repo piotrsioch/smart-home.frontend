@@ -6,9 +6,15 @@ import { BehaviorSubject, Observable, of, Subscription, switchMap } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 import { SensorsService } from "../../../core/api/services/sensors.service";
 import { ModalService } from "../../../shared/services/modal.service";
-import { tap } from "rxjs/operators";
+import { filter, tap } from "rxjs/operators";
 import { RoomDto } from "../../../core/api/models/room-dto";
 import { RoomService } from "../../../core/api/services/room.service";
+import { EditSensorModalComponent, EditSensorModalReturnData } from "../edit-sensor-modal/edit-sensor-modal.component";
+import { sensorsTypesMap } from "../sensors.assets";
+
+export interface EditSensorModalData {
+  sensor: SensorDto;
+}
 
 @Component({
   selector: 'sh-sensor-details',
@@ -21,6 +27,7 @@ export class SensorDetailsComponent {
   public sensor: SensorDto;
   public loading = true;
   public room: RoomDto;
+  public sensorTypesMap = sensorsTypesMap;
   private loadingSubject = new BehaviorSubject<boolean>(true);
   private readonly subscription = new Subscription();
 
@@ -44,8 +51,29 @@ export class SensorDetailsComponent {
     )
   }
 
-  public editSensor(id: string): void {
+  public editSensor(): void {
+    const modalRef =
+      this.modalService.open<EditSensorModalComponent, EditSensorModalData, EditSensorModalReturnData>(
+        EditSensorModalComponent, {
+          data: {
+            sensor: this.sensor,
+          },
+        });
 
+    this.subscription.add(
+      modalRef.afterClosed().pipe(
+        filter(data => !!data),
+        tap(_ => this.loadingSubject.next(true)),
+        switchMap(data => this.sensorsService.sensorControllerEditSensor({
+          body: {
+            id: this.sensor._id,
+            name: data?.name || '',
+            location: data?.location || '',
+          }
+        })),
+        switchMap(_ => this.fetchSensorData()),
+      ).subscribe(_ => this.loadingSubject.next(false))
+    )
   }
 
   private fetchSensorData(): Observable<RoomDto | null> {
