@@ -1,0 +1,43 @@
+@import "mixins";
+@import "variables";
+
+.sh-sensor-details {
+  &__container {
+    color: var(--black);
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $main-size * 8;
+  }
+
+  &__title {
+    display: block;
+    font-size: $main-size * 5;
+    font-weight: 700;
+  }
+
+  &__edit-button {
+    @include default-button;
+    width: $main-size * 25 !important;
+  }
+
+  &__overview {
+    display: flex;
+    flex-direction: column;
+    gap: $main-size * 5;
+
+    &__wrapper {
+      display: flex;
+      gap: $main-size * 2;
+    }
+
+    &__header {
+      font-weight: 700;
+    }
+  }
+}
