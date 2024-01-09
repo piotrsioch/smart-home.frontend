@@ -40,4 +40,10 @@
       font-weight: 700;
     }
   }
+
+  &__history {
+    margin: $main-size * 10 0 $main-size * 7 0;
+    font-weight: 700;
+    font-size: $main-size * 4.5;
+  }
 }

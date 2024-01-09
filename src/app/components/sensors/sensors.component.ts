@@ -7,8 +7,8 @@ import { LoaderComponent } from "../../shared/components/loader/loader.component
 import { CommonModule } from "@angular/common";
 import { MatIconModule } from "@angular/material/icon";
 import { sensorTypeIconMap } from "./sensors.assets";
-import { roomTypeIconMap } from "src/app/components/rooms/rooms.assets";
 import { Router } from "@angular/router";
+import { TableComponent } from "../../shared/components/table/table.component";
 
 @Component({
   selector: 'sh-sensors',
@@ -17,6 +17,7 @@ import { Router } from "@angular/router";
     LoaderComponent,
     CommonModule,
     MatIconModule,
+    TableComponent,
   ],
   templateUrl: './sensors.component.html',
   styleUrl: './sensors.component.scss'
@@ -48,7 +49,7 @@ export class SensorsComponent implements OnInit {
     )
   }
 
-  public openSensorDetails(id: string): void {
+  openSensorDetails(id: string): void {
     this.router.navigate(['/sensor-details', id]);
   }
 
@@ -62,7 +63,4 @@ export class SensorsComponent implements OnInit {
       map(data => data.items!),
     )
   }
-
-  protected readonly screenX = screenX;
-  protected readonly roomIconMap = roomTypeIconMap;
 }

@@ -1,0 +1,76 @@
+<div class="sh-table__container">
+  <ng-container
+    *ngIf="isFilterable"
+    matColumnDef="filter"
+  >
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input
+        (keyup)="applyFilter($event)"
+        placeholder="filter"
+        matInput
+      >
+    </mat-form-field>
+  </ng-container>
+
+  <table
+    [dataSource]="tableDataSource"
+    (matSortChange)="sortTable($event)"
+    mat-table
+    matSort
+    class="sh-table__table"
+  >
+    <ng-container
+      *ngFor="let tableColumn of tableColumns"
+      [matColumnDef]="tableColumn.name"
+    >
+      <ng-container *ngIf="tableColumn.isSortable; else notSortable">
+        <th
+          *matHeaderCellDef
+          [mat-sort-header]="tableColumn.name"
+          [arrowPosition]="tableColumn.position === 'right' ? 'before' : 'after'"
+          mat-header-cell
+        >
+          {{ tableColumn.name }}
+        </th>
+      </ng-container>
+
+      <ng-template #notSortable>
+        <th
+          *matHeaderCellDef
+          [class.text-right]="tableColumn.position == 'right'"
+          mat-header-cell
+        >
+          {{ tableColumn.name }}
+        </th>
+      </ng-template>
+
+      <td
+        *matCellDef="let element"
+        [class.text-right]="tableColumn.position == 'right'"
+        mat-cell
+      >
+        {{ element | dataPropertyGetter: tableColumn.dataKey | tableColumn: tableColumn.type }}
+      </td>
+    </ng-container>
+    <tr
+      *matHeaderRowDef="displayedColumns"
+      mat-header-row
+    ></tr>
+    <tr
+      *matRowDef="let row; columns: displayedColumns;"
+      mat-row
+    ></tr>
+  </table>
+
+  <mat-paginator
+    #paginator
+    *ngIf="isPageable && totalItemCount"
+    [length]="totalItemCount"
+    [pageSizeOptions]="paginationSizes"
+    [pageSize]="defaultPageSize"
+    [ngClass]="{ 'sh-table__mobile-paginator' : isMobile }"
+    (page)="pageChangeEvent($event)"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>

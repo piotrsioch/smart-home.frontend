@@ -36,6 +36,17 @@
           }
         }
       </div>
+      <div class="sh-sensor-details__history">Sensor History</div>
+
+      <sh-table
+        *ngIf="sensorData && sensorData.data.length > 0"
+        [totalItemCount]="totalItemCount"
+        [tableData]="sensorData"
+        [tableColumns]="sensorColumns"
+        [isPageable]="true"
+        (pageChanged)="handlePageChange($event)"
+        (sortChanged)="handleSortChange($event)"
+      />
     </div>
   }
 </sh-loader>
