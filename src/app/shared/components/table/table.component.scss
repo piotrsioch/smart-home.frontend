@@ -1,0 +1,55 @@
+@import "variables";
+
+:host ::ng-deep {
+  .mat-mdc-header-cell, .mat-mdc-cell, .mat-mdc-paginator-range-label, .mat-mdc-paginator-page-size-label {
+    color: var(--black) !important;
+  }
+
+  .mat-mdc-header-cell {
+    font-weight: 700;
+  }
+
+  .mat-mdc-paginator-icon {
+    fill: var(--black);
+    opacity: 0.7;
+  }
+
+  .mat-mdc-icon-button[disabled] .mat-mdc-paginator-icon {
+    fill: var(--black);
+    opacity: 0.15;
+  }
+
+  .mat-mdc-paginator-container {
+    background: var(--white-dirty);
+  }
+
+  .mat-mdc-text-field-wrapper {
+    border: 0.5px solid var(--black);
+    border-radius: $main-size;
+    margin-bottom: $main-size * 2;
+  }
+
+  .mat-mdc-paginator .mat-mdc-select-value {
+    color: var(--black)
+  }
+
+  .mat-mdc-select-arrow svg {
+    fill: var(--black);
+  }
+
+  .sh-table__mobile-paginator {
+    .mat-mdc-paginator-container {
+      flex-direction: column !important;
+    }
+
+    .mat-mdc-paginator-page-size {
+      order: 2;
+    }
+  }
+}
+
+.sh-table {
+  &__table {
+    background: var(--white-dirty);
+  }
+}

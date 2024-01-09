@@ -24,6 +24,7 @@ export class TableComponent {
   @ViewChild('paginator', { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
+  @Input() isMobile = true;
   @Input() isPageable = false;
   @Input() isSortable = false;
   @Input() isFilterable = false;
