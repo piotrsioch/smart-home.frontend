@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { LoaderComponent } from "../../../shared/components/loader/loader.component";
 import { CommonModule } from "@angular/common";
 import { SensorDto } from "../../../core/api/models/sensor-dto";
@@ -29,7 +29,7 @@ export interface EditSensorModalData {
   templateUrl: './sensor-details.component.html',
   styleUrl: './sensor-details.component.scss'
 })
-export class SensorDetailsComponent {
+export class SensorDetailsComponent implements OnDestroy {
   public sensor: SensorDto;
   public loading = true;
   public room: RoomDto;
@@ -99,7 +99,20 @@ export class SensorDetailsComponent {
     const currentPage = event.pageIndex;
     const perPage = event.pageSize;
 
-    this.fetchDataForTable(this.sensor, currentPage, perPage);
+    this.subscription.add(
+      this.fetchDataForTable(this.sensor, currentPage, perPage).subscribe(data => {
+        this.sensorData = {
+          data: data.items,
+          total: data.total
+        };
+
+        this.totalItemCount = data.total;
+      })
+    )
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   private fetchSensorData(): Observable<GetPaginatedSensorData> {
