@@ -15,6 +15,11 @@ import { TableColumn, TableColumnType } from "../components/table/table.assets";
 
 export type SensorServiceType = ReedSwitchDto | LightDto | DhtSensorDto | PirSensorDto | SmokeSensorDto | AlarmDto;
 
+export type GetPaginatedSensorData = {
+  items: SensorServiceType[],
+  total: number
+}
+
 @Injectable({
   providedIn: 'root'
 })

@@ -12,7 +12,10 @@ import { RoomService } from "../../../core/api/services/room.service";
 import { EditSensorModalComponent, EditSensorModalReturnData } from "../edit-sensor-modal/edit-sensor-modal.component";
 import { sensorsTypesMap } from "../sensors.assets";
 import { TableComponent } from "../../../shared/components/table/table.component";
-import { SensorsHelperService } from "../../../shared/services/sensors-helper.service";
+import {
+  GetPaginatedSensorData,
+  SensorsHelperService
+} from "../../../shared/services/sensors-helper.service";
 import { CustomDatasource, PageChangedData, TableColumn } from "../../../shared/components/table/table.assets";
 
 export interface EditSensorModalData {
@@ -54,15 +57,15 @@ export class SensorDetailsComponent {
 
     this.subscription.add(
       this.fetchSensorData().subscribe(data => {
-        if (data) {
-          this.room = data;
-        }
+        this.sensorData = {
+          data: data.items,
+          total: data.total
+        };
+
+        this.totalItemCount = data.total;
         this.loadingSubject.next(false);
 
-        //TODO REFACTOR
-        this.fetchDataForTable(this.sensor, 0, 5);
         this.sensorColumns = this.sensorHelperService.getSensorColumns(this.sensor.type);
-        //TODO REFACTOR
       })
     )
   }
@@ -99,7 +102,7 @@ export class SensorDetailsComponent {
     this.fetchDataForTable(this.sensor, currentPage, perPage);
   }
 
-  private fetchSensorData(): Observable<RoomDto | null> {
+  private fetchSensorData(): Observable<GetPaginatedSensorData> {
     return this.sensorsService.sensorControllerGetById({
       id: this.route.snapshot.paramMap.get('id')!,
     }).pipe(
@@ -113,12 +116,18 @@ export class SensorDetailsComponent {
         return this.roomService.roomControllerGetRoomById({
           id: data.roomId,
         })
-      })
+      }),
+      tap(data => {
+        if (data) {
+          this.room = data;
+        }
+      }),
+      switchMap(_ => this.fetchDataForTable(this.sensor, 0, 5))
     )
   }
 
-  private fetchDataForTable(sensor: SensorDto, page: number, limit: number) {
-    this.sensorHelperService.getPaginatedData(sensor.type, {
+  private fetchDataForTable(sensor: SensorDto, page: number, limit: number): Observable<GetPaginatedSensorData> {
+    return this.sensorHelperService.getPaginatedData(sensor.type, {
       page,
       limit,
     }).pipe(
@@ -129,13 +138,6 @@ export class SensorDetailsComponent {
           }
         }
       ),
-    ).subscribe(data => {
-      this.sensorData = {
-        data: data.items,
-        total: data.total
-      };
-
-      this.totalItemCount = data.total;
-    });
+    )
   }
 }
