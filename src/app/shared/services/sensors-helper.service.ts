@@ -112,10 +112,6 @@ export class SensorsHelperService {
 
   private dhtSensorColumns = [
     {
-      name: 'Id',
-      dataKey: '_id',
-    },
-    {
       name: 'Created At',
       dataKey: 'createdAt',
     },
@@ -131,10 +127,6 @@ export class SensorsHelperService {
 
   private reedSwitchColumns = [
     {
-      name: 'Id',
-      dataKey: '_id',
-    },
-    {
       name: 'Created At',
       dataKey: 'createdAt',
     },
@@ -145,10 +137,6 @@ export class SensorsHelperService {
   ]
 
   private lightColumns = [
-    {
-      name: 'Id',
-      dataKey: '_id',
-    },
     {
       name: 'Created At',
       dataKey: 'createdAt',
@@ -161,10 +149,6 @@ export class SensorsHelperService {
 
   private pirSensorColumns = [
     {
-      name: 'Id',
-      dataKey: '_id',
-    },
-    {
       name: 'Created At',
       dataKey: 'createdAt',
     },
@@ -176,10 +160,6 @@ export class SensorsHelperService {
 
   private smokeSensorColumns = [
     {
-      name: 'Id',
-      dataKey: '_id',
-    },
-    {
       name: 'Created At',
       dataKey: 'createdAt',
     },
@@ -190,10 +170,6 @@ export class SensorsHelperService {
   ]
 
   private alarmColumns = [
-    {
-      name: 'Id',
-      dataKey: '_id',
-    },
     {
       name: 'Created At',
       dataKey: 'createdAt',
