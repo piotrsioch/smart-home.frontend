@@ -31,6 +31,10 @@ export class SensorDetailsComponent {
   public loading = true;
   public room: RoomDto;
   public sensorTypesMap = sensorsTypesMap;
+  public sensorColumns: TableColumn[] = [];
+  public sensorData: CustomDatasource = { data: [], total: 0 };
+  public totalItemCount = 0;
+
   private loadingSubject = new BehaviorSubject<boolean>(true);
   private readonly subscription = new Subscription();
 
@@ -60,7 +64,7 @@ export class SensorDetailsComponent {
     )
   }
 
-  public editSensor(): void {
+  editSensor(): void {
     const modalRef =
       this.modalService.open<EditSensorModalComponent, EditSensorModalData, EditSensorModalReturnData>(
         EditSensorModalComponent, {
@@ -85,6 +89,13 @@ export class SensorDetailsComponent {
     )
   }
 
+  handlePageChange(event: PageChangedData): void {
+    const currentPage = event.pageIndex;
+    const perPage = event.pageSize;
+
+    this.fetchDataForTable(this.sensor, currentPage, perPage);
+  }
+
   private fetchSensorData(): Observable<RoomDto | null> {
     return this.sensorsService.sensorControllerGetById({
       id: this.route.snapshot.paramMap.get('id')!,
@@ -103,10 +114,7 @@ export class SensorDetailsComponent {
     )
   }
 
-  public sensorColumns: TableColumn[] = [];
-  public sensorData: CustomDatasource = { data: [], perPage: 0, currentPage: 0, total: 0 };
-
-  fetchDataForTable(sensor: SensorDto, page: number, limit: number) {
+  private fetchDataForTable(sensor: SensorDto, page: number, limit: number) {
     this.sensorHelperService.getPaginatedData(sensor.type, {
       page,
       limit,
@@ -119,14 +127,8 @@ export class SensorDetailsComponent {
         }
       ),
     ).subscribe(data => {
-      this.sensorData = {data: data.items, currentPage: page, perPage: limit,  total: data.total};
+      this.sensorData = {data: data.items, total: data.total};
+      this.totalItemCount = data.total;
     });
-  }
-
-  handlePageChange(event: PageChangedData) {
-    const currentPage = event.pageIndex;
-    const perPage = event.pageSize;
-
-    this.fetchDataForTable(this.sensor, currentPage, perPage);
   }
 }

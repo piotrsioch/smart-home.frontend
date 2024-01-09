@@ -49,7 +49,7 @@ export class SensorsComponent implements OnInit {
     )
   }
 
-  public openSensorDetails(id: string): void {
+  openSensorDetails(id: string): void {
     this.router.navigate(['/sensor-details', id]);
   }
 

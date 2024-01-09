@@ -12,7 +12,5 @@ export interface PageChangedData {
 
 export interface CustomDatasource {
   data: any[];
-  perPage: number;
-  currentPage: number;
   total: number;
 }

@@ -40,6 +40,7 @@
 
     <sh-table
       *ngIf="sensorData && sensorData.data.length > 0"
+      [totalItemCount]="totalItemCount"
       [tableData]="sensorData"
       [tableColumns]="sensorColumns"
       [isPageable]="true"

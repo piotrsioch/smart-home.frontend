@@ -20,7 +20,6 @@ import { CommonModule } from "@angular/common";
 export class TableComponent {
   public tableDataSource = new MatTableDataSource([]);
   public displayedColumns: string[];
-  public check: any;
 
   @ViewChild('paginator', { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -47,29 +46,28 @@ export class TableComponent {
     this.displayedColumns = this.tableColumns.map((tableColumn: TableColumn) => tableColumn.name);
   }
 
-  setTableDataSource(data: CustomDatasource) {
-    this.check = data;
+  setTableDataSource(data: CustomDatasource): void {
     // @ts-ignore
     this.tableDataSource = new MatTableDataSource<any>(data.data);
     this.tableDataSource.sort = this.sort;
 
   }
 
-  applyFilter(event: Event) {
+  applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.tableDataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  sortTable(sortParameters: Sort) {
+  sortTable(sortParameters: Sort): void {
     sortParameters.active = this.tableColumns.find(column => column.name === sortParameters.active)!.dataKey;
     this.sortChanged.emit(sortParameters);
   }
 
-  emitRowAction(row: any) {
+  emitRowAction(row: any): void {
     this.rowAction.emit(row);
   }
 
-  pageChangeEvent(event: any) {
+  pageChangeEvent(event: any): void {
     this.pageChanged.emit({
       pageIndex: event.pageIndex,
       pageSize: event.pageSize,

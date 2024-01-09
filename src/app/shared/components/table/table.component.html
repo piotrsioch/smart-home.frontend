@@ -64,8 +64,8 @@
 
   <mat-paginator
     #paginator
-    *ngIf="isPageable && check"
-    [length]="check.total"
+    *ngIf="isPageable && totalItemCount"
+    [length]="totalItemCount"
     [pageSizeOptions]="paginationSizes"
     [pageSize]="defaultPageSize"
     (page)="pageChangeEvent($event)"
