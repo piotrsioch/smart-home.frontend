@@ -50,7 +50,7 @@
         [class.text-right]="tableColumn.position == 'right'"
         mat-cell
       >
-        {{ element | dataPropertyGetter: tableColumn.dataKey }}
+        {{ element | dataPropertyGetter: tableColumn.dataKey | tableColumn: tableColumn.type }}
       </td>
     </ng-container>
     <tr

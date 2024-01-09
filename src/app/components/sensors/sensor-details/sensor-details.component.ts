@@ -32,7 +32,10 @@ export class SensorDetailsComponent {
   public room: RoomDto;
   public sensorTypesMap = sensorsTypesMap;
   public sensorColumns: TableColumn[] = [];
-  public sensorData: CustomDatasource = { data: [], total: 0 };
+  public sensorData: CustomDatasource = {
+    data: [],
+    total: 0
+  };
   public totalItemCount = 0;
 
   private loadingSubject = new BehaviorSubject<boolean>(true);
@@ -127,7 +130,11 @@ export class SensorDetailsComponent {
         }
       ),
     ).subscribe(data => {
-      this.sensorData = {data: data.items, total: data.total};
+      this.sensorData = {
+        data: data.items,
+        total: data.total
+      };
+
       this.totalItemCount = data.total;
     });
   }

@@ -12,6 +12,7 @@ import { RoomDetailsComponent } from "./components/rooms/room-details/room-detai
 import { AllNotificationsComponent } from "./components/notifications/all-notifications/all-notifications.component";
 import { HttpClientModule } from "@angular/common/http";
 import { SensorDetailsComponent } from "./components/sensors/sensor-details/sensor-details.component";
+import { DatePipe } from "@angular/common";
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
@@ -28,5 +29,10 @@ const routes: Routes = [
 ]
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideAnimations(), importProvidersFrom(HttpClientModule)],
+  providers: [
+    provideRouter(routes),
+    provideAnimations(),
+    importProvidersFrom(HttpClientModule),
+    DatePipe
+  ],
 }

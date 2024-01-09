@@ -11,7 +11,7 @@ import { SmokeSensorDto } from "../../core/api/models/smoke-sensor-dto";
 import { AlarmService } from "../../core/api/services/alarm.service";
 import { LightService } from "../../core/api/services/light.service";
 import { AlarmDto } from "../../core/api/models/alarm-dto";
-import { TableColumn } from "../components/table/table.assets";
+import { TableColumn, TableColumnType } from "../components/table/table.assets";
 
 export type SensorServiceType = ReedSwitchDto | LightDto | DhtSensorDto | PirSensorDto | SmokeSensorDto | AlarmDto;
 
@@ -114,6 +114,7 @@ export class SensorsHelperService {
     {
       name: 'Created At',
       dataKey: 'createdAt',
+      type: TableColumnType.DATE,
     },
     {
       name: 'Temperature',
@@ -129,6 +130,7 @@ export class SensorsHelperService {
     {
       name: 'Created At',
       dataKey: 'createdAt',
+      type: TableColumnType.DATE,
     },
     {
       name: 'Is Opened',
@@ -140,6 +142,7 @@ export class SensorsHelperService {
     {
       name: 'Created At',
       dataKey: 'createdAt',
+      type: TableColumnType.DATE,
     },
     {
       name: 'Is On',
@@ -151,6 +154,7 @@ export class SensorsHelperService {
     {
       name: 'Created At',
       dataKey: 'createdAt',
+      type: TableColumnType.DATE,
     },
     {
       name: 'Sensor Id',
@@ -162,6 +166,7 @@ export class SensorsHelperService {
     {
       name: 'Created At',
       dataKey: 'createdAt',
+      type: TableColumnType.DATE,
     },
     {
       name: 'Value',
@@ -173,6 +178,7 @@ export class SensorsHelperService {
     {
       name: 'Created At',
       dataKey: 'createdAt',
+      type: TableColumnType.DATE,
     },
     {
       name: 'State',

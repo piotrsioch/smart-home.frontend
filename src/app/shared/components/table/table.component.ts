@@ -9,11 +9,23 @@ import { DataPropertyGetterPipe } from "../../utils/pipes/data-property-getter.p
 import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
 import { CommonModule } from "@angular/common";
+import { TableColumnPipe } from "../../utils/pipes/table-column.pipe";
 
 @Component({
   selector: 'sh-table',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatFormFieldModule, MatSortModule, MatIconModule, DataPropertyGetterPipe, MatButtonModule, MatInputModule],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatSortModule,
+    MatIconModule,
+    DataPropertyGetterPipe,
+    MatButtonModule,
+    MatInputModule,
+    TableColumnPipe
+  ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
 })
@@ -22,14 +34,14 @@ export class TableComponent {
   public displayedColumns: string[];
 
   @ViewChild('paginator', { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   @Input() isMobile = true;
   @Input() isPageable = false;
   @Input() isSortable = false;
   @Input() isFilterable = false;
   @Input() tableColumns: TableColumn[];
-  @Input() paginationSizes: number[] = [5, 10, 15];
+  @Input() paginationSizes: number[] = [5, 10, 20];
   @Input() defaultPageSize = this.paginationSizes[0];
   @Input() totalItemCount: number = 0;
 

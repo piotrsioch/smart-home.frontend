@@ -1,8 +1,13 @@
+export enum TableColumnType {
+  DATE = 'date',
+}
+
 export interface TableColumn {
   name: string;
   dataKey: string;
   position?: 'right' | 'left';
   isSortable?: boolean;
+  type?: TableColumnType;
 }
 
 export interface PageChangedData {
