@@ -11,7 +11,7 @@ import { SmokeSensorDto } from "../../core/api/models/smoke-sensor-dto";
 import { AlarmService } from "../../core/api/services/alarm.service";
 import { LightService } from "../../core/api/services/light.service";
 import { AlarmDto } from "../../core/api/models/alarm-dto";
-import { TableColumn, TableColumnType } from "../components/table/table.assets";
+import { TableColumn, TableColumnType, TablePaginatedListInput } from "../components/table/table.assets";
 
 export type SensorServiceType = ReedSwitchDto | LightDto | DhtSensorDto | PirSensorDto | SmokeSensorDto | AlarmDto;
 
@@ -34,53 +34,74 @@ export class SensorsHelperService {
   ) {
   }
 
-  public getPaginatedData(type: 'dhtSensor' | 'pirSensor' | 'reedSwitch' | 'light' | 'mqSensor' | 'alarm', pagination: any) {
+  public getPaginatedData(type: 'dhtSensor' | 'pirSensor' | 'reedSwitch' | 'light' | 'mqSensor' | 'alarm', pagination: TablePaginatedListInput) {
     switch (type) {
       case "dhtSensor":
         return this.dhtSensorService.dhtSensorControllerDhtSensorList({
           page: pagination.page,
-          limit: pagination.limit
+          limit: pagination.limit,
+          search: pagination.search ?? '',
+          orderField: pagination.orderField ?? '',
+          orderDirection: pagination.orderDirection,
         });
 
 
       case "pirSensor":
         return this.pirSensorService.pirSensorControllerPirSensorList({
           page: pagination.page,
-          limit: pagination.limit
+          limit: pagination.limit,
+          search: pagination.search ?? '',
+          orderField: pagination.orderField ?? '',
+          orderDirection: pagination.orderDirection,
         });
 
 
       case "reedSwitch":
         return this.reedSwitchService.reedSwitchControllerReedSwitchList({
           page: pagination.page,
-          limit: pagination.limit
+          limit: pagination.limit,
+          search: pagination.search ?? '',
+          orderField: pagination.orderField ?? '',
+          orderDirection: pagination.orderDirection,
         });
 
 
       case "light":
         return this.lightService.lightControllerLightList({
           page: pagination.page,
-          limit: pagination.limit
+          limit: pagination.limit,
+          search: pagination.search ?? '',
+          orderField: pagination.orderField ?? '',
+          orderDirection: pagination.orderDirection,
         });
 
 
       case "mqSensor":
         return this.smokeSensorService.smokeSensorControllerDhtSensorList({
           page: pagination.page,
-          limit: pagination.limit
+          limit: pagination.limit,
+          search: pagination.search ?? '',
+          orderField: pagination.orderField ?? '',
+          orderDirection: pagination.orderDirection,
         });
 
 
       case "alarm":
         return this.alarmService.alarmControllerAlarmList({
           page: pagination.page,
-          limit: pagination.limit
+          limit: pagination.limit,
+          search: pagination.search ?? '',
+          orderField: pagination.orderField ?? '',
+          orderDirection: pagination.orderDirection,
         });
 
       default:
         return this.dhtSensorService.dhtSensorControllerDhtSensorList({
           page: pagination.page,
-          limit: pagination.limit
+          limit: pagination.limit,
+          search: pagination.search ?? '',
+          orderField: pagination.orderField ?? '',
+          orderDirection: pagination.orderDirection,
         });
     }
   }
@@ -120,14 +141,17 @@ export class SensorsHelperService {
       name: 'Created At',
       dataKey: 'createdAt',
       type: TableColumnType.DATE,
+      isSortable: true,
     },
     {
       name: 'Temperature',
       dataKey: 'temperature',
+      isSortable: true,
     },
     {
       name: 'Humidity',
       dataKey: 'humidity',
+      isSortable: true,
     },
   ]
 
@@ -136,10 +160,12 @@ export class SensorsHelperService {
       name: 'Created At',
       dataKey: 'createdAt',
       type: TableColumnType.DATE,
+      isSortable: true,
     },
     {
       name: 'Is Opened',
       dataKey: 'isOpened',
+      isSortable: true,
     },
   ]
 
@@ -148,10 +174,12 @@ export class SensorsHelperService {
       name: 'Created At',
       dataKey: 'createdAt',
       type: TableColumnType.DATE,
+      isSortable: true,
     },
     {
       name: 'Is On',
       dataKey: 'isOn',
+      isSortable: true,
     },
   ]
 
@@ -160,10 +188,12 @@ export class SensorsHelperService {
       name: 'Created At',
       dataKey: 'createdAt',
       type: TableColumnType.DATE,
+      isSortable: true,
     },
     {
       name: 'Sensor Id',
       dataKey: 'sensorId',
+      isSortable: true,
     },
   ]
 
@@ -172,10 +202,12 @@ export class SensorsHelperService {
       name: 'Created At',
       dataKey: 'createdAt',
       type: TableColumnType.DATE,
+      isSortable: true,
     },
     {
       name: 'Value',
       dataKey: 'value',
+      isSortable: true,
     },
   ]
 
@@ -184,10 +216,12 @@ export class SensorsHelperService {
       name: 'Created At',
       dataKey: 'createdAt',
       type: TableColumnType.DATE,
+      isSortable: true,
     },
     {
       name: 'State',
       dataKey: 'state',
+      isSortable: true,
     },
   ]
 }

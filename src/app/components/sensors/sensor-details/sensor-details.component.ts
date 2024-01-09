@@ -16,7 +16,12 @@ import {
   GetPaginatedSensorData,
   SensorsHelperService
 } from "../../../shared/services/sensors-helper.service";
-import { CustomDatasource, PageChangedData, TableColumn } from "../../../shared/components/table/table.assets";
+import {
+  CustomDatasource,
+  PageChangedData,
+  TableColumn,
+  TablePaginatedListInput
+} from "../../../shared/components/table/table.assets";
 
 export interface EditSensorModalData {
   sensor: SensorDto;
@@ -98,9 +103,39 @@ export class SensorDetailsComponent implements OnDestroy {
   handlePageChange(event: PageChangedData): void {
     const currentPage = event.pageIndex;
     const perPage = event.pageSize;
+    const orderField = event.orderField;
+    const orderDirection = event.orderDirection;
 
     this.subscription.add(
-      this.fetchDataForTable(this.sensor, currentPage, perPage).subscribe(data => {
+      this.fetchDataForTable(this.sensor, {
+          page: currentPage,
+          limit: perPage,
+          orderField,
+          orderDirection,
+        }
+      ).subscribe(data => {
+        this.sensorData = {
+          data: data.items,
+          total: data.total
+        };
+
+        this.totalItemCount = data.total;
+      })
+    )
+  }
+
+  handleSortChange(event: any): void {
+    const currentPage = 0;
+    const perPage = event.pageSize;
+
+    this.subscription.add(
+      this.fetchDataForTable(this.sensor, {
+          page: currentPage,
+          limit: perPage,
+          orderField: event.active,
+          orderDirection: event.direction
+        }
+      ).subscribe(data => {
         this.sensorData = {
           data: data.items,
           total: data.total
@@ -135,14 +170,22 @@ export class SensorDetailsComponent implements OnDestroy {
           this.room = data;
         }
       }),
-      switchMap(_ => this.fetchDataForTable(this.sensor, 0, 5))
+      switchMap(_ => this.fetchDataForTable(this.sensor, {
+        page: 0,
+        limit: 5
+      }))
     )
   }
 
-  private fetchDataForTable(sensor: SensorDto, page: number, limit: number): Observable<GetPaginatedSensorData> {
+  private fetchDataForTable(sensor: SensorDto, paginatedListInput: TablePaginatedListInput): Observable<GetPaginatedSensorData> {
+    const {page, limit, orderField = 'createdAt', orderDirection = 'DESC', search} = paginatedListInput;
+
     return this.sensorHelperService.getPaginatedData(sensor.type, {
       page,
       limit,
+      orderField,
+      orderDirection,
+      search,
     }).pipe(
       map(data => {
           return {

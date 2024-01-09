@@ -11,6 +11,11 @@ import { MatInputModule } from "@angular/material/input";
 import { CommonModule } from "@angular/common";
 import { TableColumnPipe } from "../../utils/pipes/table-column.pipe";
 
+export interface SortData {
+  orderField: any;
+  orderDirection: any;
+}
+
 @Component({
   selector: 'sh-table',
   standalone: true,
@@ -45,7 +50,12 @@ export class TableComponent {
   @Input() defaultPageSize = this.paginationSizes[0];
   @Input() totalItemCount: number = 0;
 
-  @Output() sortChanged: EventEmitter<Sort> = new EventEmitter();
+  sortData: SortData = {
+    orderField: 'createdAt',
+    orderDirection: 'DESC',
+  }
+
+  @Output() sortChanged: EventEmitter<any> = new EventEmitter();
   @Output() pageChanged: EventEmitter<PageChangedData> = new EventEmitter<PageChangedData>();
   @Output() rowAction: EventEmitter<any> = new EventEmitter<any>();
 
@@ -73,7 +83,21 @@ export class TableComponent {
 
   sortTable(sortParameters: Sort): void {
     sortParameters.active = this.tableColumns.find(column => column.name === sortParameters.active)!.dataKey;
-    this.sortChanged.emit(sortParameters);
+
+    if(!sortParameters.direction) {
+      sortParameters.direction = 'desc';
+      sortParameters.active = 'createdAt'
+    }
+
+    this.sortChanged.emit({
+      active: sortParameters.active,
+      direction: sortParameters.direction.toUpperCase(),
+      pageSize: this.paginator.pageSize,
+    });
+
+    this.sortData.orderField = sortParameters.active;
+    this.sortData.orderDirection = sortParameters.direction.toUpperCase();
+    this.paginator.pageIndex = 0;
   }
 
   emitRowAction(row: any): void {
@@ -84,6 +108,8 @@ export class TableComponent {
     this.pageChanged.emit({
       pageIndex: event.pageIndex,
       pageSize: event.pageSize,
+      orderField: this.sortData.orderField,
+      orderDirection: this.sortData.orderDirection,
     });
   }
 }

@@ -13,9 +13,19 @@ export interface TableColumn {
 export interface PageChangedData {
   pageIndex: number;
   pageSize: number;
+  orderField?: any;
+  orderDirection?: any;
 }
 
 export interface CustomDatasource {
   data: any[];
   total: number;
+}
+
+export interface TablePaginatedListInput {
+  page: number;
+  limit: number;
+  orderField?: any;
+  orderDirection?: 'ASC' | 'DESC',
+  search?: string;
 }
