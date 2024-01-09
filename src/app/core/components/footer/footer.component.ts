@@ -27,9 +27,9 @@ export class FooterComponent {
       icon: 'notifications'
     },
     {
-      name: 'settings',
-      path: '/settings',
-      icon: 'settings'
+      name: 'sensors',
+      path: '/sensors',
+      icon: 'sensors'
     }
   ]
 }

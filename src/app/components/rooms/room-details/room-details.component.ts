@@ -18,6 +18,7 @@ import {
   ConfirmModalComponent,
   ConfirmModalData
 } from "../../../shared/components/modal/confirm-modal/confirm-modal.component";
+import { sensorsTypesMap } from "../../sensors/sensors.assets";
 
 export interface AssignSensorModalData {
   sensors: SensorDto[];
@@ -38,6 +39,7 @@ export class RoomDetailsComponent implements OnDestroy {
   public room: RoomDto;
   public roomSensors: SensorDto[] = [];
   public unassignedSensors: SensorDto[] = [];
+  public sensorTypesMap = sensorsTypesMap;
   public loading = true;
   private loadingSubject = new BehaviorSubject<boolean>(true);
   private readonly subscription = new Subscription();
@@ -58,8 +60,7 @@ export class RoomDetailsComponent implements OnDestroy {
     this.subscription.add(
       this.fetchRoomAndUnassignedSensorData().pipe(
         tap(_ => this.loadingSubject.next(true)),
-      )
-        .subscribe(([roomSensors, unassignedSensors]) => {
+      ).subscribe(([roomSensors, unassignedSensors]) => {
           this.loadingSubject.next(false);
           this.roomSensors = roomSensors;
           this.unassignedSensors = unassignedSensors;
@@ -77,7 +78,8 @@ export class RoomDetailsComponent implements OnDestroy {
         },
         style: ModalStyle.ConfirmModal
       }
-    )
+    );
+
     this.subscription.add(
       modalRef.afterClosed().pipe(
         filter(data => !!data),
@@ -151,7 +153,7 @@ export class RoomDetailsComponent implements OnDestroy {
     )
   }
 
-  public unassigneSensor(id: string): void {
+  public unassignSensor(id: string): void {
     const modalRef = this.modalService.open<ConfirmModalComponent, ConfirmModalData>(
       ConfirmModalComponent,
       {

@@ -1,7 +1,7 @@
 import { ApplicationConfig, importProvidersFrom } from "@angular/core";
 import { provideRouter, Routes } from "@angular/router";
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
-import { SettingsComponent } from "./components/settings/settings.component";
+import { SensorsComponent } from "./components/sensors/sensors.component";
 import { NotificationsComponent } from "./components/notifications/notifications.component";
 import { SecurityComponent } from "./components/security/security.component";
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -11,10 +11,12 @@ import { RoomsComponent } from "./components/rooms/rooms.component";
 import { RoomDetailsComponent } from "./components/rooms/room-details/room-details.component";
 import { AllNotificationsComponent } from "./components/notifications/all-notifications/all-notifications.component";
 import { HttpClientModule } from "@angular/common/http";
+import { SensorDetailsComponent } from "./components/sensors/sensor-details/sensor-details.component";
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'settings', component: SettingsComponent },
+  { path: 'sensors', component: SensorsComponent },
+  { path: 'sensor-details/:id', component: SensorDetailsComponent },
   { path: 'notifications', component: NotificationsComponent },
   { path: 'notifications/all', component: AllNotificationsComponent },
   { path: 'security', component: SecurityComponent },
