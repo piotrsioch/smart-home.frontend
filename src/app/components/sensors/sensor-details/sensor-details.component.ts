@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { LoaderComponent } from "../../../shared/components/loader/loader.component";
 import { CommonModule } from "@angular/common";
 import { SensorDto } from "../../../core/api/models/sensor-dto";
@@ -6,11 +6,14 @@ import { BehaviorSubject, Observable, of, Subscription, switchMap } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 import { SensorsService } from "../../../core/api/services/sensors.service";
 import { ModalService } from "../../../shared/services/modal.service";
-import { filter, tap } from "rxjs/operators";
+import { filter, map, tap } from "rxjs/operators";
 import { RoomDto } from "../../../core/api/models/room-dto";
 import { RoomService } from "../../../core/api/services/room.service";
 import { EditSensorModalComponent, EditSensorModalReturnData } from "../edit-sensor-modal/edit-sensor-modal.component";
 import { sensorsTypesMap } from "../sensors.assets";
+import { TableComponent } from "../../../shared/components/table/table.component";
+import { SensorsHelperService } from "../../../shared/services/sensors-helper.service";
+import { CustomDatasource, PageChangedData, TableColumn } from "../../../shared/components/table/table.assets";
 
 export interface EditSensorModalData {
   sensor: SensorDto;
@@ -19,7 +22,7 @@ export interface EditSensorModalData {
 @Component({
   selector: 'sh-sensor-details',
   standalone: true,
-  imports: [LoaderComponent, CommonModule],
+  imports: [LoaderComponent, CommonModule, TableComponent],
   templateUrl: './sensor-details.component.html',
   styleUrl: './sensor-details.component.scss'
 })
@@ -36,6 +39,7 @@ export class SensorDetailsComponent {
     private readonly sensorsService: SensorsService,
     private readonly modalService: ModalService,
     private readonly roomService: RoomService,
+    private readonly sensorHelperService: SensorsHelperService,
   ) {
     this.loadingSubject.subscribe(isLoading => {
       this.loading = isLoading;
@@ -47,6 +51,11 @@ export class SensorDetailsComponent {
           this.room = data;
         }
         this.loadingSubject.next(false);
+
+        //TODO REFACTOR
+        this.fetchDataForTable(this.sensor, 0, 5);
+        this.sensorColumns = this.sensorHelperService.getSensorColumns(this.sensor.type);
+        //TODO REFACTOR
       })
     )
   }
@@ -92,5 +101,32 @@ export class SensorDetailsComponent {
         })
       })
     )
+  }
+
+  public sensorColumns: TableColumn[] = [];
+  public sensorData: CustomDatasource = { data: [], perPage: 0, currentPage: 0, total: 0 };
+
+  fetchDataForTable(sensor: SensorDto, page: number, limit: number) {
+    this.sensorHelperService.getPaginatedData(sensor.type, {
+      page,
+      limit,
+    }).pipe(
+      map(data => {
+          return {
+            items: data.items!,
+            total: data.total,
+          }
+        }
+      ),
+    ).subscribe(data => {
+      this.sensorData = {data: data.items, currentPage: page, perPage: limit,  total: data.total};
+    });
+  }
+
+  handlePageChange(event: PageChangedData) {
+    const currentPage = event.pageIndex;
+    const perPage = event.pageSize;
+
+    this.fetchDataForTable(this.sensor, currentPage, perPage);
   }
 }

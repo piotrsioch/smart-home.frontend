@@ -37,6 +37,14 @@
         }
       </div>
     </div>
+
+    <sh-table
+      *ngIf="sensorData && sensorData.data.length > 0"
+      [tableData]="sensorData"
+      [tableColumns]="sensorColumns"
+      [isPageable]="true"
+      (pageChanged)="handlePageChange($event)"
+    />
   }
 </sh-loader>
 
