@@ -2,6 +2,8 @@
 /* eslint-disable */
 import { Injectable } from '@angular/core';
 
+console.log(process.env["BACKEND_URL"]);
+
 /**
  * Global configuration
  */
