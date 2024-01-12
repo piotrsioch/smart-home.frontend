@@ -38,6 +38,9 @@ export class SensorsComponent implements OnInit {
         this.loading = isLoading;
       })
     );
+
+    const url = process.env["API_URL"] || 'http://localhost:4001';
+    console.log(url);
   }
 
   ngOnInit(): void {
