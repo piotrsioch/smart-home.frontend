@@ -1,12 +1,10 @@
 /* tslint:disable */
 /* eslint-disable */
 import { Injectable } from '@angular/core';
+import { environment } from "../../../environments/environment";
 
-const url = process.env["API_URL"] || 'http://localhost:4001';
+const url = environment.apiUrl || 'no access';
 console.log(url);
-
-const test = process.env["TEST"] || 'diffeert';
-console.log(test);
 
 /**
  * Global configuration
