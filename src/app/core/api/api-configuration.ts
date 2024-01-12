@@ -2,6 +2,8 @@
 /* eslint-disable */
 import { Injectable } from '@angular/core';
 
+const url = process.env["API_URL"] || 'http://localhost:4001';
+
 /**
  * Global configuration
  */
@@ -9,7 +11,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ApiConfiguration {
-  rootUrl: string = 'http://localhost:4001';
+  rootUrl: string = url;
 }
 
 /**
