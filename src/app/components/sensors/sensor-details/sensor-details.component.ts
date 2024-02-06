@@ -185,7 +185,7 @@ export class SensorDetailsComponent implements OnDestroy {
       limit,
       orderField,
       orderDirection,
-      search,
+      search: sensor._id,
     }).pipe(
       map(data => {
           return {

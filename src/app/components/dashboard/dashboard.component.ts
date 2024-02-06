@@ -20,32 +20,32 @@ export class DashboardComponent {
     {
       name: 'Security',
       icon: 'lock',
-      path: '/security'
+      path: 'dashboard/security'
     },
     {
       name: 'Lighting system',
       icon: 'lightbulb',
-      path: '/lighting',
+      path: 'dashboard/lighting',
     },
     {
       name: 'Climate',
       icon: 'thermostat',
-      path: '/climate'
+      path: 'dashboard/climate'
     },
     {
       name: 'Energy usage',
       icon: 'bolt',
-      path: '/energy'
+      path: 'dashboard/energy'
     },
     {
       name: 'Remote control',
       icon: 'remote_gen',
-      path: '/remote-control'
+      path: 'dashboard/remote-control'
     },
     {
       name: 'Rooms',
       icon: 'sensor_door',
-      path: '/rooms',
+      path: 'dashboard/rooms',
     }
   ]
 }

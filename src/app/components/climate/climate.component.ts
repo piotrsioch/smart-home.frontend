@@ -9,6 +9,7 @@ import { SensorDto } from "../../core/api/models/sensor-dto";
 import { DhtSensorDto } from "../../core/api/models/dht-sensor-dto";
 import { SmokeSensorDto } from "../../core/api/models/smoke-sensor-dto";
 import { SmokeSensorService } from "../../core/api/services/smoke-sensor.service";
+import { SmokeValuePipe } from "../../shared/utils/pipes/smoke-value.pipe";
 
 @Component({
   selector: 'sh-climate',
@@ -16,6 +17,7 @@ import { SmokeSensorService } from "../../core/api/services/smoke-sensor.service
   imports: [
     LoaderComponent,
     CommonModule,
+    SmokeValuePipe,
   ],
   templateUrl: './climate.component.html',
   styleUrl: './climate.component.scss'

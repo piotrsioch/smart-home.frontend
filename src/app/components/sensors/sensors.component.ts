@@ -50,7 +50,7 @@ export class SensorsComponent implements OnInit {
   }
 
   openSensorDetails(id: string): void {
-    this.router.navigate(['/sensor-details', id]);
+    this.router.navigate(['sensors/sensor-details', id]);
   }
 
   private fetchSensors(): Observable<SensorDto[]> {
