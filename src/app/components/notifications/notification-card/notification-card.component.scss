@@ -20,6 +20,12 @@
     &__header {
       font-weight: 700;
     }
+
+    &--column {
+      display: flex;
+      flex-direction: column;
+      gap: $main-size * 3;
+    }
   }
 
   &__button {

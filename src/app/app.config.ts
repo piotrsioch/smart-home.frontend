@@ -17,14 +17,14 @@ import { DatePipe } from "@angular/common";
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'sensors', component: SensorsComponent },
-  { path: 'sensor-details/:id', component: SensorDetailsComponent },
+  { path: 'sensors/sensor-details/:id', component: SensorDetailsComponent },
   { path: 'notifications', component: NotificationsComponent },
   { path: 'notifications/all', component: AllNotificationsComponent },
-  { path: 'security', component: SecurityComponent },
-  { path: 'lighting', component: LightingComponent },
-  { path: 'climate', component: ClimateComponent },
-  { path: 'rooms', component: RoomsComponent },
-  { path: 'room-details/:id', component: RoomDetailsComponent },
+  { path: 'dashboard/security', component: SecurityComponent },
+  { path: 'dashboard/lighting', component: LightingComponent },
+  { path: 'dashboard/climate', component: ClimateComponent },
+  { path: 'dashboard/rooms', component: RoomsComponent },
+  { path: 'dashboard/room-details/:id', component: RoomDetailsComponent },
   { path: '**', redirectTo: 'dashboard' },
 ]
 

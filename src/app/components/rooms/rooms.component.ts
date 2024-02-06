@@ -52,7 +52,7 @@ export class RoomsComponent implements OnDestroy {
   }
 
   public openRoomDetails(id: string): void {
-    this.router.navigate(['/room-details', id]);
+    this.router.navigate(['dashboard/room-details', id]);
   }
 
   public addRoom(): void {
